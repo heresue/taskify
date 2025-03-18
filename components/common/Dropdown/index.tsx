@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import kebab_more_vert from '@/public/kebab_more_vert.svg';
-import Image from 'next/image';
+
+import { Trigger, VariableTrigger } from '@/components/common/Dropdown/Trigger';
+import { Item, VariableItem } from '@/components/common/Dropdown/Item';
 
 interface DropdownProps {
   options: string[];
@@ -44,8 +45,12 @@ export default function Dropdown({ options, onSelect, showSelected }: DropdownPr
   }, []);
 
   return (
-    <div className="relative" ref={dropdownRef}>
-      <Trigger onClick={toggleList} showSelected={showSelected} selected={selected} />
+    <div className={`relative ${showSelected && 'w-full'}`} ref={dropdownRef}>
+      {showSelected ? (
+        <VariableTrigger onClick={toggleList} selected={selected} />
+      ) : (
+        <Trigger onClick={toggleList} />
+      )}
 
       {isOpen && (
         <List
@@ -54,65 +59,30 @@ export default function Dropdown({ options, onSelect, showSelected }: DropdownPr
             selectItem(option);
             closeList();
           }}
+          selected={selected}
         />
       )}
     </div>
   );
 }
 
-interface TriggerProps {
-  onClick: () => void;
-  showSelected: boolean;
-  selected: string | null;
-}
-
-function Trigger({ onClick, showSelected, selected }: TriggerProps) {
-  return showSelected ? (
-    <button className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-white" onClick={onClick}>
-      {selected || '옵션 선택'}
-    </button>
-  ) : (
-    <button className="cursor-pointer" onClick={onClick}>
-      <Image
-        className="size-5 lg:size-7"
-        src={kebab_more_vert}
-        width={28}
-        height={28}
-        alt="메뉴 열기"
-      />
-    </button>
-  );
-}
-
 interface ListProps {
   options: string[];
   onClickItem: (option: string) => void;
+  selected: string | null;
 }
 
-function List({ options, onClickItem }: ListProps) {
+function List({ options, onClickItem, selected }: ListProps) {
   return (
-    <ul className="absolute right-0 flex min-w-24 flex-col items-stretch justify-center gap-1 rounded-md border border-[#d9d9d9] bg-white px-1.5 py-2 drop-shadow-[0px_4px_20px_rgba(0,0,0,0.08)] filter">
+    <ul className="absolute right-0 mt-1 flex w-full min-w-24 flex-col items-stretch justify-center gap-1 rounded-md border border-[#d9d9d9] bg-white px-1.5 py-2 drop-shadow-[0px_4px_20px_rgba(0,0,0,0.08)] filter">
       {options.map((option) => (
-        <Item key={option} option={option} onClick={() => onClickItem(option)} />
+        <VariableItem
+          key={option}
+          option={option}
+          onClick={() => onClickItem(option)}
+          selected={selected}
+        />
       ))}
     </ul>
-  );
-}
-
-interface ItemProps {
-  option: string;
-  onClick: () => void;
-}
-
-function Item({ option, onClick }: ItemProps) {
-  return (
-    <li className="cursor-pointer">
-      <button
-        className="hover:bg-violet8 hover:text-violet text-regular14 w-full cursor-pointer rounded-sm px-4 py-1"
-        onClick={onClick}
-      >
-        {option}
-      </button>
-    </li>
   );
 }
