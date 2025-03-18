@@ -44,7 +44,7 @@ export default function Dropdown({ options, onSelect, showSelected }: DropdownPr
   }, []);
 
   return (
-    <div className="relative inline-block" ref={dropdownRef}>
+    <div className="relative" ref={dropdownRef}>
       <Trigger onClick={toggleList} showSelected={showSelected} selected={selected} />
 
       {isOpen && (
@@ -72,8 +72,14 @@ function Trigger({ onClick, showSelected, selected }: TriggerProps) {
       {selected || '옵션 선택'}
     </button>
   ) : (
-    <button onClick={onClick}>
-      <Image src={kebab_more_vert} alt="메뉴 열기" />
+    <button className="cursor-pointer" onClick={onClick}>
+      <Image
+        className="size-5 lg:size-7"
+        src={kebab_more_vert}
+        width={28}
+        height={28}
+        alt="메뉴 열기"
+      />
     </button>
   );
 }
@@ -85,7 +91,7 @@ interface ListProps {
 
 function List({ options, onClickItem }: ListProps) {
   return (
-    <ul className="absolute mt-2 w-full rounded border bg-white shadow-lg">
+    <ul className="absolute right-0 flex min-w-24 flex-col items-stretch justify-center gap-1 rounded-md border border-[#d9d9d9] bg-white px-1.5 py-2 drop-shadow-[0px_4px_20px_rgba(0,0,0,0.08)] filter">
       {options.map((option) => (
         <Item key={option} option={option} onClick={() => onClickItem(option)} />
       ))}
@@ -100,8 +106,13 @@ interface ItemProps {
 
 function Item({ option, onClick }: ItemProps) {
   return (
-    <li className="cursor-pointer p-2 hover:bg-gray-200" onClick={onClick}>
-      {option}
+    <li className="cursor-pointer">
+      <button
+        className="hover:bg-violet8 hover:text-violet text-regular14 w-full cursor-pointer rounded-sm px-4 py-1"
+        onClick={onClick}
+      >
+        {option}
+      </button>
     </li>
   );
 }
