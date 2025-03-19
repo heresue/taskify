@@ -17,14 +17,14 @@
   --color-pink: #e876ea;
   --color-white: #ffffff;
   --color-black: #000000;
-  --color-gFAFAFA: #fafafa;
-  --color-gEEEEEE: #eeeeee;
-  --color-gD9D9D9: #d9d9d9;
-  --color-g9FA6B2: #9fa6b2;
-  --color-g787486: #787486;
-  --color-b4B4B4B: #4b4b4b;
-  --color-b333236: #333236;
-  --color-b171717: #171717;
+  --color-gray100: #fafafa;
+  --color-gray200: #eeeeee;
+  --color-gray300: #d9d9d9;
+  --color-gray400: #9fa6b2;
+  --color-gray500: #787486;
+  --color-black100: #4b4b4b;
+  --color-black200: #333236;
+  --color-black300: #171717;
 }
 
 @layer components {
