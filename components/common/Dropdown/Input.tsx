@@ -18,7 +18,7 @@ export function AutoCompleteInput({
 }: AutoCompleteInputProps) {
   return (
     <button
-      className={`flex min-h-12 w-full items-center justify-between rounded border border-[#d9d9d9] bg-white px-4 py-2 ${isOpen && 'border-violet'}`}
+      className={`border-gray300 flex min-h-12 w-full items-center justify-between rounded border bg-white px-4 py-2 ${isOpen && 'border-violet'}`}
     >
       <input
         type="text"
@@ -30,7 +30,7 @@ export function AutoCompleteInput({
       />
       {value !== '' && (
         <Image
-          className="rounded-sm hover:bg-[#eeeeee]"
+          className="hover:bg-gray200 rounded-sm"
           src={close}
           width={24}
           height={24}

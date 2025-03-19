@@ -17,7 +17,7 @@ interface VariableTriggerProps extends TriggerProps {
 export function Trigger({ onClick }: TriggerProps) {
   return (
     <button
-      className="size-5 cursor-pointer rounded-sm hover:bg-[#eeeeee] lg:size-7"
+      className="hover:bg-gray200 size-5 cursor-pointer rounded-sm lg:size-7"
       onClick={onClick}
     >
       <Image src={kebab_more_vert} width={28} height={28} alt="메뉴 열기" />
@@ -33,7 +33,7 @@ export function VariableTrigger({
 }: VariableTriggerProps) {
   return (
     <button
-      className={`flex min-h-12 w-full cursor-pointer items-center justify-between rounded border border-[#d9d9d9] bg-white px-4 py-2 hover:bg-[#eeeeee] ${isOpen && 'border-violet'}`}
+      className={`hover:bg-gray200 border-gray300 flex min-h-12 w-full cursor-pointer items-center justify-between rounded border bg-white px-4 py-2 ${isOpen && 'border-violet'}`}
       onClick={onClick}
     >
       <ItemComponent value={selected} />
@@ -50,7 +50,7 @@ export function AutoCompleteTrigger({
 }: VariableTriggerProps) {
   return (
     <button
-      className={`flex min-h-12 w-full cursor-pointer items-center justify-between rounded border border-[#d9d9d9] bg-white px-4 py-2 hover:bg-[#eeeeee] ${isOpen && 'border-violet'}`}
+      className={`hover:bg-bg-gray200 border-gray300 flex min-h-12 w-full cursor-pointer items-center justify-between rounded border bg-white px-4 py-2 ${isOpen && 'border-violet'}`}
       onClick={onClick}
     >
       <ItemComponent value={selected} />
