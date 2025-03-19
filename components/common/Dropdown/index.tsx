@@ -3,11 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { List, VariableList } from './List';
 import { AutoCompleteInput } from '@/components/common/Dropdown/Input';
-import {
-  Trigger,
-  VariableTrigger,
-  AutoCompleteTrigger,
-} from '@/components/common/Dropdown/Trigger';
+import { Trigger, VariableTrigger } from '@/components/common/Dropdown/Trigger';
 
 interface DropdownProps {
   options: string[];
@@ -180,7 +176,7 @@ export function AutoCompleteDropdown({ options, onSelect, ItemComponent }: Varia
   return (
     <div className="relative w-full" ref={dropdownRef}>
       {selected !== '' && !isOpen ? (
-        <AutoCompleteTrigger
+        <VariableTrigger
           onClick={toggleList}
           selected={selected}
           ItemComponent={ItemComponent}
