@@ -3,13 +3,10 @@
 import Image from 'next/image';
 import arrow_drop_down from '@/public/arrow_drop_down.svg';
 import kebab_more_vert from '@/public/kebab_more_vert.svg';
+import { Text } from './Item';
 
 interface TriggerProps {
   onClick: () => void;
-}
-
-interface VariableTriggerProps extends TriggerProps {
-  selected: string | null;
 }
 
 export function Trigger({ onClick }: TriggerProps) {
@@ -26,13 +23,22 @@ export function Trigger({ onClick }: TriggerProps) {
   );
 }
 
-export function VariableTrigger({ onClick, selected }: VariableTriggerProps) {
+type ItemProps = {
+  text: string;
+};
+
+interface VariableTriggerProps extends TriggerProps {
+  selected: string | null;
+  ItemComponent: React.ComponentType<ItemProps>; // 사용자가 전달한 컴포넌트를 받는 Prop
+}
+
+export function VariableTrigger({ onClick, selected, ItemComponent }: VariableTriggerProps) {
   return (
     <button
       className="align-center flex w-full cursor-pointer justify-between rounded border border-[#d9d9d9] bg-white px-4 py-2"
       onClick={onClick}
     >
-      <div>{selected || '옵션 선택'}</div>
+      <ItemComponent text={selected || '선택된 값'} />
       <Image className="size-6.5" src={arrow_drop_down} width={26} height={26} alt="메뉴 열기" />
     </button>
   );
