@@ -3,8 +3,6 @@
 import Image from 'next/image';
 import arrow_drop_down from '@/public/arrow_drop_down.svg';
 import kebab_more_vert from '@/public/kebab_more_vert.svg';
-import { Text } from './Item';
-import close from '@/public/close_small.svg';
 
 interface TriggerProps {
   onClick: () => void;
@@ -43,47 +41,6 @@ export function VariableTrigger({
     >
       <ItemComponent value={selected} />
       <Image className="size-6.5" src={arrow_drop_down} width={26} height={26} alt="메뉴 열기" />
-    </button>
-  );
-}
-
-interface AutoCompleteInput {
-  value: string;
-  onClick: () => void;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onClear: () => void;
-  isOpen: boolean;
-}
-
-export function AutoCompleteInput({
-  onClick,
-  value,
-  onChange,
-  onClear,
-  isOpen,
-}: AutoCompleteInput) {
-  return (
-    <button
-      className={`flex min-h-12 w-full items-center justify-between rounded border border-[#d9d9d9] bg-white px-4 py-2 ${isOpen && 'border-violet'}`}
-    >
-      <input
-        type="text"
-        value={value}
-        onChange={onChange}
-        onClick={onClick}
-        placeholder="이름을 입력해 주세요"
-        className="w-full border-0 outline-0"
-      />
-      {value !== '' && (
-        <Image
-          className="rounded-sm hover:bg-[#eeeeee]"
-          src={close}
-          width={24}
-          height={24}
-          alt="메뉴 열기"
-          onClick={onClear}
-        />
-      )}
     </button>
   );
 }

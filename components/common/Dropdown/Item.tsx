@@ -18,10 +18,6 @@ export function Item({ option, onClick }: ItemWrapperProps) {
   );
 }
 
-type ItemProps = {
-  text: string;
-};
-
 interface VariableItemWrapperProps extends ItemWrapperProps {
   selected: string;
   ItemComponent: React.ElementType;
@@ -47,12 +43,4 @@ export function VariableItem({
       </button>
     </li>
   );
-}
-
-interface TextProps {
-  option: string;
-}
-
-export function Text({ option }: TextProps) {
-  return <div>{option}</div>;
 }

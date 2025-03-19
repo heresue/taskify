@@ -14,9 +14,6 @@ export function List({ options, onClickItem }: ListProps) {
     </ul>
   );
 }
-type ItemProps = {
-  text: string;
-};
 
 interface VariableListProps extends ListProps {
   selected: string;

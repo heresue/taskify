@@ -2,11 +2,11 @@
 
 import { useState, useEffect, useRef } from 'react';
 import {
-  AutoCompleteInput,
   AutoCompleteTrigger,
   Trigger,
   VariableTrigger,
 } from '@/components/common/Dropdown/Trigger';
+import { AutoCompleteInput } from '@/components/common/Dropdown/Input';
 import { List, VariableList } from './List';
 
 interface DropdownProps {
