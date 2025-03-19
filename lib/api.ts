@@ -1,16 +1,18 @@
-import { cookies } from 'next/headers';
-import { getItem } from '@/utils/localstorage';
+import { redirect } from 'next/navigation';
+import { NextResponse } from 'next/server';
+import { getItem } from '../utils/localstorage';
 
-export function createApi<T>(
+export function createApi(
   baseConfig: {
     baseURL?: string;
     headers?: Record<string, string>;
   } = {}
 ) {
-  const { baseURL = process.env.NEXT_PUBLIC_API_BASE_URL, headers: baseHeaders = {} } = baseConfig;
+  const { baseURL = process.env.NEXT_PUBLIC_BASE_URL, headers: baseHeaders = {} } = baseConfig;
 
   const getAccessToken = async (): Promise<string | undefined> => {
     if (typeof window === 'undefined') {
+      const { cookies } = await import('next/headers');
       const cookie = await cookies();
       return cookie.get('accessToken')?.value;
     } else {
@@ -18,16 +20,15 @@ export function createApi<T>(
     }
   };
 
-  const fetcher = async (
+  async function fetcher<T>(
     url: string,
     options: RequestInit & {
-      data?: any;
-      formData?: FormData;
+      data?: unknown;
       next?: NextFetchRequestConfig;
     } = {}
-  ): Promise<T> => {
-    const { data, formData, next, headers, ...restOptions } = options;
-    const accessToken = getAccessToken();
+  ): Promise<T | NextResponse> {
+    const { data, next, headers, ...restOptions } = options;
+    const accessToken = await getAccessToken();
 
     const fetchOptions: RequestInit & { next?: NextFetchRequestConfig } = {
       ...restOptions,
@@ -38,9 +39,7 @@ export function createApi<T>(
       },
     };
 
-    if (formData) {
-      fetchOptions.body = formData;
-    } else if (data && options.method && options.method !== 'GET') {
+    if (data && options.method && options.method !== 'GET') {
       fetchOptions.headers = {
         'Content-Type': 'application/json',
         ...fetchOptions.headers,
@@ -54,51 +53,58 @@ export function createApi<T>(
 
     const response = await fetch(`${baseURL}${url}`, fetchOptions);
 
+    if (response.status === 401) {
+      if (typeof window === 'undefined') {
+        return NextResponse.redirect(new URL('/login', response.url));
+      } else {
+        redirect('/login');
+        return {} as T;
+      }
+    }
+
     const contentType = response.headers.get('content-type');
     if (contentType && contentType.includes('application/json')) {
       return response.json() as Promise<T>;
     }
 
     return {} as T;
-  };
+  }
 
   return {
-    get: (
+    get<T>(
       url: string,
       options: Omit<RequestInit, 'method'> & { next?: NextFetchRequestConfig } = {}
-    ) => fetcher(url, { ...options, method: 'GET' }),
-
-    post: (
-      url: string,
-      dataOrFormData?: any | FormData,
-      options: Omit<RequestInit, 'method' | 'body'> & { next?: NextFetchRequestConfig } = {}
-    ) => {
-      if (dataOrFormData instanceof FormData) {
-        return fetcher(url, { ...options, method: 'POST', formData: dataOrFormData });
-      }
-      return fetcher(url, { ...options, method: 'POST', data: dataOrFormData });
+    ): Promise<T | NextResponse> {
+      return fetcher<T>(url, { ...options, method: 'GET' });
     },
 
-    put: (
+    post<T>(
       url: string,
-      dataOrFormData?: any | FormData,
+      data?: unknown,
       options: Omit<RequestInit, 'method' | 'body'> & { next?: NextFetchRequestConfig } = {}
-    ) => {
-      if (dataOrFormData instanceof FormData) {
-        return fetcher(url, { ...options, method: 'PUT', formData: dataOrFormData });
-      }
-      return fetcher(url, { ...options, method: 'PUT', data: dataOrFormData });
+    ): Promise<T | NextResponse> {
+      return fetcher<T>(url, { ...options, method: 'POST', data });
     },
 
-    delete: (
+    put<T>(
+      url: string,
+      data?: unknown,
+      options: Omit<RequestInit, 'method' | 'body'> & { next?: NextFetchRequestConfig } = {}
+    ): Promise<T | NextResponse> {
+      return fetcher<T>(url, { ...options, method: 'PUT', data });
+    },
+
+    delete<T>(
       url: string,
       options: Omit<RequestInit, 'method'> & { next?: NextFetchRequestConfig } = {}
-    ) => fetcher(url, { ...options, method: 'DELETE' }),
+    ): Promise<T | NextResponse> {
+      return fetcher<T>(url, { ...options, method: 'DELETE' });
+    },
   };
 }
 
 export const api = createApi({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   headers: {
     Accept: 'application/json',
   },
