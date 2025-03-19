@@ -9,23 +9,20 @@ interface TriggerProps {
   isOpen: boolean;
 }
 
-export function Trigger({ onClick }: TriggerProps) {
-  return (
-    <button className="cursor-pointer rounded-sm hover:bg-[#eeeeee]" onClick={onClick}>
-      <Image
-        className="size-5 lg:size-7"
-        src={kebab_more_vert}
-        width={28}
-        height={28}
-        alt="메뉴 열기"
-      />
-    </button>
-  );
-}
-
 interface VariableTriggerProps extends TriggerProps {
   selected: string;
   ItemComponent: React.ElementType;
+}
+
+export function Trigger({ onClick }: TriggerProps) {
+  return (
+    <button
+      className="size-5 cursor-pointer rounded-sm hover:bg-[#eeeeee] lg:size-7"
+      onClick={onClick}
+    >
+      <Image src={kebab_more_vert} width={28} height={28} alt="메뉴 열기" />
+    </button>
+  );
 }
 
 export function VariableTrigger({

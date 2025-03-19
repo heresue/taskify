@@ -1,8 +1,13 @@
-import { Item, VariableItem } from './Item';
+import { Item, VariableItem } from '@/components/common/Dropdown/Item';
 
 interface ListProps {
   options: string[];
   onClickItem: (option: string) => void;
+}
+
+interface VariableListProps extends ListProps {
+  selected: string;
+  ItemComponent: React.ElementType;
 }
 
 export function List({ options, onClickItem }: ListProps) {
@@ -13,11 +18,6 @@ export function List({ options, onClickItem }: ListProps) {
       ))}
     </ul>
   );
-}
-
-interface VariableListProps extends ListProps {
-  selected: string;
-  ItemComponent: React.ElementType;
 }
 
 export function VariableList({ options, onClickItem, selected, ItemComponent }: VariableListProps) {

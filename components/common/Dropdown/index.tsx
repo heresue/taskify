@@ -1,17 +1,21 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { List, VariableList } from './List';
+import { AutoCompleteInput } from '@/components/common/Dropdown/Input';
 import {
-  AutoCompleteTrigger,
   Trigger,
   VariableTrigger,
+  AutoCompleteTrigger,
 } from '@/components/common/Dropdown/Trigger';
-import { AutoCompleteInput } from '@/components/common/Dropdown/Input';
-import { List, VariableList } from './List';
 
 interface DropdownProps {
   options: string[];
   onSelect: (option: string) => void;
+}
+
+interface VariableDropdownProps extends DropdownProps {
+  ItemComponent: React.ElementType;
 }
 
 export default function Dropdown({ options, onSelect }: DropdownProps) {
@@ -59,10 +63,6 @@ export default function Dropdown({ options, onSelect }: DropdownProps) {
       )}
     </div>
   );
-}
-
-interface VariableDropdownProps extends DropdownProps {
-  ItemComponent: React.ElementType;
 }
 
 export function VariableDropdown({ options, onSelect, ItemComponent }: VariableDropdownProps) {

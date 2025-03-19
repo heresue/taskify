@@ -1,14 +1,19 @@
 'use client';
 
-import check from '@/public/check.svg';
 import Image from 'next/image';
+import check from '@/public/check.svg';
 
-interface ItemWrapperProps {
+interface ItemProps {
   option: string;
   onClick: () => void;
 }
 
-export function Item({ option, onClick }: ItemWrapperProps) {
+interface VariableItemProps extends ItemProps {
+  selected: string;
+  ItemComponent: React.ElementType;
+}
+
+export function Item({ option, onClick }: ItemProps) {
   return (
     <li className="hover:bg-violet8 hover:text-violet w-full cursor-pointer rounded-sm px-4 py-1">
       <button className="text-regular14 cursor-pointer rounded-sm" onClick={onClick}>
@@ -18,17 +23,7 @@ export function Item({ option, onClick }: ItemWrapperProps) {
   );
 }
 
-interface VariableItemWrapperProps extends ItemWrapperProps {
-  selected: string;
-  ItemComponent: React.ElementType;
-}
-
-export function VariableItem({
-  option,
-  onClick,
-  selected,
-  ItemComponent,
-}: VariableItemWrapperProps) {
+export function VariableItem({ option, onClick, selected, ItemComponent }: VariableItemProps) {
   return (
     <li className="hover:bg-violet8 hover:text-violet flex w-full cursor-pointer flex-row items-center justify-start gap-2 rounded-sm px-4 py-1">
       <Image
