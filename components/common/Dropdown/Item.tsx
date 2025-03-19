@@ -23,8 +23,8 @@ type ItemProps = {
 };
 
 interface VariableItemWrapperProps extends ItemWrapperProps {
-  selected: string | null;
-  ItemComponent: React.ComponentType<ItemProps>; // 사용자가 전달한 컴포넌트를 받는 Prop
+  selected: string;
+  ItemComponent: React.ElementType;
 }
 
 export function VariableItem({
@@ -43,7 +43,7 @@ export function VariableItem({
         className={`${option !== selected && 'invisible'}`}
       />
       <button className="text-regular14 cursor-pointer" onClick={onClick}>
-        <ItemComponent text={option} />
+        <ItemComponent value={option} />
       </button>
     </li>
   );

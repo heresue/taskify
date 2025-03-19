@@ -19,8 +19,8 @@ type ItemProps = {
 };
 
 interface VariableListProps extends ListProps {
-  selected: string | null;
-  ItemComponent: React.ComponentType<ItemProps>; // 사용자가 전달한 컴포넌트를 받는 Prop
+  selected: string;
+  ItemComponent: React.ElementType;
 }
 
 export function VariableList({ options, onClickItem, selected, ItemComponent }: VariableListProps) {
