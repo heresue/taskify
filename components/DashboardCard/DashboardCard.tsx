@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import date from '@/public/icons/date.svg';
-import UserBadge from '../userBadge/userBadge';
+import UserBadge from '../UserBadge/userBadge';
 
 interface CardProps {
   imageUrl: string;
