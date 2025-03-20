@@ -6,8 +6,17 @@ const getFontSize = (size: number) => {
 
   return fontSizeMap[size] || 'text-regular16';
 };
-const getBorderColor = (isValid: boolean) => {
-  return isValid ? 'border-[var(--color-purple)]' : 'border-[var(--color-red)]';
-};
+const getBorderClasses = (disabled: boolean, isValid: boolean) => {
+  const baseClasses = 'border transition-colors';
 
-export { getFontSize, getBorderColor };
+  if (!isValid) {
+    return `${baseClasses} border-[var(--color-red)]`;
+  }
+
+  if (disabled) {
+    return `${baseClasses} border-[var(--color-gray-300)]`;
+  }
+
+  return `${baseClasses} border-[var(--color-gray-300)] hover:border-[var(--color-purple)] focus-within:border-[var(--color-purple)]`;
+};
+export { getFontSize, getBorderClasses };
