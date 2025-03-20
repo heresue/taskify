@@ -5,13 +5,17 @@ import { List, VariableList } from './List';
 import { AutoCompleteInput } from '@/components/common/Dropdown/Input';
 import { Trigger, VariableTrigger } from '@/components/common/Dropdown/Trigger';
 
-interface DropdownProps {
-  options: string[];
-  onSelect: (option: string) => void;
-}
+type DropdownItemId = number | string;
 
-interface VariableDropdownProps extends DropdownProps {
-  ItemComponent: React.ElementType;
+type DropdownItem = {
+  id: DropdownItemId;
+  value: string;
+  Component?: React.ElementType;
+};
+
+interface DropdownProps {
+  options: DropdownItem[];
+  onSelect: (option: DropdownItem) => void;
 }
 
 export default function Dropdown({ options, onSelect }: DropdownProps) {
@@ -26,7 +30,7 @@ export default function Dropdown({ options, onSelect }: DropdownProps) {
     setIsOpen(false);
   };
 
-  const selectItem = (option: string) => {
+  const selectItem = (option: DropdownItem) => {
     onSelect(option);
   };
 
@@ -61,9 +65,9 @@ export default function Dropdown({ options, onSelect }: DropdownProps) {
   );
 }
 
-export function VariableDropdown({ options, onSelect, ItemComponent }: VariableDropdownProps) {
+export function VariableDropdown({ options, onSelect }: DropdownProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selected, setSelected] = useState<string>(options[0] || '');
+  const [selected, setSelected] = useState<DropdownItem>(options[0]);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const toggleList = () => {
@@ -74,7 +78,7 @@ export function VariableDropdown({ options, onSelect, ItemComponent }: VariableD
     setIsOpen(false);
   };
 
-  const selectItem = (option: string) => {
+  const selectItem = (option: DropdownItem) => {
     setSelected(option);
     onSelect(option);
   };
@@ -96,32 +100,27 @@ export function VariableDropdown({ options, onSelect, ItemComponent }: VariableD
 
   return (
     <div className="relative w-full" ref={dropdownRef}>
-      <VariableTrigger
-        onClick={toggleList}
-        selected={selected}
-        ItemComponent={ItemComponent}
-        isOpen={isOpen}
-      />
+      <VariableTrigger onClick={toggleList} selected={selected} isOpen={isOpen} />
       {isOpen && (
         <VariableList
           options={options}
           onClickItem={(option) => {
+            console.log('event');
             selectItem(option);
             closeList();
           }}
           selected={selected}
-          ItemComponent={ItemComponent}
         />
       )}
     </div>
   );
 }
 
-export function AutoCompleteDropdown({ options, onSelect, ItemComponent }: VariableDropdownProps) {
+export function AutoCompleteDropdown({ options, onSelect }: DropdownProps) {
   const [query, setQuery] = useState<string>('');
-  const [filteredOptions, setFilteredOptions] = useState<string[]>(options);
+  const [filteredOptions, setFilteredOptions] = useState<DropdownItem[]>(options);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selected, setSelected] = useState<string>('');
+  const [selected, setSelected] = useState<DropdownItem | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const toggleList = () => {
@@ -132,14 +131,14 @@ export function AutoCompleteDropdown({ options, onSelect, ItemComponent }: Varia
     setIsOpen(false);
   };
 
-  const selectItem = (option: string) => {
+  const selectItem = (option: DropdownItem) => {
     setSelected(option);
-    setQuery(option);
+    setQuery(option.value);
     onSelect(option);
   };
 
   const clearFilter = () => {
-    setSelected('');
+    setSelected(null);
     setQuery('');
     setFilteredOptions(options);
   };
@@ -152,8 +151,8 @@ export function AutoCompleteDropdown({ options, onSelect, ItemComponent }: Varia
     const searchQuery = event.target.value;
     setQuery(searchQuery);
 
-    const newFilteredOptions = options.filter((option) =>
-      option.toLowerCase().includes(searchQuery.toLowerCase())
+    const newFilteredOptions = options.filter(({ value }) =>
+      value.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredOptions(newFilteredOptions);
   };
@@ -175,13 +174,8 @@ export function AutoCompleteDropdown({ options, onSelect, ItemComponent }: Varia
 
   return (
     <div className="relative w-full" ref={dropdownRef}>
-      {selected !== '' && !isOpen ? (
-        <VariableTrigger
-          onClick={toggleList}
-          selected={selected}
-          ItemComponent={ItemComponent}
-          isOpen={isOpen}
-        />
+      {selected && !isOpen ? (
+        <VariableTrigger onClick={toggleList} selected={selected} isOpen={isOpen} />
       ) : (
         <AutoCompleteInput
           value={query}
@@ -199,7 +193,6 @@ export function AutoCompleteDropdown({ options, onSelect, ItemComponent }: Varia
             closeList();
           }}
           selected={selected}
-          ItemComponent={ItemComponent}
         />
       )}
     </div>
