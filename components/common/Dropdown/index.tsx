@@ -174,7 +174,7 @@ export function SearchableDropdown({ options, onSelect }: DropdownProps) {
       )}
       {isOpen && (
         <SelectionList
-          options={filteredOptions.length !== 0 ? filteredOptions : options}
+          options={filteredOptions}
           onClickItem={(option) => {
             selectItem(option);
             closeList();
