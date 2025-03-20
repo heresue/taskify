@@ -8,6 +8,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   size?: 16 | 14;
   customBorderClass?: string;
   customInputClass?: string;
+  ref?: React.Ref<HTMLInputElement>;
 }
 
 const Input = ({
@@ -17,6 +18,7 @@ const Input = ({
   size = 16,
   customBorderClass = '',
   customInputClass = '',
+  ref,
   ...props
 }: InputProps) => {
   return (
@@ -26,6 +28,7 @@ const Input = ({
       {leftIcon && leftIcon}
       <input
         className={`w-full border-none text-[var(--color-black200)] outline-none placeholder:text-[var(--color-gray-400)] ${getFontSize(size)} ${customInputClass}`}
+        ref={ref}
         {...props}
       />
       {rightIcon && rightIcon}
