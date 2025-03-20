@@ -4,7 +4,16 @@ import { useState, useEffect, useRef } from 'react';
 import { MenuTrigger, SelectionTrigger } from '@/components/common/Dropdown/Trigger';
 import { MenuList, SelectionList } from '@/components/common/Dropdown/List';
 import { SearchableInput } from '@/components/common/Dropdown/Input';
-import { DropdownOption, DropdownProps } from '@/components/common/Dropdown/types';
+import { DropdownItem } from '@/components/common/Dropdown/types';
+
+export interface DropdownProps {
+  options: DropdownItem[];
+  onSelect: (option: DropdownItem) => void;
+}
+
+export interface SearchableDropdownProps extends DropdownProps {
+  placeholder?: string;
+}
 
 export function MenuDropdown({ options, onSelect }: DropdownProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -18,7 +27,7 @@ export function MenuDropdown({ options, onSelect }: DropdownProps) {
     setIsOpen(false);
   };
 
-  const selectItem = (option: DropdownOption) => {
+  const selectItem = (option: DropdownItem) => {
     onSelect(option);
   };
 
@@ -55,7 +64,7 @@ export function MenuDropdown({ options, onSelect }: DropdownProps) {
 
 export function SelectionDropdown({ options, onSelect }: DropdownProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selected, setSelected] = useState<DropdownOption>(options[0]);
+  const [selected, setSelected] = useState<DropdownItem>(options[0]);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const toggleList = () => {
@@ -66,7 +75,7 @@ export function SelectionDropdown({ options, onSelect }: DropdownProps) {
     setIsOpen(false);
   };
 
-  const selectItem = (option: DropdownOption) => {
+  const selectItem = (option: DropdownItem) => {
     setSelected(option);
     onSelect(option);
   };
@@ -92,22 +101,22 @@ export function SelectionDropdown({ options, onSelect }: DropdownProps) {
       {isOpen && (
         <SelectionList
           options={options}
+          selected={selected}
           onClickItem={(option) => {
             selectItem(option);
             closeList();
           }}
-          selected={selected}
         />
       )}
     </div>
   );
 }
 
-export function SearchableDropdown({ options, onSelect }: DropdownProps) {
+export function SearchableDropdown({ options, onSelect, placeholder }: SearchableDropdownProps) {
   const [query, setQuery] = useState<string>('');
-  const [filteredOptions, setFilteredOptions] = useState<DropdownOption[]>(options);
+  const [filteredOptions, setFilteredOptions] = useState<DropdownItem[]>(options);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selected, setSelected] = useState<DropdownOption | null>(null);
+  const [selected, setSelected] = useState<DropdownItem | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const toggleList = () => {
@@ -118,7 +127,7 @@ export function SearchableDropdown({ options, onSelect }: DropdownProps) {
     setIsOpen(false);
   };
 
-  const selectItem = (option: DropdownOption) => {
+  const selectItem = (option: DropdownItem) => {
     setSelected(option);
     setQuery(option.value);
     onSelect(option);
@@ -166,20 +175,21 @@ export function SearchableDropdown({ options, onSelect }: DropdownProps) {
       ) : (
         <SearchableInput
           value={query}
+          isOpen={isOpen}
+          placeholder={placeholder ?? ''}
           onClick={handleInputClick}
           onChange={handleInputChange}
           onClear={clearFilter}
-          isOpen={isOpen}
         />
       )}
       {isOpen && (
         <SelectionList
           options={filteredOptions}
+          selected={selected}
           onClickItem={(option) => {
             selectItem(option);
             closeList();
           }}
-          selected={selected}
         />
       )}
     </div>

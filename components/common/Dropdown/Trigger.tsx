@@ -1,14 +1,14 @@
 import ArrowDropDownIcon from '@/assets/icons/ArrowDropDown';
 import KebabVertIcon from '@/assets/icons/KebabVertIcon';
-import { DropdownOption } from '@/components/common/Dropdown/types';
+import { DropdownItem } from '@/components/common/Dropdown/types';
 
 interface TriggerProps {
-  onClick: () => void;
   isOpen: boolean;
+  onClick: () => void;
 }
 
 interface SelectionTriggerProps extends TriggerProps {
-  selected: DropdownOption;
+  selected: DropdownItem;
 }
 
 export function MenuTrigger({ onClick }: TriggerProps) {
@@ -22,7 +22,7 @@ export function MenuTrigger({ onClick }: TriggerProps) {
   );
 }
 
-export function SelectionTrigger({ onClick, selected, isOpen }: SelectionTriggerProps) {
+export function SelectionTrigger({ isOpen, onClick, selected }: SelectionTriggerProps) {
   return (
     <button
       className={`hover:bg-gray200 border-gray300 flex min-h-12 w-full cursor-pointer items-center justify-between rounded border bg-white px-4 py-2 ${isOpen && 'border-violet'}`}

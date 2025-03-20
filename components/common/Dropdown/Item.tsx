@@ -1,16 +1,16 @@
-import { DropdownOption } from '@/components/common/Dropdown/types';
+import { DropdownItem } from '@/components/common/Dropdown/types';
 import CheckIcon from '@/assets/icons/CheckIcon';
 
-interface ItemProps {
-  option: DropdownOption;
-  onClickItem: (option: DropdownOption) => void;
+interface OptionProps {
+  option: DropdownItem;
+  onClickItem: (option: DropdownItem) => void;
 }
 
-interface SelectionItemProps extends ItemProps {
-  selected: DropdownOption | null;
+interface SelectionOptionProps extends OptionProps {
+  selected: DropdownItem | null;
 }
 
-export function MenuItem({ option, onClickItem }: ItemProps) {
+export function MenuOption({ option, onClickItem }: OptionProps) {
   return (
     <li
       className="hover:bg-violet8 hover:text-violet flex min-h-8 cursor-pointer flex-row items-center justify-start gap-2 rounded-sm px-4 py-1"
@@ -27,7 +27,7 @@ export function MenuItem({ option, onClickItem }: ItemProps) {
   );
 }
 
-export function SelectionItem({ option, onClickItem, selected }: SelectionItemProps) {
+export function SelectionOption({ option, onClickItem, selected }: SelectionOptionProps) {
   return (
     <li
       className="hover:bg-violet8 hover:text-violet flex min-h-12 w-full cursor-pointer flex-row items-center justify-start gap-2 rounded-sm px-4 py-1"

@@ -2,18 +2,20 @@ import CloseIcon from '@/assets/icons/CloseIcon';
 
 interface SearchableInputProps {
   value: string;
+  isOpen: boolean;
+  placeholder: string;
   onClick: () => void;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onClear: () => void;
-  isOpen: boolean;
 }
 
 export function SearchableInput({
   onClick,
   value,
+  isOpen,
+  placeholder,
   onChange,
   onClear,
-  isOpen,
 }: SearchableInputProps) {
   return (
     <button
@@ -24,7 +26,7 @@ export function SearchableInput({
         value={value}
         onChange={onChange}
         onClick={onClick}
-        placeholder="이름을 입력해 주세요"
+        placeholder={placeholder}
         className="w-full border-0 outline-0"
       />
       {value !== '' && (
