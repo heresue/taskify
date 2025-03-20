@@ -29,7 +29,11 @@ export function SelectionTrigger({ onClick, selected, isOpen }: SelectionTrigger
       className={`hover:bg-gray200 border-gray300 flex min-h-12 w-full cursor-pointer items-center justify-between rounded border bg-white px-4 py-2 ${isOpen && 'border-violet'}`}
       onClick={onClick}
     >
-      {selected.renderItem ? <>{selected.renderItem()}</> : <span>{selected.value}</span>}
+      {selected.renderItem ? (
+        <>{selected.renderItem()}</>
+      ) : (
+        <span className="truncate">{selected.value}</span>
+      )}
       <ArrowDropDownIcon width="28" height="28" />
     </button>
   );

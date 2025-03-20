@@ -38,7 +38,7 @@ export function MenuDropdown({ options, onSelect }: DropdownProps) {
   }, []);
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative w-auto" ref={dropdownRef}>
       <MenuTrigger onClick={toggleList} isOpen={isOpen} />
       {isOpen && (
         <MenuList
