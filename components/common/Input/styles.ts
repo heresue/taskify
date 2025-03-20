@@ -14,9 +14,9 @@ const getBorderClasses = (disabled: boolean, isValid: boolean) => {
   }
 
   if (disabled) {
-    return `${baseClasses} border-[var(--color-gray-300)]`;
+    return `${baseClasses} border-[var(--color-gray300)]`;
   }
 
-  return `${baseClasses} border-[var(--color-gray-300)] hover:border-[var(--color-purple)] focus-within:border-[var(--color-purple)]`;
+  return `${baseClasses} border-[var(--color-gray300)] hover:border-[var(--color-purple)] focus-within:border-[var(--color-purple)]`;
 };
 export { getFontSize, getBorderClasses };
