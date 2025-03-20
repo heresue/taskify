@@ -2,7 +2,7 @@
 
 import ArrowDropDownIcon from '@/assets/icons/ArrowDropDown';
 import KebabVertIcon from '@/assets/icons/KebabVertIcon';
-import { DropdownItem } from '@/components/common/Dropdown/types';
+import { DropdownOption } from '@/components/common/Dropdown/types';
 
 interface TriggerProps {
   onClick: () => void;
@@ -10,7 +10,7 @@ interface TriggerProps {
 }
 
 interface SelectionTriggerProps extends TriggerProps {
-  selected: DropdownItem;
+  selected: DropdownOption;
 }
 
 export function MenuTrigger({ onClick }: TriggerProps) {

@@ -1,15 +1,15 @@
 'use client';
 
-import { DropdownItem } from '@/components/common/Dropdown/types';
+import { DropdownOption } from '@/components/common/Dropdown/types';
 import CheckIcon from '@/assets/icons/CheckIcon';
 
 interface ItemProps {
-  option: DropdownItem;
-  onClickItem: (option: DropdownItem) => void;
+  option: DropdownOption;
+  onClickItem: (option: DropdownOption) => void;
 }
 
 interface SelectionItemProps extends ItemProps {
-  selected: DropdownItem | null;
+  selected: DropdownOption | null;
 }
 
 export function MenuItem({ option, onClickItem }: ItemProps) {

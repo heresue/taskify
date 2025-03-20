@@ -1,13 +1,13 @@
 import { MenuItem, SelectionItem } from '@/components/common/Dropdown/Item';
-import { DropdownItem } from '@/components/common/Dropdown/types';
+import { DropdownOption } from '@/components/common/Dropdown/types';
 
 interface ListProps {
-  options: DropdownItem[];
-  onClickItem: (option: DropdownItem) => void;
+  options: DropdownOption[];
+  onClickItem: (option: DropdownOption) => void;
 }
 
 interface SelectionListProps extends ListProps {
-  selected: DropdownItem | null;
+  selected: DropdownOption | null;
 }
 
 export function MenuList({ options, onClickItem }: ListProps) {
