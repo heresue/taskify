@@ -1,7 +1,7 @@
 import React from 'react';
 import { getFontSize, getBorderClasses } from './styles';
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   isValid?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
