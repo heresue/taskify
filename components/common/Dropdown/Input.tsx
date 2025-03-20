@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import close from '@/public/close_small.svg';
 
-interface AutoCompleteInputProps {
+interface SearchableInputProps {
   value: string;
   onClick: () => void;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -9,13 +9,13 @@ interface AutoCompleteInputProps {
   isOpen: boolean;
 }
 
-export function AutoCompleteInput({
+export function SearchableInput({
   onClick,
   value,
   onChange,
   onClear,
   isOpen,
-}: AutoCompleteInputProps) {
+}: SearchableInputProps) {
   return (
     <button
       className={`border-gray300 flex min-h-12 w-full items-center justify-between rounded border bg-white px-4 py-2 ${isOpen && 'border-violet'}`}

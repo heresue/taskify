@@ -2,42 +2,34 @@
 
 import Image from 'next/image';
 import check from '@/public/check.svg';
-
-type DropdownItemId = number | string;
-
-type DropdownItem = {
-  id: DropdownItemId;
-  value: string;
-  Component?: React.ElementType;
-};
+import { DropdownItem } from '@/components/common/Dropdown/types';
 
 interface ItemProps {
   option: DropdownItem;
   onClickItem: (option: DropdownItem) => void;
 }
 
-interface VariableItemProps extends ItemProps {
+interface SelectionItemProps extends ItemProps {
   selected: DropdownItem | null;
 }
 
-export function Item({ option, onClickItem }: ItemProps) {
+export function MenuItem({ option, onClickItem }: ItemProps) {
   return (
     <li
       className="hover:bg-violet8 hover:text-violet w-full cursor-pointer rounded-sm px-4 py-1"
       onClick={() => onClickItem(option)}
     >
-      <button className="text-regular14 cursor-pointer rounded-sm">{option.value}</button>
+      <button className="text-regular14 cursor-pointer rounded-sm">
+        {option.renderItem ? <>{option.renderItem()}</> : <span>{option.value}</span>}
+      </button>
     </li>
   );
 }
-function Text({ value }: { value: string }) {
-  return <span>{value}</span>;
-}
 
-export function VariableItem({ option, onClickItem, selected }: VariableItemProps) {
+export function SelectionItem({ option, onClickItem, selected }: SelectionItemProps) {
   return (
     <li
-      className="hover:bg-violet8 hover:text-violet flex w-full cursor-pointer flex-row items-center justify-start gap-2 rounded-sm px-4 py-1"
+      className="hover:bg-violet8 hover:text-violet flex min-h-12 w-full cursor-pointer flex-row items-center justify-start gap-2 rounded-sm px-4 py-1"
       onClick={() => onClickItem(option)}
     >
       <Image
@@ -48,7 +40,7 @@ export function VariableItem({ option, onClickItem, selected }: VariableItemProp
         className={`${option.id !== selected?.id && 'invisible'}`}
       />
       <button className="text-regular14 cursor-pointer">
-        {option.Component ? <option.Component /> : <Text value={option.value} />}
+        {option.renderItem ? <>{option.renderItem()}</> : <span>{option.value}</span>}
       </button>
     </li>
   );
