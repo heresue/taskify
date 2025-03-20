@@ -1,25 +1,37 @@
 import Image from 'next/image';
-import image from '@/public/icons/image.svg';
-import b from '@/public/icons/b.svg';
 import date from '@/public/icons/date.svg';
+import UserBadge from '../userBadge/userBadge';
 
-export default function Card() {
+interface CardProps {
+  imageUrl: string;
+  title: string;
+  tags: string[];
+  dueDate: string;
+  assignee: {
+    profileImageUrl: string;
+  };
+}
+
+export default function Card({ imageUrl, title, dueDate, assignee }: CardProps) {
   return (
-    <div className="border-gray300 flex w-full items-center justify-center rounded-md border border-solid bg-white px-5 py-4">
-      <div className="flex w-full flex-col items-start justify-center max-md:flex-row max-md:gap-5 max-sm:flex-col">
-        <div className="relative h-40 w-[274px] pb-4 max-md:h-[53px] max-md:w-[90px] max-md:pb-0 max-sm:h-[152px] max-sm:w-[260px]">
-          <Image fill className="rounded-sm object-cover" src={image} alt="cardImage" />
-        </div>
+    <div className="border-gray300 max-[769px]: flex w-full items-center justify-center rounded-md border border-solid bg-white p-4 max-[769px]:px-5 max-[769px]:py-[18px] max-sm:p-3">
+      <div className="flex w-full flex-col items-start justify-center gap-4 max-[769px]:flex-row max-[769px]:gap-5 max-sm:flex-col max-sm:gap-1">
+        {imageUrl && (
+          <div className="relative h-40 w-[274px] max-[769px]:h-[53px] max-[769px]:w-[90px] max-sm:h-[152px] max-sm:w-[260px]">
+            <Image fill className="rounded-sm object-cover" src={imageUrl} alt="cardImage" />
+          </div>
+        )}
         <div className="flex w-full flex-col items-start justify-center gap-2.5">
-          <h3 className="text-medium16">새로운 일정 관리</h3>
-          <div className="flex w-full flex-col items-start justify-center gap-2.5 max-md:flex-row max-sm:flex-col">
+          <h3 className="text-medium16">{title}</h3>
+          <div className="flex w-full flex-col items-start justify-center gap-2.5 max-[769px]:flex-row max-sm:flex-col">
+            {/* 추후 tags 컴포넌트로 만들고 추가하겠습니다! */}
             <div className="bg-violet h-7 w-[147px]" />
             <div className="flex w-full items-center justify-between">
-              <div className="flex items-center justify-center gap-1.5">
+              <div className="flex items-center justify-center gap-1.5 border-gray-300">
                 <Image src={date} width={18} height={18} alt="date" />
-                <p className="text-gray500 text-medium12">2025.01.01</p>
+                <p className="text-gray500 text-medium12">{dueDate}</p>
               </div>
-              <Image src={b} width={24} height={24} alt="profile" />
+              <UserBadge size={24} profile={assignee.profileImageUrl} />
             </div>
           </div>
         </div>
