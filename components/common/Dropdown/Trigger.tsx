@@ -11,10 +11,10 @@ interface SelectionTriggerProps extends TriggerProps {
   selected: DropdownItem;
 }
 
-export function MenuTrigger({ onClick }: TriggerProps) {
+export function MenuTrigger({ onClick, isOpen }: TriggerProps) {
   return (
     <button
-      className="hover:bg-gray200 size-5 cursor-pointer rounded-sm lg:size-7"
+      className={`hover:bg-gray200 size-5 cursor-pointer rounded-sm lg:size-7 ${isOpen && 'bg-gray200'}`}
       onClick={onClick}
     >
       <KebabVertIcon width="28" height="28" />
