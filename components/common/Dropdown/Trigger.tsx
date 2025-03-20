@@ -1,5 +1,3 @@
-'use client';
-
 import ArrowDropDownIcon from '@/assets/icons/ArrowDropDown';
 import KebabVertIcon from '@/assets/icons/KebabVertIcon';
 import { DropdownOption } from '@/components/common/Dropdown/types';

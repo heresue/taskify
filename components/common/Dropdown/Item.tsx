@@ -1,5 +1,3 @@
-'use client';
-
 import { DropdownOption } from '@/components/common/Dropdown/types';
 import CheckIcon from '@/assets/icons/CheckIcon';
 
