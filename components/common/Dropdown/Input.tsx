@@ -1,5 +1,4 @@
-import Image from 'next/image';
-import close from '@/public/close_small.svg';
+import { CloseIcon } from '@/components/common/Dropdown/icons';
 
 interface SearchableInputProps {
   value: string;
@@ -29,14 +28,9 @@ export function SearchableInput({
         className="w-full border-0 outline-0"
       />
       {value !== '' && (
-        <Image
-          className="hover:bg-gray200 rounded-sm"
-          src={close}
-          width={24}
-          height={24}
-          alt="메뉴 열기"
-          onClick={onClear}
-        />
+        <div className="hover:bg-gray200 rounded-sm" onClick={onClear}>
+          <CloseIcon width="24" height="24" />
+        </div>
       )}
     </button>
   );

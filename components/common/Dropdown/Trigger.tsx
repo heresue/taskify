@@ -1,8 +1,6 @@
 'use client';
 
-import Image from 'next/image';
-import arrow_drop_down from '@/public/arrow_drop_down.svg';
-import kebab_more_vert from '@/public/kebab_more_vert.svg';
+import { ArrowDropDownIcon, KebabVertIcon } from '@/components/common/Dropdown/icons';
 import { DropdownItem } from '@/components/common/Dropdown/types';
 
 interface TriggerProps {
@@ -20,7 +18,7 @@ export function MenuTrigger({ onClick }: TriggerProps) {
       className="hover:bg-gray200 size-5 cursor-pointer rounded-sm lg:size-7"
       onClick={onClick}
     >
-      <Image src={kebab_more_vert} width={28} height={28} alt="메뉴 열기" />
+      <KebabVertIcon width="28" height="28" />
     </button>
   );
 }
@@ -32,7 +30,7 @@ export function SelectionTrigger({ onClick, selected, isOpen }: SelectionTrigger
       onClick={onClick}
     >
       {selected.renderItem ? <>{selected.renderItem()}</> : <span>{selected.value}</span>}
-      <Image className="size-6.5" src={arrow_drop_down} width={26} height={26} alt="메뉴 열기" />
+      <ArrowDropDownIcon width="28" height="28" />
     </button>
   );
 }

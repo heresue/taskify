@@ -1,8 +1,7 @@
 'use client';
 
-import Image from 'next/image';
-import check from '@/public/check.svg';
 import { DropdownItem } from '@/components/common/Dropdown/types';
+import { CheckIcon } from '@/components/common/Dropdown/icons';
 
 interface ItemProps {
   option: DropdownItem;
@@ -32,13 +31,9 @@ export function SelectionItem({ option, onClickItem, selected }: SelectionItemPr
       className="hover:bg-violet8 hover:text-violet flex min-h-12 w-full cursor-pointer flex-row items-center justify-start gap-2 rounded-sm px-4 py-1"
       onClick={() => onClickItem(option)}
     >
-      <Image
-        src={check}
-        width={22}
-        height={22}
-        alt="선택됨"
-        className={`${option.id !== selected?.id && 'invisible'}`}
-      />
+      <div className={`${option.id !== selected?.id && 'invisible'}`}>
+        <CheckIcon width="22" height="22" />
+      </div>
       <button className="text-regular14 cursor-pointer">
         {option.renderItem ? <>{option.renderItem()}</> : <span>{option.value}</span>}
       </button>
