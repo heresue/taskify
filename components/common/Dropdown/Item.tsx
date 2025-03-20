@@ -1,7 +1,7 @@
 'use client';
 
 import { DropdownItem } from '@/components/common/Dropdown/types';
-import { CheckIcon } from '@/components/common/Dropdown/icons';
+import CheckIcon from '@/assets/icons/CheckIcon';
 
 interface ItemProps {
   option: DropdownItem;

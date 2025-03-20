@@ -1,4 +1,4 @@
-import { CloseIcon } from '@/components/common/Dropdown/icons';
+import CloseIcon from '@/assets/icons/CloseIcon';
 
 interface SearchableInputProps {
   value: string;

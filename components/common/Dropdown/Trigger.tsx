@@ -1,6 +1,7 @@
 'use client';
 
-import { ArrowDropDownIcon, KebabVertIcon } from '@/components/common/Dropdown/icons';
+import ArrowDropDownIcon from '@/assets/icons/ArrowDropDown';
+import KebabVertIcon from '@/assets/icons/KebabVertIcon';
 import { DropdownItem } from '@/components/common/Dropdown/types';
 
 interface TriggerProps {
