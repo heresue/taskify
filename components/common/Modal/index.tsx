@@ -1,8 +1,6 @@
 import clsx from 'clsx';
 import { createPortal } from 'react-dom';
-
-type PaddingSize = '64/40' | '24/24' | '32/32' | '32/24';
-type RadiusSize = '16' | '8';
+import { borderRadiusCSS, paddingCSS, PaddingSize, RadiusSize } from './style';
 
 interface ModalProps {
   isOpen: boolean;
@@ -26,18 +24,6 @@ export default function Modal({
   borderRadius,
 }: ModalProps) {
   if (!isOpen) return null;
-
-  const paddingCSS: Record<PaddingSize, string> = {
-    '64/40': 'px-16 py-10 max-sm:px-10 max-sm:py-8',
-    '32/32': 'p-8 max-sm:px-4 max-sm:py-6',
-    '32/24': 'px-8 py-6 max-sm:p-4',
-    '24/24': 'p-6 max-sm:px-4 max-sm:py-6',
-  };
-
-  const borderRadiusCSS: Record<RadiusSize, string> = {
-    '16': 'rounded-2xl',
-    '8': 'rounded-lg',
-  };
 
   const handleConfirmClick = () => {
     if (confirmFunction) {
