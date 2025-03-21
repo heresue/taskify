@@ -8,8 +8,15 @@ import Modal from '../common/Modal';
 import useSignupForm from './useSignupForm';
 
 export default function SignupForm() {
-  const { formData, handleFormChange, handleIsChecked, state, formAction, isPending } =
-    useSignupForm();
+  const {
+    formData,
+    handleFormChange,
+    handleIsChecked,
+    handlePreventSpace,
+    state,
+    formAction,
+    isPending,
+  } = useSignupForm();
 
   const INPUT = [
     {
@@ -69,6 +76,7 @@ export default function SignupForm() {
           label={input.label}
           placeholder={input.placeholder}
           onChange={handleFormChange}
+          onKeyDown={handlePreventSpace}
           isValid={state?.field !== input.name}
           errorMessage={state?.field === input.name ? state.err : ''}
           fieldType="input"

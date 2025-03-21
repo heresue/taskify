@@ -45,5 +45,19 @@ export default function useSignupForm() {
     }));
   };
 
-  return { formData, handleFormChange, handleIsChecked, state, formAction, isPending };
+  const handlePreventSpace = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === ' ') {
+      e.preventDefault();
+    }
+  };
+
+  return {
+    formData,
+    handleFormChange,
+    handleIsChecked,
+    handlePreventSpace,
+    state,
+    formAction,
+    isPending,
+  };
 }
