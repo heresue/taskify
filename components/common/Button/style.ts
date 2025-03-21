@@ -2,9 +2,9 @@ const sizes = {
   button:
     'w-[109px] h-[32px] text-medium12 md:w-[72px] md:h-[30px] md:text-medium14 lg:w-[84px] lg:h-[32px] rounded-sm',
 
-  auth: 'w-full h-[50px] text-medium18 rounded-lg',
-  modal: 'w-full h-[54px] text-semi16 rounded-lg',
-  modalAlert: 'w-full h-[42px] text-semi14 md:h-[48px] md:text-semi16 rounded-lg',
+  auth: 'h-[50px] text-medium18 rounded-lg',
+  modal: 'h-[54px] text-semi16 rounded-lg',
+  modalAlert: 'h-[42px] text-semi14 md:h-[48px] md:text-semi16 rounded-lg',
   delete: 'w-[52px] h-[32px] text-medium12 md:w-[84px] md:text-medium14 rounded-sm',
   comment: 'w-[84px] h-[28px] text-medium12 md:w-[77px] md:h-[32px] lg:w-[83px] rounded-sm',
   addTodo: 'w-[284px] h-[32px] md:w-[544px] md:h-[40px] lg:w-[314px] rounded-md',
