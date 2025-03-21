@@ -26,7 +26,7 @@ export function createApi(
       data?: unknown;
       next?: NextFetchRequestConfig;
     } = {}
-  ): Promise<T | NextResponse> {
+  ): Promise<T> {
     const { data, next, headers, ...restOptions } = options;
     const accessToken = await getAccessToken();
 
@@ -55,16 +55,16 @@ export function createApi(
 
     if (response.status === 401) {
       if (typeof window === 'undefined') {
-        return NextResponse.redirect(new URL('/login', response.url));
+        throw NextResponse.redirect(new URL('/login', response.url));
       } else {
         redirect('/login');
-        return {} as T;
       }
     }
 
     const contentType = response.headers.get('content-type');
     if (contentType && contentType.includes('application/json')) {
-      return response.json() as Promise<T>;
+      const json = await response.json();
+      return json as T;
     }
 
     return {} as T;
@@ -74,7 +74,7 @@ export function createApi(
     get<T>(
       url: string,
       options: Omit<RequestInit, 'method'> & { next?: NextFetchRequestConfig } = {}
-    ): Promise<T | NextResponse> {
+    ): Promise<T> {
       return fetcher<T>(url, { ...options, method: 'GET' });
     },
 
@@ -82,7 +82,7 @@ export function createApi(
       url: string,
       data?: unknown,
       options: Omit<RequestInit, 'method' | 'body'> & { next?: NextFetchRequestConfig } = {}
-    ): Promise<T | NextResponse> {
+    ): Promise<T> {
       return fetcher<T>(url, { ...options, method: 'POST', data });
     },
 
@@ -90,14 +90,14 @@ export function createApi(
       url: string,
       data?: unknown,
       options: Omit<RequestInit, 'method' | 'body'> & { next?: NextFetchRequestConfig } = {}
-    ): Promise<T | NextResponse> {
+    ): Promise<T> {
       return fetcher<T>(url, { ...options, method: 'PUT', data });
     },
 
     delete<T>(
       url: string,
       options: Omit<RequestInit, 'method'> & { next?: NextFetchRequestConfig } = {}
-    ): Promise<T | NextResponse> {
+    ): Promise<T> {
       return fetcher<T>(url, { ...options, method: 'DELETE' });
     },
   };
