@@ -1,6 +1,14 @@
 import React from 'react';
 import { getFontSize, getBorderClasses } from '@/components/common/Input/styles';
 
+export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  size?: number;
+  rows?: number;
+  disabled?: boolean;
+  isValid?: boolean;
+  customBorderClass?: string;
+  customTextareaClass?: string;
+}
 const Textarea = ({
   size = 16,
   rows = 4,
@@ -9,14 +17,7 @@ const Textarea = ({
   customBorderClass = '',
   customTextareaClass = '',
   ...props
-}: React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
-  size?: number;
-  rows?: number;
-  disabled?: boolean;
-  isValid?: boolean;
-  customBorderClass?: string;
-  customTextareaClass?: string;
-}) => {
+}: TextareaProps) => {
   return (
     <div
       className={`${getBorderClasses(disabled, isValid)} rounded-lg border px-4 py-3 ${customBorderClass}`}
