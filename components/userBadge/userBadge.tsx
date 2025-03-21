@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import user from '@/public/icons/user.svg';
 import clsx from 'clsx';
+import UserIcon from '@/assets/icons/UserIcon';
 
 type FontSize = 'M16' | 'R14' | 'R16';
 
@@ -29,12 +29,17 @@ export default function UserBadge({
 
   return (
     <div className="flex items-center justify-center" style={{ gap: `${gap}px` }}>
-      <Image
-        src={profile && profile.trim() !== '' ? profile : user}
-        width={size}
-        height={size}
-        alt="user"
-      />
+      {profile ? (
+        <Image
+          src={profile}
+          width={size}
+          height={size}
+          alt="user"
+          className="border-[1px] border-solid border-white"
+        />
+      ) : (
+        <UserIcon width={size} height={size} />
+      )}
       {userName && (
         <span className={clsx(fontSize && fontSizeCSS[fontSize], responsive && 'max-sm:hidden')}>
           {userName}
