@@ -2,9 +2,9 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { MenuTrigger, SelectionTrigger } from '@/components/common/Dropdown/Trigger';
-import { MenuList, SearchableList, SelectionList } from '@/components/common/Dropdown/List';
-import { SearchableInput } from '@/components/common/Dropdown/Input';
+import { MenuList, SelectionList, SearchableList } from '@/components/common/Dropdown/List';
 import { DropdownItem, SearchableDropdownItem } from '@/components/common/Dropdown/types';
+import { SearchableInput } from '@/components/common/Dropdown/Input';
 
 export interface DropdownProps {
   options: DropdownItem[];

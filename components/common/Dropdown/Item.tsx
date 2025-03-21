@@ -1,5 +1,5 @@
-import { DropdownItem, SearchableDropdownItem } from '@/components/common/Dropdown/types';
 import CheckIcon from '@/assets/icons/CheckIcon';
+import { DropdownItem, SearchableDropdownItem } from '@/components/common/Dropdown/types';
 
 interface OptionProps {
   option: DropdownItem;
