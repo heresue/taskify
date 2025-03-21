@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import Date from '@/public/icons/date.svg';
-import UserBadge from '../UserBadge/UserBadge';
+import DateIcon from '@/public/icons/date.svg';
+import UserBadge from '../userBadge/UserBadge';
 
 interface CardProps {
   imageUrl: string;
@@ -28,7 +28,7 @@ export default function Card({ imageUrl, title, dueDate, assignee }: CardProps) 
             <div className="bg-violet h-7 w-[147px]" />
             <div className="flex w-full items-center justify-between">
               <div className="flex items-center justify-center gap-1.5 border-gray-300">
-                <Date width={18} height={18} alt="date" />
+                <DateIcon width={18} height={18} alt="date" />
                 <p className="text-gray500 text-medium12">{dueDate}</p>
               </div>
               <UserBadge size={24} profile={assignee.profileImageUrl} />
