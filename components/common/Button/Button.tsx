@@ -18,7 +18,7 @@ const sizeClasses = {
   modal: 'w-full h-[54px] text-semi16 rounded-lg',
   modalAlert: 'w-full h-[42px] text-semi14 md:h-[48px] md:text-semi16 rounded-lg',
   delete: 'w-[52px] h-[32px] text-medium12 md:w-[84px] md:text-medium14 rounded-sm',
-  input: 'w-[84px] h-[28px] text-medium12 md:w-[77px] md:h-[32px] lg:w-[83px] rounded-sm',
+  comment: 'w-[84px] h-[28px] text-medium12 md:w-[77px] md:h-[32px] lg:w-[83px] rounded-sm',
   addTodo: 'w-[284px] h-[32px] md:w-[544px] md:h-[40px] lg:w-[314px] rounded-md',
   addColumn: 'w-[284px] h-[66px] text-bold18 md:w-[544px] md:h-[70px] lg:w-[354px] rounded-lg',
   dashboardCard:
