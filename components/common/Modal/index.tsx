@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { createPortal } from 'react-dom';
 import { borderRadiusCSS, paddingCSS, PaddingSize, RadiusSize } from './style';
+import Button from '../Button';
 
 interface ModalProps {
   isOpen: boolean;
@@ -51,20 +52,14 @@ export default function Modal({
           }`}
         >
           {cancelMessage && (
-            <button
-              onClick={onClose}
-              className="border-gray300 flex-1 rounded-lg border border-solid px-[46px] py-[14px]"
-            >
+            <Button variant="outline" size="modalAlert" onClick={onClose} fullWidth>
               {cancelMessage}
-            </button>
+            </Button>
           )}
           {confirmMessage && (
-            <button
-              onClick={handleConfirmClick}
-              className="bg-violet flex-1 rounded-lg px-[46px] py-[14px] text-white"
-            >
+            <Button size="modalAlert" onClick={handleConfirmClick} fullWidth>
               {confirmMessage}
-            </button>
+            </Button>
           )}
         </div>
       </div>
