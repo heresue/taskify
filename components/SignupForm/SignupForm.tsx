@@ -57,7 +57,7 @@ export default function SignupForm() {
     !formData.isChecked;
 
   return (
-    <form action={formAction} className="flex flex-col gap-3">
+    <form action={formAction} className="flex flex-col gap-6">
       <Modal
         isOpen={(state && state.status) || false}
         padding="64/40"
@@ -67,22 +67,24 @@ export default function SignupForm() {
       >
         가입이 완료되었습니다!
       </Modal>
-      {INPUT.map((input) => (
-        <FormField
-          key={input.label}
-          name={input.name}
-          type={input.type}
-          value={input.value}
-          label={input.label}
-          placeholder={input.placeholder}
-          onChange={handleFormChange}
-          onKeyDown={handlePreventSpace}
-          isValid={state?.field !== input.name}
-          errorMessage={state?.field === input.name ? state.err : ''}
-          fieldType="input"
-        />
-      ))}
-      <CheckBox isChecked={formData.isChecked} handleIsChecked={handleIsChecked} />
+      <div className="flex flex-col gap-4">
+        {INPUT.map((input) => (
+          <FormField
+            key={input.label}
+            name={input.name}
+            type={input.type}
+            value={input.value}
+            label={input.label}
+            placeholder={input.placeholder}
+            onChange={handleFormChange}
+            onKeyDown={handlePreventSpace}
+            isValid={state?.field !== input.name}
+            errorMessage={state?.field === input.name ? state.err : ''}
+            fieldType="input"
+          />
+        ))}
+        <CheckBox isChecked={formData.isChecked} handleIsChecked={handleIsChecked} />
+      </div>
       <Button disabled={isPending || isNotFormEmpty} type="submit" fullWidth size="auth">
         {isPending ? '...' : '가입하기'}
       </Button>
