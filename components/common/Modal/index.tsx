@@ -7,8 +7,8 @@ interface ModalProps {
   isOpen: boolean;
   children: React.ReactNode;
   onClose: () => void;
-  confirmFunction?: () => void;
-  confirmMessage?: string;
+  onSubmit?: () => void;
+  submitMessage?: string;
   cancelMessage?: string;
   padding: PaddingSize;
   borderRadius: RadiusSize;
@@ -18,17 +18,17 @@ export default function Modal({
   isOpen,
   children,
   onClose,
-  confirmFunction,
-  confirmMessage,
+  onSubmit,
+  submitMessage,
   cancelMessage,
   padding,
   borderRadius,
 }: ModalProps) {
   if (!isOpen) return null;
 
-  const handleConfirmClick = () => {
-    if (confirmFunction) {
-      confirmFunction();
+  const handleSubmitClick = () => {
+    if (onSubmit) {
+      onSubmit();
     }
     onClose();
   };
@@ -46,7 +46,7 @@ export default function Modal({
         {children}
         <div
           className={`flex gap-[7px] ${
-            cancelMessage && confirmMessage
+            cancelMessage && submitMessage
               ? 'w-[520px] min-w-[295px] max-sm:w-[83.9vw]'
               : 'w-60 min-w-48 max-sm:w-[45.1vw]'
           }`}
@@ -56,9 +56,9 @@ export default function Modal({
               {cancelMessage}
             </Button>
           )}
-          {confirmMessage && (
-            <Button size="modalAlert" onClick={handleConfirmClick} fullWidth>
-              {confirmMessage}
+          {submitMessage && (
+            <Button size="modalAlert" onClick={handleSubmitClick} fullWidth>
+              {submitMessage}
             </Button>
           )}
         </div>
