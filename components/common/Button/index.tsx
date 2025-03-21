@@ -1,15 +1,10 @@
 import clsx from 'clsx';
 import { sizes, variants } from './style';
 
-interface ButtonProps {
-  children?: React.ReactNode;
-  onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: keyof typeof variants;
   size?: keyof typeof sizes | string;
   fullWidth?: boolean;
-  className?: string;
-  disabled?: boolean;
 }
 
 export default function Button({
@@ -21,6 +16,7 @@ export default function Button({
   fullWidth,
   className,
   disabled = false,
+  ...props
 }: ButtonProps) {
   const selectedSize = sizes[size as keyof typeof sizes] ?? size;
 
@@ -37,6 +33,7 @@ export default function Button({
         disabled && 'cursor-not-allowed',
         className
       )}
+      {...props}
     >
       <div className="overflow-hidden text-ellipsis whitespace-nowrap">{children}</div>
     </button>
