@@ -27,7 +27,7 @@ export default function Card({ imageUrl, title, dueDate, assignee }: CardProps) 
             {/* 추후 tags 컴포넌트로 만들고 추가하겠습니다! */}
             <div className="bg-violet h-7 w-[147px]" />
             <div className="flex w-full items-center justify-between">
-              <div className="flex items-center justify-center gap-1.5 border-gray-300">
+              <div className="border-gray300 flex items-center justify-center gap-1.5">
                 <DateIcon width={18} height={18} alt="date" />
                 <p className="text-gray500 text-medium12">{dueDate}</p>
               </div>
