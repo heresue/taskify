@@ -19,6 +19,10 @@ const INITIAL = {
 
 export default function useSignupForm() {
   const [formData, setFormData] = useState<SignupType>(INITIAL);
+  const [isPasswordVisible, setIsPasswordVisible] = useState<Record<string, boolean>>({
+    password: false,
+    checkPassword: false,
+  });
   const [state, formAction, isPending] = useActionState(signupAction, null);
 
   useEffect(() => {
@@ -51,11 +55,20 @@ export default function useSignupForm() {
     }
   };
 
+  const toggleVisiblePassword = (name: string) => {
+    setIsPasswordVisible((prev) => ({
+      ...prev,
+      [name]: !prev[name],
+    }));
+  };
+
   return {
     formData,
     handleFormChange,
     handleIsChecked,
     handlePreventSpace,
+    isPasswordVisible,
+    toggleVisiblePassword,
     state,
     formAction,
     isPending,

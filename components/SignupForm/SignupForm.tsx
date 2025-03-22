@@ -6,6 +6,8 @@ import FormField from '../compound/form/FormField';
 import Button from '../common/Button';
 import Modal from '../common/Modal';
 import useSignupForm from './useSignupForm';
+import Open from '@/public/icons/openEye.svg';
+import Close from '@/public/icons/closeEye.svg';
 
 export default function SignupForm() {
   const {
@@ -13,6 +15,8 @@ export default function SignupForm() {
     handleFormChange,
     handleIsChecked,
     handlePreventSpace,
+    isPasswordVisible,
+    toggleVisiblePassword,
     state,
     formAction,
     isPending,
@@ -36,16 +40,18 @@ export default function SignupForm() {
     {
       label: '비밀번호',
       name: 'password',
-      type: 'password',
+      type: isPasswordVisible.password ? 'text' : 'password',
       placeholder: '8자 이상 입력해 주세요',
       value: formData.password,
+      isPassword: true,
     },
     {
       label: '비밀번호 확인',
       name: 'checkPassword',
-      type: 'password',
+      type: isPasswordVisible.checkPassword ? 'text' : 'password',
       placeholder: '비밀번호를 한번 더 입력해 주세요',
       value: formData.checkPassword,
+      isPassword: true,
     },
   ];
 
@@ -69,19 +75,32 @@ export default function SignupForm() {
       </Modal>
       <div className="flex flex-col gap-4">
         {INPUT.map((input) => (
-          <FormField
-            key={input.label}
-            name={input.name}
-            type={input.type}
-            value={input.value}
-            label={input.label}
-            placeholder={input.placeholder}
-            onChange={handleFormChange}
-            onKeyDown={handlePreventSpace}
-            isValid={state?.field !== input.name}
-            errorMessage={state?.field === input.name ? state.err : ''}
-            fieldType="input"
-          />
+          <div key={input.label} className="relative">
+            <FormField
+              name={input.name}
+              type={input.type}
+              value={input.value}
+              label={input.label}
+              placeholder={input.placeholder}
+              onChange={handleFormChange}
+              onKeyDown={handlePreventSpace}
+              isValid={state?.field !== input.name}
+              errorMessage={state?.field === input.name ? state.err : ''}
+              fieldType="input"
+            />
+            {input.isPassword &&
+              (isPasswordVisible[input.name] ? (
+                <Open
+                  onClick={() => toggleVisiblePassword(input.name)}
+                  className="absolute top-[70%] right-4 -translate-y-1/2 cursor-pointer"
+                />
+              ) : (
+                <Close
+                  onClick={() => toggleVisiblePassword(input.name)}
+                  className="absolute top-[70%] right-4 -translate-y-1/2 cursor-pointer"
+                />
+              ))}
+          </div>
         ))}
         <CheckBox isChecked={formData.isChecked} handleIsChecked={handleIsChecked} />
       </div>
