@@ -17,6 +17,7 @@ export default function SignupForm() {
     handlePreventSpace,
     isPasswordVisible,
     toggleVisiblePassword,
+    isNotFormEmpty,
     state,
     formAction,
     isPending,
@@ -54,13 +55,6 @@ export default function SignupForm() {
       isPassword: true,
     },
   ];
-
-  const isNotFormEmpty =
-    !formData.email ||
-    !formData.nickname ||
-    !formData.password ||
-    !formData.checkPassword ||
-    !formData.isChecked;
 
   return (
     <form action={formAction} className="flex flex-col gap-6">
