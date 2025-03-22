@@ -2,16 +2,18 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { MenuTrigger, SelectionTrigger } from '@/components/common/Dropdown/Trigger';
-import { MenuList, SelectionList } from '@/components/common/Dropdown/List';
+import { MenuList, SelectionList, SearchableList } from '@/components/common/Dropdown/List';
+import { DropdownItem, SearchableDropdownItem } from '@/components/common/Dropdown/types';
 import { SearchableInput } from '@/components/common/Dropdown/Input';
-import { DropdownItem } from '@/components/common/Dropdown/types';
 
 export interface DropdownProps {
   options: DropdownItem[];
   onSelect: (option: DropdownItem) => void;
 }
 
-export interface SearchableDropdownProps extends DropdownProps {
+export interface SearchableDropdownProps {
+  options: SearchableDropdownItem[];
+  onSelect: (option: SearchableDropdownItem) => void;
   placeholder?: string;
 }
 
@@ -47,7 +49,7 @@ export function MenuDropdown({ options, onSelect }: DropdownProps) {
   }, []);
 
   return (
-    <div className="relative w-auto" ref={dropdownRef}>
+    <div className="relative w-fit" ref={dropdownRef}>
       <MenuTrigger onClick={toggleList} isOpen={isOpen} />
       {isOpen && (
         <MenuList
@@ -114,9 +116,9 @@ export function SelectionDropdown({ options, onSelect }: DropdownProps) {
 
 export function SearchableDropdown({ options, onSelect, placeholder }: SearchableDropdownProps) {
   const [query, setQuery] = useState<string>('');
-  const [filteredOptions, setFilteredOptions] = useState<DropdownItem[]>(options);
+  const [filteredOptions, setFilteredOptions] = useState<SearchableDropdownItem[]>(options);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selected, setSelected] = useState<DropdownItem | null>(null);
+  const [selected, setSelected] = useState<SearchableDropdownItem | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const toggleList = () => {
@@ -127,7 +129,7 @@ export function SearchableDropdown({ options, onSelect, placeholder }: Searchabl
     setIsOpen(false);
   };
 
-  const selectItem = (option: DropdownItem) => {
+  const selectItem = (option: SearchableDropdownItem) => {
     setSelected(option);
     setQuery(option.value);
     onSelect(option);
@@ -183,7 +185,7 @@ export function SearchableDropdown({ options, onSelect, placeholder }: Searchabl
         />
       )}
       {isOpen && (
-        <SelectionList
+        <SearchableList
           options={filteredOptions}
           selected={selected}
           onClickItem={(option) => {
