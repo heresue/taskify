@@ -57,7 +57,7 @@ export default function SignupForm() {
   ];
 
   return (
-    <form action={formAction} className="flex flex-col gap-6">
+    <form action={formAction} className="flex w-full flex-col gap-6">
       <Modal
         isOpen={(state && state.status) || false}
         padding="64/40"
