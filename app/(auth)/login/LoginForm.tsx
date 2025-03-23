@@ -1,7 +1,13 @@
 'use client';
 
+/* 역할
+validation UI 관리
+Modal UI 관리
+*/
 import FormField from '@/components/compound/form/FormField';
 import Button from '@/components/common/Button';
+import { useActionState } from 'react';
+import { Login } from './Login';
 import { useState, useEffect } from 'react';
 
 const Email_Regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -34,13 +40,16 @@ export default function LoginForm() {
     setCanSubmit(isEmailValid && isPasswordValid);
   }, [isEmailValid, isPasswordValid]);
 
+  const [state, action, pending] = useActionState(Login, null);
+
   return (
-    <form action="" className="flex w-full flex-col gap-4 lg:gap-6">
+    <form action={action} className="flex w-full flex-col gap-4 lg:gap-6">
       <div className="flex flex-col gap-2 lg:gap-4">
         <FormField
+          id="email"
+          name="email"
           fieldType="input"
           label="이메일"
-          id="email"
           type="email"
           errorMessage="이메일 형식으로 작성해 주세요."
           value={email}
@@ -49,9 +58,10 @@ export default function LoginForm() {
           isValid={isEmailValid}
         />
         <FormField
+          id="password"
+          name="password"
           fieldType="input"
           label="비밀번호"
-          id="password"
           type="password"
           errorMessage="8자 이상 작성해 주세요."
           value={password}
