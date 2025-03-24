@@ -2,22 +2,29 @@ import Link from 'next/link';
 import Image from 'next/image';
 import IndexIcon from './IndexIcon';
 import clsx from 'clsx';
+import { DashboardList } from '@/utils/getDashboardList';
 
-interface DashboardListItemProps {
+interface DashboardListItemProps extends DashboardList {
+  id: number;
   title: string;
+  color: string;
+  createdAt: string;
+  updatedAt: string;
+  createdByMe: boolean;
+  userId: number;
   isSelected?: boolean;
-  createdByMe?: boolean;
 }
 
 export default function DashboardListItem({
   title,
-  isSelected = false,
-  createdByMe = false,
+  color,
+  createdByMe,
+  isSelected,
 }: DashboardListItemProps) {
   return (
     <li className={clsx('rounded-sm', isSelected && 'bg-violet8')}>
       <Link href="/" className="flex h-[42px] items-center gap-4 px-3 py-2">
-        <IndexIcon />
+        <IndexIcon color={color} />
         <div className="flex min-w-0 items-center gap-[6px]">
           <span
             className={clsx(
