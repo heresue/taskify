@@ -17,9 +17,9 @@ export default function SignupForm() {
     handlePreventSpace,
     isPasswordVisible,
     toggleVisiblePassword,
-    isNotFormEmpty,
+    isFormIncomplete,
+    handleFormSubmit,
     state,
-    formAction,
     isPending,
   } = useSignupForm();
 
@@ -57,7 +57,7 @@ export default function SignupForm() {
   ];
 
   return (
-    <form action={formAction} className="flex w-full flex-col gap-6">
+    <form onSubmit={handleFormSubmit} className="flex w-full flex-col gap-6">
       <Modal
         isOpen={(state && state.status) || false}
         padding="64/40"
@@ -98,7 +98,7 @@ export default function SignupForm() {
         ))}
         <CheckBox isChecked={formData.isChecked} handleIsChecked={handleIsChecked} />
       </div>
-      <Button disabled={isPending || isNotFormEmpty} type="submit" fullWidth size="auth">
+      <Button disabled={isPending || isFormIncomplete} type="submit" fullWidth size="auth">
         {isPending ? '...' : '가입하기'}
       </Button>
     </form>

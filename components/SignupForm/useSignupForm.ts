@@ -1,4 +1,4 @@
-import { useEffect, useState, useActionState } from 'react';
+import { useState, useActionState, startTransition } from 'react';
 import signupAction from './action';
 
 interface SignupType {
@@ -24,15 +24,6 @@ export default function useSignupForm() {
     checkPassword: false,
   });
   const [state, formAction, isPending] = useActionState(signupAction, null);
-
-  useEffect(() => {
-    if (state?.status === false) {
-      setFormData((prev) => ({
-        ...prev,
-        isChecked: prev.isChecked,
-      }));
-    }
-  }, [state?.status]);
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -62,12 +53,26 @@ export default function useSignupForm() {
     }));
   };
 
-  const isNotFormEmpty =
+  const isFormIncomplete =
     !formData.email ||
     !formData.nickname ||
     !formData.password ||
     !formData.checkPassword ||
     !formData.isChecked;
+
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const fd = new FormData();
+    fd.append('email', formData.email);
+    fd.append('nickname', formData.nickname);
+    fd.append('password', formData.password);
+    fd.append('checkPassword', formData.checkPassword);
+
+    startTransition(() => {
+      formAction(fd);
+    });
+  };
 
   return {
     formData,
@@ -76,9 +81,9 @@ export default function useSignupForm() {
     handlePreventSpace,
     isPasswordVisible,
     toggleVisiblePassword,
-    isNotFormEmpty,
+    isFormIncomplete,
+    handleFormSubmit,
     state,
-    formAction,
     isPending,
   };
 }
