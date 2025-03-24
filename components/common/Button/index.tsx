@@ -26,11 +26,10 @@ export default function Button({
       onClick={onClick}
       disabled={disabled}
       className={clsx(
-        'flex cursor-pointer items-center justify-center overflow-hidden p-2 font-medium',
+        'flex items-center justify-center overflow-hidden p-2 font-medium',
         selectedSize,
         variants[variant],
         fullWidth && 'w-full',
-        disabled && 'cursor-not-allowed',
         className
       )}
       {...props}
