@@ -33,12 +33,15 @@ export default function Modal({
     onClose();
   };
 
+  const twoButton = cancelMessage && submitMessage;
+
   return createPortal(
     <>
       <div className="fixed top-0 left-0 z-[999] h-full w-full bg-black opacity-70" />
       <div
         className={clsx(
-          'fixed top-1/2 left-1/2 z-[999] flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-5 bg-white',
+          'fixed top-1/2 left-1/2 z-[999] flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center bg-white',
+          cancelMessage || submitMessage ? 'gap-5' : 'gap-0',
           paddingCSS[padding],
           borderRadiusCSS[borderRadius]
         )}
@@ -46,18 +49,23 @@ export default function Modal({
         {children}
         <div
           className={`flex gap-[7px] ${
-            cancelMessage && submitMessage
-              ? 'w-[520px] min-w-[295px] max-sm:w-[83.9vw]'
-              : 'w-60 min-w-48 max-sm:w-[45.1vw]'
+            twoButton
+              ? 'w-[80vw] max-w-[520px] min-w-[295px] md:w-[520px]'
+              : 'w-[38vw] max-w-[240px] min-w-[192px] md:w-[240px]'
           }`}
         >
           {cancelMessage && (
-            <Button variant="outline" size="modalAlert" onClick={onClose} fullWidth>
+            <Button
+              variant="outline"
+              size={twoButton ? 'modal' : 'modalAlert'}
+              onClick={onClose}
+              fullWidth
+            >
               {cancelMessage}
             </Button>
           )}
           {submitMessage && (
-            <Button size="modalAlert" onClick={handleSubmitClick} fullWidth>
+            <Button size={twoButton ? 'modal' : 'modalAlert'} onClick={handleSubmitClick} fullWidth>
               {submitMessage}
             </Button>
           )}
