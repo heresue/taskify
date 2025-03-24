@@ -10,7 +10,7 @@ export default function HeaderGuest() {
       <Link href="/" className="block md:hidden">
         <Logo color="white" size="sm" />
       </Link>
-      <div className="text-regular14 flex gap-6 text-white md:gap-9 md:text-base md:font-normal">
+      <div className="text-regular14 md:text-regular16 flex gap-6 text-white md:gap-9">
         <Link href="/login">로그인</Link>
         <Link href="/signup">회원가입</Link>
       </div>
