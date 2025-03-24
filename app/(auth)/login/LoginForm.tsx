@@ -4,17 +4,7 @@ import FormField from '@/components/compound/form/FormField';
 import Button from '@/components/common/Button';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-
-const Email_Regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const Password_Regex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$/;
-
-export const validateEmail = (value: string) => {
-  return Email_Regex.test(value);
-};
-
-export const validatePassword = (value: string) => {
-  return Password_Regex.test(value);
-};
+import { validateEmail, validatePassword } from '@/utils/authValidate';
 
 export default function LoginForm() {
   const router = useRouter();
