@@ -11,23 +11,27 @@ export default function LoginForm() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isEmailValid, setIsEmailValid] = useState(false);
-  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
+  const [hasEmailClicked, setHasEmailClicked] = useState(false);
+  const [hasPasswordClicked, setHasPasswordClicked] = useState(false);
   const [canSubmit, setCanSubmit] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
 
   const handleEmailBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    setHasEmailClicked(true);
     setIsEmailValid(validateEmail(e.target.value));
   };
 
   const handlePasswordBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    setHasPasswordClicked(true);
     setIsPasswordValid(validatePassword(e.target.value));
   };
 
   useEffect(() => {
-    setCanSubmit(isEmailValid && isPasswordValid);
-  }, [setCanSubmit, isEmailValid, isPasswordValid]);
+    setCanSubmit(hasEmailClicked && hasPasswordClicked && isEmailValid && isPasswordValid);
+  }, [setCanSubmit, hasEmailClicked, hasPasswordClicked, isEmailValid, isPasswordValid]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
