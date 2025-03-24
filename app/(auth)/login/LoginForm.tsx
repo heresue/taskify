@@ -9,6 +9,8 @@ import Button from '@/components/common/Button';
 import { useActionState } from 'react';
 import { Login } from './Login';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { setItem } from '@/utils/localstorage';
 
 const Email_Regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const Password_Regex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$/;
@@ -38,9 +40,17 @@ export default function LoginForm() {
 
   useEffect(() => {
     setCanSubmit(isEmailValid && isPasswordValid);
-  }, [isEmailValid, isPasswordValid]);
+  }, [setCanSubmit, isEmailValid, isPasswordValid]);
 
-  const [state, action, pending] = useActionState(Login, null);
+  const [state, action, isPending] = useActionState(Login, null);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (state?.user) {
+      setItem('accessToken', state?.accessToken);
+      router.push(`/mydashboard`);
+    }
+  }, [state, router]);
 
   return (
     <form action={action} className="flex w-full flex-col gap-4 lg:gap-6">
