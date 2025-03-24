@@ -1,16 +1,9 @@
 'use client';
 
-/* 역할
-validation UI 관리
-Modal UI 관리
-*/
 import FormField from '@/components/compound/form/FormField';
 import Button from '@/components/common/Button';
-import { useActionState } from 'react';
-import { Login } from './Login';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { setItem } from '@/utils/localstorage';
 
 const Email_Regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const Password_Regex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$/;
@@ -24,6 +17,7 @@ export const validatePassword = (value: string) => {
 };
 
 export default function LoginForm() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(false);
@@ -42,18 +36,28 @@ export default function LoginForm() {
     setCanSubmit(isEmailValid && isPasswordValid);
   }, [setCanSubmit, isEmailValid, isPasswordValid]);
 
-  const [state, action, isPending] = useActionState(Login, null);
-  const router = useRouter();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  useEffect(() => {
-    if (state?.user) {
-      setItem('accessToken', state?.accessToken);
-      router.push(`/mydashboard`);
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+      router.push('/mydashboard');
+    } else {
+      alert(result.message);
     }
-  }, [state, router]);
+  };
 
   return (
-    <form action={action} className="flex w-full flex-col gap-4 lg:gap-6">
+    <form onSubmit={handleSubmit} className="flex w-full flex-col gap-4 lg:gap-6">
       <div className="flex flex-col gap-2 lg:gap-4">
         <FormField
           id="email"
