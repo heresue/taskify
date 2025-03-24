@@ -1,9 +1,10 @@
 import Button from '@/components/common/Button';
-import Setting from '@/public/icons/setting.svg';
 import Card from '../DashboardCard/DashboardCard';
 import Plus from '@/public/icons/plus.svg';
+import Setting from '@/assets/icons/Setting';
 
 export default function DashboardColumn() {
+  //column id(id), column title(title), cards.length, cards
   return (
     <div className="border-gray200 w-full border-b border-solid px-5 py-[18px] lg:w-[354px] lg:border-r lg:border-b-0">
       <div>
@@ -15,18 +16,13 @@ export default function DashboardColumn() {
               3
             </span>
           </div>
-          <Setting className="cursor-pointer" />
+          <Setting width={24} height={24} />
         </div>
         <div className="flex w-full flex-col gap-2 md:gap-4">
           <Button fullWidth size="addTodo" variant="outline">
             <Plus />
           </Button>
-          <Card
-            title="프로젝트"
-            tags={['프로젝트']}
-            dueDate="2025.04.01"
-            assignee={{ profileImageUrl: '' }}
-          />
+          <Card title="" tags={['']} dueDate="" assignee={{ profileImageUrl: '' }} />
         </div>
       </div>
     </div>
