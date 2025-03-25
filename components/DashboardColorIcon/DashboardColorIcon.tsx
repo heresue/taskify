@@ -3,7 +3,7 @@ interface DashboardColorIconProps {
   size?: number;
 }
 
-export default function dashboardColorIcon({ color = 'black', size = 8 }: DashboardColorIconProps) {
+export default function DashboardColorIcon({ color = 'black', size = 8 }: DashboardColorIconProps) {
   return (
     <div
       className="shrink-0"
