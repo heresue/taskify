@@ -1,10 +1,10 @@
 'use client';
 
+import { useState, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import FormField from '@/components/compound/form/FormField';
 import Button from '@/components/common/Button';
 import Modal from '@/components/common/Modal';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { validateEmail, validatePassword } from '@/utils/authValidate';
 
 export default function LoginForm() {
@@ -15,9 +15,12 @@ export default function LoginForm() {
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [hasEmailClicked, setHasEmailClicked] = useState(false);
   const [hasPasswordClicked, setHasPasswordClicked] = useState(false);
-  const [canSubmit, setCanSubmit] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
+
+  const canSubmit = useMemo(() => {
+    return hasEmailClicked && hasPasswordClicked && isEmailValid && isPasswordValid;
+  }, [hasEmailClicked, hasPasswordClicked, isEmailValid, isPasswordValid]);
 
   const handleEmailBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     setHasEmailClicked(true);
@@ -28,10 +31,6 @@ export default function LoginForm() {
     setHasPasswordClicked(true);
     setIsPasswordValid(validatePassword(e.target.value));
   };
-
-  useEffect(() => {
-    setCanSubmit(hasEmailClicked && hasPasswordClicked && isEmailValid && isPasswordValid);
-  }, [setCanSubmit, hasEmailClicked, hasPasswordClicked, isEmailValid, isPasswordValid]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,6 +86,7 @@ export default function LoginForm() {
           로그인
         </Button>
       </form>
+
       <Modal
         isOpen={isModalOpen}
         padding="64/40"
