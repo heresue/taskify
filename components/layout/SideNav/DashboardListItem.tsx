@@ -2,9 +2,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import DashboardColorIcon from '../../DashboardColorIcon/DashboardColorIcon';
 import clsx from 'clsx';
-import { DashboardList } from '@/utils/getDashboardList';
 
-interface DashboardListItemProps extends DashboardList {
+interface DashboardListItemProps {
   id: number;
   title: string;
   color: string;
