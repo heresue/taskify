@@ -7,12 +7,10 @@ interface CardProps {
   title: string;
   tags: string[];
   dueDate: string;
-  assignee: {
-    profileImageUrl: string;
-  };
+  profile: string | null;
 }
 
-export default function Card({ imageUrl, title, dueDate, assignee }: CardProps) {
+export default function Card({ imageUrl, title, dueDate, profile }: CardProps) {
   return (
     <div className="border-gray300 flex w-full items-center justify-center rounded-md border border-solid bg-white p-3 sm:p-3 md:p-4 md:px-5 md:py-[18px]">
       <div className="flex w-full flex-col items-start justify-center gap-1 sm:gap-1 md:flex-row md:gap-5">
@@ -31,7 +29,7 @@ export default function Card({ imageUrl, title, dueDate, assignee }: CardProps) 
                 <DateIcon width={18} height={18} alt="date" />
                 <p className="text-gray500 text-medium12">{dueDate}</p>
               </div>
-              <UserBadge size={24} profile={assignee.profileImageUrl} />
+              <UserBadge size={24} profile={profile} />
             </div>
           </div>
         </div>
