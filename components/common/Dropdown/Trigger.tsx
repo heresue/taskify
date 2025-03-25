@@ -33,7 +33,12 @@ export function SelectionTrigger({ isOpen, onClick, selected }: SelectionTrigger
       ) : (
         <span className="truncate">{selected.value}</span>
       )}
-      <ArrowDropDownIcon width="28" height="28" />
+      <div className="block md:hidden">
+        <ArrowDropDownIcon width="20" height="20" />
+      </div>
+      <div className="hidden md:block">
+        <ArrowDropDownIcon width="28" height="28" />
+      </div>
     </button>
   );
 }
