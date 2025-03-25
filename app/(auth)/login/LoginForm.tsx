@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import FormField from '@/components/compound/form/FormField';
 import Button from '@/components/common/Button';
@@ -13,22 +13,21 @@ export default function LoginForm() {
   const [password, setPassword] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
-  const [hasEmailClicked, setHasEmailClicked] = useState(false);
-  const [hasPasswordClicked, setHasPasswordClicked] = useState(false);
+  const hasEmailClickedRef = useRef<boolean>(false);
+  const hasPasswordClickedRef = useRef<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
 
-  const canSubmit = useMemo(() => {
-    return hasEmailClicked && hasPasswordClicked && isEmailValid && isPasswordValid;
-  }, [hasEmailClicked, hasPasswordClicked, isEmailValid, isPasswordValid]);
+  const canSubmit =
+    hasEmailClickedRef.current && hasPasswordClickedRef.current && isEmailValid && isPasswordValid;
 
   const handleEmailBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    setHasEmailClicked(true);
+    hasEmailClickedRef.current = true;
     setIsEmailValid(validateEmail(e.target.value));
   };
 
   const handlePasswordBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    setHasPasswordClicked(true);
+    hasPasswordClickedRef.current = true;
     setIsPasswordValid(validatePassword(e.target.value));
   };
 
