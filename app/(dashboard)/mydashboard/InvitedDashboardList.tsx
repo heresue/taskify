@@ -1,16 +1,8 @@
 import Button from '@/components/common/Button';
 import React from 'react';
+import { Invitation } from './invitations';
 
-const InviteDashboardList = ({
-  invitations,
-}: {
-  invitations: {
-    id: number;
-    inviter: { nickname: string };
-    dashboard: { title: string };
-    inviteAccepted: boolean | null;
-  }[];
-}) => {
+const InvitedDashboardList = ({ invitations }: { invitations: Invitation[] }) => {
   return (
     <div className="w-full overflow-hidden rounded-lg">
       {/* Header */}
@@ -39,4 +31,4 @@ const InviteDashboardList = ({
   );
 };
 
-export default InviteDashboardList;
+export default InvitedDashboardList;
