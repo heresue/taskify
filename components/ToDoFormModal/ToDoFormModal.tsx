@@ -1,3 +1,4 @@
+import ColumnName from '../ColumnName/ColumnName';
 import { SearchableDropdown, SelectionDropdown } from '../common/Dropdown';
 import Modal from '../common/Modal';
 import FormField from '../compound/form/FormField';
@@ -10,7 +11,7 @@ interface ToDoFormProps {
   cardId?: number;
 }
 
-export default function ToDoFormModal({ open, onClose, cardId = 1 }: ToDoFormProps) {
+export default function ToDoFormModal({ open, onClose, cardId }: ToDoFormProps) {
   const CreateOrUpdate = cardId ? '수정' : '생성';
   return (
     <Modal
@@ -23,11 +24,16 @@ export default function ToDoFormModal({ open, onClose, cardId = 1 }: ToDoFormPro
     >
       <div className="flex w-full flex-col gap-8">
         <h1 className="text-bold24 text-black200">할 일 {CreateOrUpdate}</h1>
-        <div className="flex gap-8">
+        <div className="flex flex-col gap-8 md:flex-row">
           {cardId && (
             <div className="flex flex-1 flex-col gap-2">
               <label className="text-black200 text-medium18">상태</label>
-              <SelectionDropdown options={[]} onSelect={() => {}} />
+              <SelectionDropdown
+                options={[
+                  { value: 'to do', id: 1, renderItem: () => <ColumnName columnName="todo" /> },
+                ]}
+                onSelect={() => {}}
+              />
             </div>
           )}
           <div className="flex flex-1 flex-col gap-2">
