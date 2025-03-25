@@ -22,9 +22,9 @@ export default function MyDashboardSection({ mydashboards }: Props) {
               <img src="/icons/plus.svg" alt="추가" width={16} height={16} className="mr-2 ml-3" />
             </Button>
 
-            {mydashboards.map((mydashboards) => (
-              <Button key={mydashboards.id} variant="outline" size="dashboardCard">
-                {mydashboards.dashboard.title}
+            {mydashboards.map((mydashboard) => (
+              <Button key={mydashboard.id} variant="outline" size="dashboardCard">
+                {mydashboard.dashboard.title}
               </Button>
             ))}
           </div>
