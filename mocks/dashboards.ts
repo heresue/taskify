@@ -4,10 +4,10 @@ export interface MockDashboard {
   id: number;
   title: string;
   color: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
   createdByMe: boolean;
-  userId: number;
+  userId?: number;
 }
 
 export const mockDashboards: MockDashboard[] = [

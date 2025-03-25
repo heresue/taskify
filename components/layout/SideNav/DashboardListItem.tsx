@@ -8,14 +8,15 @@ interface DashboardListItemProps extends DashboardList {
   id: number;
   title: string;
   color: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
   createdByMe: boolean;
-  userId: number;
+  userId?: number;
   isSelected?: boolean;
 }
 
 export default function DashboardListItem({
+  id,
   title,
   color,
   createdByMe,
@@ -23,7 +24,7 @@ export default function DashboardListItem({
 }: DashboardListItemProps) {
   return (
     <li className={clsx('rounded-sm', isSelected && 'bg-violet8')}>
-      <Link href="/" className="flex h-[42px] items-center gap-4 px-3 py-2">
+      <Link href={`/dashboard/${id}`} className="flex h-[42px] items-center gap-4 px-3 py-2">
         <IndexIcon color={color} />
         <div className="flex min-w-0 items-center gap-[6px]">
           <span

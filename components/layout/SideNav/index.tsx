@@ -32,6 +32,7 @@ export default function SideNav() {
             {dashboards.map((dashboard) => (
               <DashboardListItem
                 key={dashboard.id}
+                id={dashboard.id}
                 title={dashboard.title}
                 color={dashboard.color}
                 createdByMe={dashboard.createdByMe}
