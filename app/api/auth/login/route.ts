@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     case 201: {
       const accessToken = responseData.accessToken;
 
-      const response = NextResponse.json({ success: true });
+      const response = NextResponse.json({ success: true, data: responseData }, { status: 201 });
 
       response.cookies.set('accessToken', accessToken, {
         httpOnly: true,

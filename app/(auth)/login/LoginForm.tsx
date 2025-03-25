@@ -6,6 +6,7 @@ import FormField from '@/components/compound/form/FormField';
 import Button from '@/components/common/Button';
 import Modal from '@/components/common/Modal';
 import { validateEmail, validatePassword } from '@/utils/authValidate';
+import { setItem } from '@/utils/localstorage';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -46,6 +47,7 @@ export default function LoginForm() {
 
     if (result.success) {
       router.push('/mydashboard');
+      setItem('accessToken', result.data.accessToken);
     } else {
       setModalMessage(result.message);
       setIsModalOpen(true);
