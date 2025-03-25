@@ -27,7 +27,7 @@ export function SearchableInput({
         onChange={onChange}
         onClick={onClick}
         placeholder={placeholder}
-        className="w-full border-0 outline-0"
+        className="placeholder:text-gray400 placeholder:text-regular16 w-full border-0 outline-0"
       />
       {value !== '' && (
         <div className="hover:bg-gray200 rounded-sm" onClick={onClear}>
