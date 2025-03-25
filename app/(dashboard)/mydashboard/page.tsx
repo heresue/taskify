@@ -14,7 +14,7 @@ export default async function MyDashboard() {
 
   return (
     <div id="dashboardWrapper" className="m-10 max-w-[1022px]">
-      {/* 나의 대시보드 색션션 */}
+      {/* 나의 대시보드 섹션 */}
       {mockInvitations.length > 0 ? (
         <>
           <div className="mb-10 flex flex-col gap-3">
