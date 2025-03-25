@@ -1,7 +1,7 @@
 import Button from '@/components/common/Button';
 import React from 'react';
 
-const InviteDashboardList = () => {
+const InviteDashboardList = ({ invitations }) => {
   return (
     <div className="w-full overflow-hidden rounded-lg">
       {/* Header */}
@@ -14,40 +14,16 @@ const InviteDashboardList = () => {
       {/* Body - 무한스크롤 영역 */}
       <div className="divide-y">
         <div className="border-gray200 border-b">
-          <div className="grid grid-cols-3 items-center px-[76px] py-[23px]">
-            <span>대시보드 이름</span>
-            <span>초대자</span>
-            <span className="flex justify-center gap-2">
-              <>
+          {invitations.map((invitation) => (
+            <div key={invitation.id} className="grid grid-cols-3 items-center px-[76px] py-[23px]">
+              <span>{invitation.dashboard.title}</span>
+              <span>{invitation.inviter.nickname}</span>
+              <span className="flex justify-center gap-2">
                 <Button>수락</Button>
                 <Button variant="outline">거절</Button>
-              </>
-            </span>
-          </div>
-        </div>
-        <div className="border-gray200 border-b">
-          <div className="grid grid-cols-3 items-center px-[76px] py-[23px]">
-            <span>대시보드 이름</span>
-            <span>초대자</span>
-            <span className="flex justify-center gap-2">
-              <>
-                <Button>수락</Button>
-                <Button variant="outline">거절</Button>
-              </>
-            </span>
-          </div>
-        </div>
-        <div className="border-gray200 border-b">
-          <div className="grid grid-cols-3 items-center px-[76px] py-[23px]">
-            <span>대시보드 이름</span>
-            <span>초대자</span>
-            <span className="flex justify-center gap-2">
-              <>
-                <Button>수락</Button>
-                <Button variant="outline">거절</Button>
-              </>
-            </span>
-          </div>
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
