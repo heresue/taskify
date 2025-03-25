@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import IndexIcon from './IndexIcon';
+import DashboardColorIcon from '../../DashboardColorIcon/DashboardColorIcon';
 import clsx from 'clsx';
 import { DashboardList } from '@/utils/getDashboardList';
 
@@ -25,7 +25,7 @@ export default function DashboardListItem({
   return (
     <li className={clsx('rounded-sm', isSelected && 'bg-violet8')}>
       <Link href={`/dashboard/${id}`} className="flex h-[42px] items-center gap-4 px-3 py-2">
-        <IndexIcon color={color} />
+        <DashboardColorIcon color={color} />
         <div className="flex min-w-0 items-center gap-[6px]">
           <span
             className={clsx(

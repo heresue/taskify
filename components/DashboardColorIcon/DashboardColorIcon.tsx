@@ -1,9 +1,9 @@
-interface IndexIconProps {
+interface DashboardColorIconProps {
   color: string;
   size?: number;
 }
 
-export default function IndexIcon({ color = 'black', size = 8 }: IndexIconProps) {
+export default function dashboardColorIcon({ color = 'black', size = 8 }: DashboardColorIconProps) {
   return (
     <div
       className="shrink-0"
