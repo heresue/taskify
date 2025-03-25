@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function HeaderGuest() {
   return (
-    <header className="flex h-17.5 items-center justify-between bg-black px-6 md:px-10 lg:px-17.5">
+    <header className="sticky top-0 flex h-15 items-center justify-between bg-black px-6 md:h-17.5 md:px-10 lg:px-17.5">
       <Link href="/" className="hidden md:block">
         <Logo color="white" size="md" />
       </Link>
