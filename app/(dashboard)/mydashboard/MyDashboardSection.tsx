@@ -12,7 +12,8 @@ export default function MyDashboardSection({ mydashboards }: Props) {
         <div className="mb-10 flex flex-col gap-3">
           <div className="grid grid-cols-3 grid-rows-2 gap-[13px]">
             <Button variant="outline" size="dashboardCard">
-              새로운 대시보드 +
+              <span>새로운 대시보드</span>
+              <img src="/icons/plus.svg" alt="추가" width={16} height={16} className="mr-2 ml-3" />
             </Button>
 
             {mydashboards.map((mydashboards) => (
@@ -26,7 +27,8 @@ export default function MyDashboardSection({ mydashboards }: Props) {
       ) : (
         <div className="mb-[114px] flex flex-col gap-3">
           <Button variant="outline" size="dashboardCard">
-            새로운 대시보드 +
+            <span>새로운 대시보드</span>
+            <img src="/icons/plus.svg" alt="추가" width={16} height={16} className="mr-2 ml-3" />
           </Button>
         </div>
       )}
