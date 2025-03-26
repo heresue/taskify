@@ -7,6 +7,16 @@ interface Props {
   onClose: () => void;
 }
 
+const COLOR_MAP = {
+  green: '#7ac555',
+  purple: '#760dde',
+  orange: '#ffa500',
+  blue: '#76a5ea',
+  pink: '#e876ea',
+} as const;
+
+const DASHBOARD_COLOR_KEYS = Object.keys(COLOR_MAP) as (keyof typeof COLOR_MAP)[];
+
 export default function CreateDashboardModal({ isOpen, onClose }: Props) {
   return (
     <Modal
@@ -24,11 +34,9 @@ export default function CreateDashboardModal({ isOpen, onClose }: Props) {
           <Input id="dashboardName" name="dashboardName" placeholder="이름을 입력하세요" />
         </label>
         <div className="mb-6 flex gap-2">
-          <DashboardColorIcon size={30} color="#7ac555" />
-          <DashboardColorIcon size={30} color="#760dde" />
-          <DashboardColorIcon size={30} color="#ffa500" />
-          <DashboardColorIcon size={30} color="#76a5ea" />
-          <DashboardColorIcon size={30} color="#e876ea" />
+          {DASHBOARD_COLOR_KEYS.map((key) => (
+            <DashboardColorIcon key={key} size={30} color={COLOR_MAP[key]} />
+          ))}
         </div>
       </div>
     </Modal>
