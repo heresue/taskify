@@ -1,1 +1,296 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+@layer {
+  body {
+    font-family: 'Pretendard', sans-serif;
+    
+    button {
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+    }
+  }
+}
+
+@theme {
+  --color-violet: #5534da;
+  --color-violet8: #f1effd;
+  --color-red: #d6173a;
+  --color-green: #7ac555;
+  --color-purple: #760dde;
+  --color-orange: #ffa500;
+  --color-blue: #76a5ea;
+  --color-pink: #e876ea;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray100: #fafafa;
+  --color-gray200: #eeeeee;
+  --color-gray300: #d9d9d9;
+  --color-gray400: #9fa6b2;
+  --color-gray500: #787486;
+  --color-black100: #4b4b4b;
+  --color-black200: #333236;
+  --color-black300: #171717;
+}
+
+@utility text-bold32 {
+  @layer components {
+    font-size: 32px;
+    line-height: 42px;
+    font-weight: 700;
+  }
+}
+
+@utility text-semi32 {
+  @layer components {
+    font-size: 32px;
+    line-height: 42px;
+    font-weight: 600;
+  }
+}
+
+@utility text-bold24 {
+  @layer components {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 700;
+  }
+}
+
+@utility text-semi24 {
+  @layer components {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 600;
+  }
+}
+
+@utility text-medium24 {
+  @layer components {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 500;
+  }
+}
+
+@utility text-regular24 {
+  @layer components {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 400;
+  }
+}
+
+@utility text-bold20 {
+  @layer components {
+    font-size: 20px;
+    line-height: 32px;
+    font-weight: 700;
+  }
+}
+
+@utility text-semi20 {
+  @layer components {
+    font-size: 20px;
+    line-height: 32px;
+    font-weight: 600;
+  }
+}
+
+@utility text-medium20 {
+  @layer components {
+    font-size: 20px;
+    line-height: 32px;
+    font-weight: 500;
+  }
+}
+
+@utility text-regular20 {
+  @layer components {
+    font-size: 20px;
+    line-height: 32px;
+    font-weight: 400;
+  }
+}
+
+@utility text-bold18 {
+  @layer components {
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 700;
+  }
+}
+
+@utility text-semi18 {
+  @layer components {
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 600;
+  }
+}
+
+@utility text-medium18 {
+  @layer components {
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 500;
+  }
+}
+
+@utility text-regular18 {
+  @layer components {
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 400;
+  }
+}
+
+@utility text-bold16 {
+  @layer components {
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 700;
+  }
+}
+
+@utility text-semi16 {
+  @layer components {
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 600;
+  }
+}
+
+@utility text-medium16 {
+  @layer components {
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 500;
+  }
+}
+
+@utility text-regular16 {
+  @layer components {
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 400;
+  }
+}
+
+@utility text-bold14 {
+  @layer components {
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 700;
+  }
+}
+
+@utility text-semi14 {
+  @layer components {
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 600;
+  }
+}
+
+@utility text-medium14 {
+  @layer components {
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 500;
+  }
+}
+
+@utility text-regular14 {
+  @layer components {
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 400;
+  }
+}
+
+@utility text-semi13 {
+  @layer components {
+    font-size: 13px;
+    line-height: 22px;
+    font-weight: 600;
+  }
+}
+
+@utility text-medium13 {
+  @layer components {
+    font-size: 13px;
+    line-height: 22px;
+    font-weight: 500;
+  }
+}
+
+@utility text-semi12 {
+  @layer components {
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 600;
+  }
+}
+
+@utility text-medium12 {
+  @layer components {
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 500;
+  }
+}
+
+@utility text-regular12 {
+  @layer components {
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 400;
+  }
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff2')
+    format('woff2');
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+    format('woff');
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff2')
+    format('woff2');
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff')
+    format('woff');
+  font-display: swap;
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff2')
+    format('woff2');
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff')
+    format('woff');
+  font-display: swap;
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff2')
+    format('woff2');
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff')
+    format('woff');
+  font-display: swap;
+  font-weight: 700;
+  font-style: normal;
+}
