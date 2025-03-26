@@ -3,6 +3,7 @@ import Image from 'next/image';
 import AddBoxGrayIcon from '@/assets/icons/AddBoxGrayIcon';
 import UserBadge from '@/components/UserBadge/UserBadge';
 import MemberBadgeList from '@/components/layout/Header/MemberBadgeList';
+import Setting from '@/assets/icons/Setting';
 
 interface Member {
   id: number;
@@ -140,11 +141,11 @@ export default function HeaderUser() {
       </div>
       <div className="flex items-center">
         <div className="flex gap-1.5 md:gap-3">
-          {/* TODO: 태블릿, PC 화면 톱니바퀴 아이콘 넣기 */}
           <Link
             href={`/dashboard/${dashboardId}/edit`}
             className="text-medium14 text-gray500 border-gray300 flex items-center gap-2 truncate rounded-md border-1 px-3 py-1.5 md:rounded-lg md:px-4 md:py-2"
           >
+            <Setting width={18} height={18} className="hidden md:block" />
             관리
           </Link>
           {/* FIXME: 클릭 시 edit 페이지로 이동하는게 아니라, 초대 모달을 띄워야 함 */}
