@@ -34,7 +34,9 @@ export default function Button({
       )}
       {...props}
     >
-      <div className="overflow-hidden text-ellipsis whitespace-nowrap">{children}</div>
+      <div className="flex items-center overflow-hidden text-ellipsis whitespace-nowrap">
+        {children}
+      </div>
     </button>
   );
 }
