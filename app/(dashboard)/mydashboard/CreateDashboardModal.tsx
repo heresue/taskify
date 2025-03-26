@@ -1,19 +1,11 @@
 import Input from '@/components/common/Input';
 import Modal from '@/components/common/Modal';
-import DashboardColorIcon from '@/components/DashboardColorIcon/DashboardColorIcon';
+import DashboardColorIcon, { COLOR_MAP } from '@/components/DashboardColorIcon/DashboardColorIcon';
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
 }
-
-const COLOR_MAP = {
-  green: '#7ac555',
-  purple: '#760dde',
-  orange: '#ffa500',
-  blue: '#76a5ea',
-  pink: '#e876ea',
-} as const;
 
 const DASHBOARD_COLOR_KEYS = Object.keys(COLOR_MAP) as (keyof typeof COLOR_MAP)[];
 
@@ -35,7 +27,7 @@ export default function CreateDashboardModal({ isOpen, onClose }: Props) {
         </label>
         <div className="mb-6 flex gap-2">
           {DASHBOARD_COLOR_KEYS.map((key) => (
-            <DashboardColorIcon key={key} size={30} color={COLOR_MAP[key]} />
+            <DashboardColorIcon key={key} size={30} colorKey={key} />
           ))}
         </div>
       </div>
