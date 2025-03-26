@@ -49,8 +49,8 @@ export default function ChangePasswordForm() {
 
   return (
     <form onSubmit={handleSubmit} className="p-4">
-      <h2 className="text-bold18 text-black200">비밀번호 변경</h2>
-      <div className="mt-10 mb-6 flex flex-col gap-4">
+      <h2 className="text-bold20 text-black200 md:text-bold24">비밀번호 변경</h2>
+      <div className="my-6 flex flex-col gap-4">
         <FormField
           id="password"
           name="password"
