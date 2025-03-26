@@ -8,14 +8,21 @@
 정확한 현재 비밀번호 값을 입력하고 '변경' 버튼을 클릭하면 비밀번호가 변경되도록 하세요
 */
 
+import Link from 'next/link';
 import ProfileEditForm from '@/app/(dashboard)/mypage/ProfileEditForm';
 import ChangePasswordForm from '@/app/(dashboard)/mypage/ChangePasswordForm';
 
 export default function Page() {
   return (
-    <>
-      <ProfileEditForm />
-      <ChangePasswordForm />
-    </>
+    <div className="mx-3 my-4 md:m-4 lg:m-5">
+      <Link href="/mydashboard" className="flex gap-2">
+        {/* TODO: 뒤로가기 아이콘 추가 */}
+        <span className="text-medium14 text-black200 md:text-medium16">돌아가기</span>
+      </Link>
+      <div className="flex flex-col gap-4 md:gap-6">
+        <ProfileEditForm />
+        <ChangePasswordForm />
+      </div>
+    </div>
   );
 }
