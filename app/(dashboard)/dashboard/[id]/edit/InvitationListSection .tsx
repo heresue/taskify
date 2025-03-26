@@ -1,13 +1,19 @@
+"use client"
+
 import Button from '@/components/common/Button';
+import InviteModal from './InviteModal';
+import { useState } from 'react';
 
 export default function InvitationListSection() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div id="section" className="rounded-2xl bg-white pt-[32px]">
       <div className="mb-[27px] flex items-center justify-between px-[28px]">
         <h3 className="text-bold24">초대 내역</h3>
         <div className="flex items-center gap-4">
           <div>페이지네이션 버튼</div>
-          <Button>
+          <Button onClick={() => setIsOpen(true)}>
             {/* 아이콘 삽입 시 버튼 크기 재설정
             <img src="/icons/addbox.svg" /> */}
             <span className="text-medium14">초대하기</span>
@@ -69,6 +75,8 @@ export default function InvitationListSection() {
           </div>
         </div>
       </div>
+
+      <InviteModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </div>
   );
 }
