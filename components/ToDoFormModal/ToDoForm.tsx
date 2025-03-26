@@ -3,40 +3,9 @@ import { SearchableDropdown, SelectionDropdown } from '../common/Dropdown';
 import FormField from '../compound/form/FormField';
 import UploadImage from '../compound/upload/UploadImage';
 import UserBadge from '../UserBadge/UserBadge';
-
-export interface TodoFormType {
-  name: string;
-  fieldType: 'input' | 'textarea';
-  label: string;
-  placeholder: string;
-  required: boolean;
-}
+import TagInput from './TagInput';
 
 export default function ToDoForm({ cardId }: { cardId?: number }) {
-  const TODOFORM: TodoFormType[] = [
-    {
-      name: 'email',
-      fieldType: 'input',
-      label: '제목',
-      placeholder: '제목을 입력해 주세요',
-      required: true,
-    },
-    {
-      name: 'description',
-      fieldType: 'textarea',
-      label: '설명',
-      placeholder: '설명을 입력해 주세요',
-      required: true,
-    },
-    {
-      name: 'tag',
-      fieldType: 'input',
-      label: '태그',
-      placeholder: '입력 후 Enter',
-      required: false,
-    },
-  ];
-
   return (
     <>
       <div className="flex flex-col gap-8 md:flex-row">
@@ -66,15 +35,9 @@ export default function ToDoForm({ cardId }: { cardId?: number }) {
           />
         </div>
       </div>
-      {TODOFORM.map((input) => (
-        <FormField
-          key={input.name}
-          fieldType={input.fieldType}
-          label={input.label}
-          placeholder={input.placeholder}
-          required={input.required}
-        />
-      ))}
+      <FormField fieldType="input" label="제목" placeholder="제목을 입력해 주세요" required />
+      <FormField fieldType="textarea" label="설명" placeholder="설명을 입력해 주세요" required />
+      <TagInput />
       <div className="flex flex-col gap-[5px]">
         <label className="text-black200 text-medium18">이미지</label>
         <div className="relative h-[58px] w-[58px] md:h-[76px] md:w-[76px]">

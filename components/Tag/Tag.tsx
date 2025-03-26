@@ -15,7 +15,7 @@ export default function Tag({ tag, color }: TagProps) {
   };
 
   return (
-    <div className={clsx('rounded-sm px-1.5 py-0.5', tagColor[color])}>
+    <div className={clsx('nowrap rounded-sm px-1.5 whitespace-nowrap', tagColor[color])}>
       <span style={{ color: `#${color}` }}>{tag}</span>
     </div>
   );
