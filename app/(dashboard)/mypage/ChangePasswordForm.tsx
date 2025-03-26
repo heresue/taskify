@@ -59,7 +59,7 @@ export default function ChangePasswordForm() {
           placeholder="현재 비밀번호 입력"
           fieldType="input"
           errorMessage="8자 이상 입력해 주세요."
-          customLabelClass="text-regular14"
+          customLabelClass="text-regular14 md:text-regular16"
           onChange={(e) => setPassword(e.target.value)}
           onBlur={handlePasswordBlur}
           isValid={isPasswordValid}
@@ -73,7 +73,7 @@ export default function ChangePasswordForm() {
           placeholder="새 비밀번호 입력"
           fieldType="input"
           errorMessage="8자 이상 입력해 주세요."
-          customLabelClass="text-regular14"
+          customLabelClass="text-regular14 md:text-regular16"
           onChange={(e) => setNewPassword(e.target.value)}
           onBlur={handleNewPasswordBlur}
           isValid={isNewPasswordValid}
@@ -87,7 +87,7 @@ export default function ChangePasswordForm() {
           placeholder="새 비밀번호 입력"
           fieldType="input"
           errorMessage="비밀번호가 일치하지 않습니다."
-          customLabelClass="text-regular14"
+          customLabelClass="text-regular14 md:text-regular16"
           onChange={(e) => setConfirmPassword(e.target.value)}
           onBlur={handleConfirmPasswordBlur}
           isValid={isConfirmPasswordValid}
