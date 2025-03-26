@@ -1,11 +1,10 @@
 import Input from '@/components/common/Input';
 import Image from 'next/image';
 import InvitedDashboardList from './InvitedDashboardList';
-import { mockInvitations } from '@/mocks/invitations';
 import { Invitation } from './invitations';
 
 export default function InvitedSection({ invitations }: { invitations: Invitation[] }) {
-  if (mockInvitations.length === 0) {
+  if (invitations.length === 0) {
     return (
       <div className="relative h-[390px] rounded-2xl bg-white px-10 py-6">
         <h3 className="text-bold24 text-black200">초대받은 대시보드</h3>
