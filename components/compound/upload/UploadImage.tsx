@@ -16,7 +16,7 @@ const UploadImage = ({ image, onChange, id }: UploadImageProps) => {
   };
 
   return (
-    <div>
+    <div className="relative h-full w-full">
       <Input
         type="file"
         id={id}
