@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ColorPalette from '../Dashboard/ColorPalette';
 import Tag from '../Tag/Tag';
+import { separateTagColor } from '@/utils/separateTagColor';
 
 const COLORS = ['#ffa500', '#7ac555', '#76a5ea', '#ea91bc', '#787486'];
 
@@ -40,10 +41,7 @@ export default function TagInput() {
     setTagList(tagList.filter((t) => t !== tagToDelete));
   };
 
-  const tags = tagList.map((tag) => {
-    const [text, color] = tag.split('#');
-    return { text, color };
-  });
+  const tags = separateTagColor(tagList);
 
   return (
     <div className="flex flex-col gap-2">
