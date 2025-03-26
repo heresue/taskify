@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import DateIcon from '@/public/icons/date.svg';
-import UserBadge from '../UserBadge/UserBadge';
+import UserBadge from '@/components/UserBadge/UserBadge';
 
 interface CardProps {
-  imageUrl: string;
+  imageUrl?: string;
   title: string;
   tags: string[];
   dueDate: string;
