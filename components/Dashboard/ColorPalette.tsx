@@ -12,6 +12,7 @@ export default function ColorPalette({ isSelected, colors, onColorSelect }: Colo
       {colors.map((color) => (
         <div key={color} className="relative cursor-pointer">
           <div
+            onMouseDown={(e) => e.preventDefault()}
             onClick={() => onColorSelect(color)}
             className="h-[30px] w-[30px] rounded-full"
             style={{ backgroundColor: color }}
