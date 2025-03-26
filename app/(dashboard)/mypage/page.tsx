@@ -20,8 +20,8 @@ export default function Page() {
         <span className="text-medium14 text-black200 md:text-medium16">돌아가기</span>
       </Link>
       <div className="flex flex-col gap-4 md:gap-6">
-        <ChangePasswordForm />
         <ProfileEditForm />
+        <ChangePasswordForm />
       </div>
     </div>
   );
