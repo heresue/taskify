@@ -3,8 +3,12 @@ import DashboardColumn from '@/components/Dashboard/DashboardColumn/DashboardCol
 import Plus from '@/public/icons/plus.svg';
 import GetDashboardColumn from '@/components/Dashboard/DashboardColumn/action';
 
-export default async function DashboardId({ params }: { params: { dashboardId: string } }) {
-  const dashboardId = Number(params.dashboardId);
+export default async function DashboardId({
+  params,
+}: {
+  params: Promise<{ dashboardId: string }>;
+}) {
+  const dashboardId = Number(params);
 
   const columns = await GetDashboardColumn(dashboardId);
   if (!columns) return;
