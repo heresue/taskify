@@ -34,7 +34,7 @@ export default function InvitedSection({ invitations }: { invitations: Invitatio
       ) : (
         <>
           <div className="relative h-[390px] rounded-2xl bg-white px-10 py-6">
-            <h3 className="text-bold24 text-black2 00">초대받은 대시보드</h3>
+            <h3 className="text-bold24 text-black200">초대받은 대시보드</h3>
             <div className="absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-[30px]">
               <div className="relative h-[75px] w-[87px]">
                 <Image src="/invite.svg" fill alt="초대받은 대시보드" />
