@@ -7,7 +7,7 @@ type FontSize = 'M16' | 'R14' | 'R16';
 interface BadgeProps {
   size: number;
   gap?: number;
-  profile?: string;
+  profile?: string | null;
   userName?: string;
   fontSize?: FontSize;
   responsive?: boolean;
