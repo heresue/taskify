@@ -9,19 +9,19 @@
 */
 
 import Link from 'next/link';
-import ChangePasswordForm from '@/app/(dashboard)/mypage/ProfileEditForm';
-import ProfileEditForm from '@/app/(dashboard)/mypage/ChangePasswordForm';
+import ProfileEditForm from '@/app/(dashboard)/mypage/ProfileEditForm';
+import ChangePasswordForm from '@/app/(dashboard)/mypage/ChangePasswordForm';
 
 export default function Page() {
   return (
-    <div className="mx-3 my-4 w-full max-w-[680px] md:m-4 lg:m-5">
+    <div className="w-full max-w-[680px] px-3 py-4 md:p-4 lg:p-5">
       <Link href="/mydashboard" className="flex gap-2">
         {/* TODO: 뒤로가기 아이콘 추가 */}
         <span className="text-medium14 text-black200 md:text-medium16">돌아가기</span>
       </Link>
       <div className="flex flex-col gap-4 md:gap-6">
-        <ProfileEditForm />
         <ChangePasswordForm />
+        <ProfileEditForm />
       </div>
     </div>
   );
