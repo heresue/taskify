@@ -28,7 +28,7 @@ export default function InvitedSection({ invitations }: { invitations: Invitatio
           customInputClass="h-6"
           customBorderClass="py-[7px]"
           leftIcon={
-            <img
+            <Image
               src="/icons/search.svg"
               alt="검색 아이콘"
               width={17}
