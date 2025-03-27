@@ -5,14 +5,17 @@ import MemberListSection from './MemberListSection ';
 import InvitationListSection from './InvitationListSection ';
 
 interface Props {
-  params: Promise<{ id: string }>;
+  params: {
+    dashboardId: string;
+  };
 }
+
 export default async function DashboardIdEdit({ params }: Props) {
-  const { id } = await params;
+  const { dashboardId } = params;
 
   return (
     <div id="wrapper" className="m-5 mb-[57px] flex flex-col gap-[34px]">
-      <BackLink id={id} />
+      <BackLink id={dashboardId} />
 
       <div className="flex w-[620px] flex-col gap-4">
         <DashboardNameSection />
