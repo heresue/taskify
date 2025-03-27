@@ -16,10 +16,15 @@ interface Props {
 export default function InvitedSection({ invitations: initialInvitations }: Props) {
   const [invitations, setInvitations] = useState<Invitation[]>([]);
   // const [myDashboards, setMyDashboards] = useState<Invitation[]>([]);
+  const [keyword, setKeyword] = useState('');
 
   useEffect(() => {
     setInvitations(initialInvitations);
   }, [initialInvitations]);
+
+  const filtered = invitations.filter((inv) =>
+    inv.dashboard.title.toLowerCase().includes(keyword.toLowerCase())
+  );
 
   const handleAccept = (id: number) => {
     const accepted = invitations.find((inv) => inv.id === id);
@@ -55,6 +60,8 @@ export default function InvitedSection({ invitations: initialInvitations }: Prop
         <h3 className="text-bold24 text-black200">초대받은 대시보드</h3>
         <Input
           placeholder="검색"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
           size={16}
           customInputClass="h-6"
           customBorderClass="py-[7px]"
@@ -70,7 +77,7 @@ export default function InvitedSection({ invitations: initialInvitations }: Prop
         />
       </div>
       <InvitedDashboardList
-        invitations={invitations}
+        invitations={filtered}
         onAccept={handleAccept}
         onDecline={handleDecline}
       />
