@@ -5,11 +5,10 @@ import MemberListSection from './MemberListSection ';
 import InvitationListSection from './InvitationListSection ';
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
-
-export default function DashboardIdEdit({ params }: Props) {
-  const { id } = params;
+export default async function DashboardIdEdit({ params }: Props) {
+  const { id } = await params;
 
   return (
     <div id="wrapper" className="m-5 mb-[57px] flex flex-col gap-[34px]">

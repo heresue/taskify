@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import DashboardColorIcon from '../../DashboardColorIcon/DashboardColorIcon';
+import DashboardColorIcon, { ColorKey } from '../../DashboardColorIcon/DashboardColorIcon';
 import clsx from 'clsx';
 
 interface DashboardListItemProps {
   id: number;
   title: string;
-  color: string;
+  colorKey: ColorKey;
   createdAt?: string;
   updatedAt?: string;
   createdByMe: boolean;
@@ -17,14 +17,14 @@ interface DashboardListItemProps {
 export default function DashboardListItem({
   id,
   title,
-  color,
+  colorKey,
   createdByMe,
   isSelected,
 }: DashboardListItemProps) {
   return (
     <li className={clsx('rounded-sm', isSelected && 'bg-violet8')}>
       <Link href={`/dashboard/${id}`} className="flex h-[42px] items-center gap-4 px-3 py-2">
-        <DashboardColorIcon color={color} />
+        <DashboardColorIcon colorKey={colorKey} />
         <div className="flex min-w-0 items-center gap-[6px]">
           <span
             className={clsx(

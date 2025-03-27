@@ -17,38 +17,38 @@ interface Member {
 }
 
 // membersN 은 mockData입니다.
-const members3: Member[] = [
-  {
-    id: 0,
-    userId: 0,
-    email: 'a@gmail.com',
-    nickname: 'seokjun',
-    profileImageUrl: 'string',
-    createdAt: '2025-03-25T09:49:49.827Z',
-    updatedAt: '2025-03-25T09:49:49.827Z',
-    isOwner: true,
-  },
-  {
-    id: 1,
-    userId: 1,
-    email: 'b@gmail.com',
-    nickname: 'john',
-    profileImageUrl: 'string',
-    createdAt: '2025-03-25T09:49:49.827Z',
-    updatedAt: '2025-03-25T09:49:49.827Z',
-    isOwner: false,
-  },
-  {
-    id: 2,
-    userId: 2,
-    email: 'c@gmail.com',
-    nickname: '홍길동',
-    profileImageUrl: 'string',
-    createdAt: '2025-03-25T09:49:49.827Z',
-    updatedAt: '2025-03-25T09:49:49.827Z',
-    isOwner: false,
-  },
-];
+// const members3: Member[] = [
+//   {
+//     id: 0,
+//     userId: 0,
+//     email: 'a@gmail.com',
+//     nickname: 'seokjun',
+//     profileImageUrl: 'string',
+//     createdAt: '2025-03-25T09:49:49.827Z',
+//     updatedAt: '2025-03-25T09:49:49.827Z',
+//     isOwner: true,
+//   },
+//   {
+//     id: 1,
+//     userId: 1,
+//     email: 'b@gmail.com',
+//     nickname: 'john',
+//     profileImageUrl: 'string',
+//     createdAt: '2025-03-25T09:49:49.827Z',
+//     updatedAt: '2025-03-25T09:49:49.827Z',
+//     isOwner: false,
+//   },
+//   {
+//     id: 2,
+//     userId: 2,
+//     email: 'c@gmail.com',
+//     nickname: '홍길동',
+//     profileImageUrl: 'string',
+//     createdAt: '2025-03-25T09:49:49.827Z',
+//     updatedAt: '2025-03-25T09:49:49.827Z',
+//     isOwner: false,
+//   },
+// ];
 
 const members7: Member[] = [
   {
