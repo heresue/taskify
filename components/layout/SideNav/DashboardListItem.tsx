@@ -22,7 +22,7 @@ export default function DashboardListItem({
   isSelected,
 }: DashboardListItemProps) {
   return (
-    <li className={clsx('rounded-sm', isSelected && 'bg-violet8')}>
+    <li className={clsx('rounded-sm', isSelected ? 'bg-violet8' : 'hover:bg-gray100')}>
       <Link
         href={`/dashboard/${dashboardId}`}
         className="flex h-[42px] items-center gap-4 px-3 py-2"

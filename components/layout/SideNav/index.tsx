@@ -6,8 +6,12 @@ import DashboardListItem from './DashboardListItem';
 import AddDashboardButton from './AddDashboardButton';
 import { useEffect, useState } from 'react';
 import { mockDashboards, MockDashboard } from '@/mocks/dashboards';
+import { usePathname } from 'next/navigation';
 
 export default function SideNav() {
+  const pathname = usePathname();
+  const selectedId = pathname?.split('/dashboard/')[1]?.split('/')[0];
+  
   // mock data 적용
   const [dashboards, setDashboards] = useState<MockDashboard[]>([]);
 
@@ -28,14 +32,15 @@ export default function SideNav() {
             <h2 className="text-semi12 text-gray500">Dash Boards</h2>
             <AddDashboardButton />
           </div>
-          <ul className='space-y-2'>
+          <ul className="space-y-2">
             {dashboards.map((dashboard) => (
               <DashboardListItem
                 key={dashboard.id}
-                id={dashboard.id}
+                dashboardId={dashboard.id}
                 title={dashboard.title}
                 colorKey={dashboard.color}
                 createdByMe={dashboard.createdByMe}
+                isSelected={String(dashboard.id) === selectedId}
               />
             ))}
           </ul>
