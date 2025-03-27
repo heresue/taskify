@@ -1,13 +1,13 @@
 import DashboardHeader from '@/components/layout/Header/DashboardHeader';
 
-export default function Layout({
+export default async function Layout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { dashboardId: string };
+  params: Promise<{ dashboardId: string }>;
 }) {
-  const { dashboardId } = params;
+  const { dashboardId } = await params;
 
   return (
     <>
