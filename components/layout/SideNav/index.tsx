@@ -47,14 +47,15 @@ export default function SideNav() {
           </div>
           <ul className="space-y-2">
             {dashboards.map((dashboard) => (
-              <DashboardListItem
-                key={dashboard.id}
-                dashboardId={dashboard.id}
-                title={dashboard.title}
-                colorKey={dashboard.color}
-                createdByMe={dashboard.createdByMe}
-                isSelected={String(dashboard.id) === selectedId}
-              />
+              <li key={dashboard.id} className="rounded-sm">
+                <DashboardListItem
+                  dashboardId={dashboard.id}
+                  title={dashboard.title}
+                  colorKey={dashboard.color}
+                  createdByMe={dashboard.createdByMe}
+                  isSelected={String(dashboard.id) === selectedId}
+                />
+              </li>
             ))}
           </ul>
         </div>
