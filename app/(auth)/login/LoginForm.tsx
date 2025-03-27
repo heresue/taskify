@@ -47,6 +47,7 @@ export default function LoginForm() {
 
     if (result.success) {
       router.push('/mydashboard');
+      setItem('userInfo', result.data.user);
       setItem('accessToken', result.data.accessToken);
     } else {
       setModalMessage(result.message);

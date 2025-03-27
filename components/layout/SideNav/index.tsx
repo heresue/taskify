@@ -34,7 +34,7 @@ export default function SideNav() {
                 key={dashboard.id}
                 id={dashboard.id}
                 title={dashboard.title}
-                color={dashboard.color}
+                colorKey={dashboard.color}
                 createdByMe={dashboard.createdByMe}
               />
             ))}
