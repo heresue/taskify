@@ -1,9 +1,8 @@
-import Button from '@/components/common/Button';
 import Card from '../DashboardCard/DashboardCard';
-import Plus from '@/public/icons/plus.svg';
 import Setting from '@/assets/icons/Setting';
 import { ColumnsType } from '@/components/Dashboard/DashboardColumn/action';
 import GetDashboardCard from '../DashboardCard/action';
+import AddCardBtn from './AddCardBtn';
 
 export default async function DashboardColumn({ title, id }: ColumnsType) {
   const data = await GetDashboardCard(id);
@@ -25,9 +24,7 @@ export default async function DashboardColumn({ title, id }: ColumnsType) {
           <Setting width={24} height={24} />
         </div>
         <div className="flex w-full flex-col gap-2 md:gap-4">
-          <Button fullWidth size="addTodo" variant="outline">
-            <Plus />
-          </Button>
+          <AddCardBtn />
           {cards?.map((card) => (
             <Card
               key={card.id}
