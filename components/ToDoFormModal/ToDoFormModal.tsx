@@ -1,3 +1,5 @@
+import { useEffect, useMemo, useState } from 'react';
+import { useParams } from 'next/navigation';
 import { SearchableDropdown, SelectionDropdown } from '../common/Dropdown';
 import Modal from '../common/Modal';
 import FormField from '../compound/form/FormField';
@@ -6,10 +8,9 @@ import ColumnName from '../ColumnName/ColumnName';
 import TagInput from './TagInput';
 import useToDoData from './useToDoData';
 import { DropdownItem } from '../common/Dropdown/types';
-import { useEffect, useMemo, useState } from 'react';
 import UserBadge from '../UserBadge/UserBadge';
-import { useParams } from 'next/navigation';
 import { getMembers, Member } from './action';
+import DueDate from './DueDate';
 
 interface ToDoFormProps {
   open: boolean;
@@ -31,8 +32,14 @@ export default function ToDoFormModal({ open, onClose, cardId, columnId }: ToDoF
   const params = useParams<{ dashboardId: string }>();
   const dashboardId = Number(params.dashboardId);
 
-  const { handleFormChange, handleAssigneeUserChange, handleTagsChange, handleToDoSubmit } =
-    useToDoData(columnId, dashboardId);
+  const {
+    handleFormChange,
+    handleAssigneeUserChange,
+    handleDueDateChange,
+    dueDate,
+    handleTagsChange,
+    handleToDoSubmit,
+  } = useToDoData(columnId, dashboardId);
 
   const createOrUpdate = cardId ? '수정' : '생성';
 
@@ -116,6 +123,10 @@ export default function ToDoFormModal({ open, onClose, cardId, columnId }: ToDoF
           placeholder="설명을 입력해 주세요"
           onChange={handleFormChange}
           required
+        />
+        <DueDate
+          dueDate={dueDate}
+          onDueDateChange={(date: Date | null) => handleDueDateChange(date)}
         />
         <TagInput onChange={(tags: string[]) => handleTagsChange(tags)} />
         <div className="flex flex-col gap-[5px]">
