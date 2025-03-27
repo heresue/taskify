@@ -11,11 +11,11 @@ export default function DashboardNameSection() {
         <Input id="dashboardName" name="dashboardName" placeholder="이름을 입력하세요" />
       </label>
       <div className="mb-6 flex gap-2">
-        <DashboardColorIcon size={30} color="#7ac555" />
-        <DashboardColorIcon size={30} color="#760dde" />
-        <DashboardColorIcon size={30} color="#ffa500" />
-        <DashboardColorIcon size={30} color="#76a5ea" />
-        <DashboardColorIcon size={30} color="#e876ea" />
+        <DashboardColorIcon size={30} colorKey="green" />
+        <DashboardColorIcon size={30} colorKey="purple" />
+        <DashboardColorIcon size={30} colorKey="orange" />
+        <DashboardColorIcon size={30} colorKey="blue" />
+        <DashboardColorIcon size={30} colorKey="pink" />
       </div>
       <Button fullWidth size="modal">
         변경

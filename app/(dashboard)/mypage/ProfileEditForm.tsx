@@ -17,7 +17,8 @@ export default function ProfileEditForm() {
   const canSubmit =
     hasNicknameClickedRef.current && isNicknameValid && nickname !== initialNickname;
 
-  const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeImage = () => {
+    // e: React.ChangeEvent<HTMLInputElement>
     return;
   };
 
