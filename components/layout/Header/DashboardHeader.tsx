@@ -82,7 +82,7 @@ export default async function DashboardHeader({ dashboardId }: { dashboardId: nu
             profile={profileImageUrl}
             fontSize="M16"
             responsive={true}
-          />{' '}
+          />
         </Link>
       </div>
     </header>
