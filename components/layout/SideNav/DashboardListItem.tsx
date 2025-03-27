@@ -28,10 +28,10 @@ export default function DashboardListItem({
         className="flex h-[50px] items-center gap-4 px-3 py-2"
       >
         <DashboardColorIcon colorKey={colorKey} />
-        <div className="flex min-w-0 items-center gap-[6px]">
+        <div className="flex hidden min-w-0 items-center gap-[6px] md:flex">
           <span
             className={clsx(
-              'text-medium18 text-gray500 overflow-hidden text-ellipsis whitespace-nowrap',
+              'text-medium18 text-gray500 truncate',
               createdByMe ? 'max-w-[calc(100%-14px)]' : 'flex-1'
             )}
           >
