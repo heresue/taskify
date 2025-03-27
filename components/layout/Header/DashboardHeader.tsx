@@ -74,14 +74,16 @@ export default async function DashboardHeader({ dashboardId }: { dashboardId: nu
         <MemberBadgeList members={members} totalCount={totalCount} />
         <div className="bg-gray300 mx-3 h-8.5 w-[1px] md:mx-6 md:h-[9.5] lg:mx-8"></div>
         {/* FIXME: Badge 유저명 텍스트 색상 black200으로 수정 필요 */}
-        <UserBadge
-          size={38}
-          gap={12}
-          userName={nickname}
-          profile={profileImageUrl}
-          fontSize="M16"
-          responsive={true}
-        />
+        <Link href={`/mypage`}>
+          <UserBadge
+            size={38}
+            gap={12}
+            userName={nickname}
+            profile={profileImageUrl}
+            fontSize="M16"
+            responsive={true}
+          />{' '}
+        </Link>
       </div>
     </header>
   );
