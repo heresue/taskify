@@ -1,13 +1,16 @@
-"use client"
+'use client';
 
+import Image from 'next/image';
 import Button from '@/components/common/Button';
-import { Invitation } from './invitations';
 import CreateDashboardModal from './CreateDashboardModal';
 import { useModal } from '@/hooks/useModal';
-import Image from 'next/image';
+import DashboardListItem from '@/components/layout/SideNav/DashboardListItem';
+import { sizes } from '@/components/common/Button/style';
+
+import { MockDashboard } from '@/mocks/dashboards';
 
 interface Props {
-  mydashboards: Invitation[];
+  mydashboards: MockDashboard[];
 }
 
 export default function MyDashboardSection({ mydashboards }: Props) {
@@ -32,11 +35,16 @@ export default function MyDashboardSection({ mydashboards }: Props) {
             <span>새로운 대시보드</span>
             <Image src="/icons/plus.svg" alt="추가" width={16} height={16} className="mr-2 ml-3" />
           </Button>
-
           {mydashboards.map((mydashboard) => (
-            <Button key={mydashboard.id} variant="outline" size="dashboardCard">
-              {mydashboard.dashboard.title}
-            </Button>
+            <DashboardListItem
+              key={mydashboard.id}
+              dashboardId={mydashboard.id}
+              title={mydashboard.title}
+              colorKey={mydashboard.color}
+              createdByMe={mydashboard.createdByMe}
+              className={sizes.dashboardCard}
+              // isSelected={String(mydashboard.id) === selectedId}
+            ></DashboardListItem>
           ))}
         </div>
         <button className="w-[200px] self-end">페이지네이션 버튼</button>

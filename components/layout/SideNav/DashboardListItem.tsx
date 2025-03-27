@@ -12,6 +12,7 @@ interface DashboardListItemProps {
   createdByMe: boolean;
   userId?: number;
   isSelected?: boolean;
+  className?: string;
 }
 
 export default function DashboardListItem({
@@ -20,10 +21,11 @@ export default function DashboardListItem({
   colorKey,
   createdByMe,
   isSelected,
+  className
 }: DashboardListItemProps) {
   return (
     <Link
-      href={`/dashboard/${dashboardId}/edit`}
+      href={`/dashboard/${dashboardId}`}
       className={clsx(
         'flex h-[50px] items-center justify-center gap-4 rounded-sm px-3 py-2 md:justify-start',
         isSelected ? 'bg-violet8' : 'hover:bg-gray100'

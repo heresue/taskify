@@ -11,9 +11,9 @@ interface Member {
   updatedAt: string;
   isOwner: boolean;
 }
-
+// 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지 커밋 금지
 export default function MemberBadgeList({
-  members,
+  members = [],
   totalCount,
 }: {
   members: Member[];
