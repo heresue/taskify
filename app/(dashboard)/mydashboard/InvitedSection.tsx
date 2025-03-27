@@ -1,9 +1,40 @@
+'use client';
+
 import Input from '@/components/common/Input';
 import Image from 'next/image';
 import InvitedDashboardList from './InvitedDashboardList';
 import { Invitation } from './invitations';
+import { useEffect, useState } from 'react';
 
-export default function InvitedSection({ invitations }: { invitations: Invitation[] }) {
+interface Props {
+  invitations: Invitation[];
+}
+
+// mock 데이터 기반으로 단순 기능만 구현함에 따라
+// 주석처리 된 코드가 있습니다.
+
+export default function InvitedSection({ invitations: initialInvitations }: Props) {
+  const [invitations, setInvitations] = useState<Invitation[]>([]);
+  // const [myDashboards, setMyDashboards] = useState<Invitation[]>([]);
+
+  useEffect(() => {
+    setInvitations(initialInvitations);
+  }, [initialInvitations]);
+
+  const handleAccept = (id: number) => {
+    const accepted = invitations.find((inv) => inv.id === id);
+    if (!accepted) return;
+
+    setInvitations((prev) => prev.filter((inv) => inv.id !== id));
+    // setMyDashboards((prev) => [...prev, accepted]);
+    console.log('수락된 대시보드:', accepted.dashboard.title);
+  };
+
+  const handleDecline = (id: number) => {
+    setInvitations((prev) => prev.filter((inv) => inv.id !== id));
+    console.log('거절된 초대 ID:', id);
+  };
+
   if (invitations.length === 0) {
     return (
       <div className="relative h-[390px] rounded-2xl bg-white px-10 py-6">
@@ -38,7 +69,11 @@ export default function InvitedSection({ invitations }: { invitations: Invitatio
           }
         />
       </div>
-      <InvitedDashboardList invitations={invitations} />
+      <InvitedDashboardList
+        invitations={invitations}
+        onAccept={handleAccept}
+        onDecline={handleDecline}
+      />
     </div>
   );
 }
