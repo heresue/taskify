@@ -4,7 +4,7 @@ import DashboardColorIcon, { ColorKey } from '../../DashboardColorIcon/Dashboard
 import clsx from 'clsx';
 
 interface DashboardListItemProps {
-  id: number;
+  dashboardId: number;
   title: string;
   colorKey: ColorKey;
   createdAt?: string;
@@ -15,20 +15,23 @@ interface DashboardListItemProps {
 }
 
 export default function DashboardListItem({
-  id,
+  dashboardId,
   title,
   colorKey,
   createdByMe,
   isSelected,
 }: DashboardListItemProps) {
   return (
-    <li className={clsx('rounded-sm', isSelected && 'bg-violet8')}>
-      <Link href={`/dashboard/${id}`} className="flex h-[42px] items-center gap-4 px-3 py-2">
+    <li className={clsx('rounded-sm', isSelected ? 'bg-violet8' : 'hover:bg-gray100')}>
+      <Link
+        href={`/dashboard/${dashboardId}`}
+        className="flex h-[50px] items-center gap-4 px-3 py-2"
+      >
         <DashboardColorIcon colorKey={colorKey} />
-        <div className="flex min-w-0 items-center gap-[6px]">
+        <div className="flex hidden min-w-0 items-center gap-[6px] md:flex">
           <span
             className={clsx(
-              'text-medium18 text-gray500 overflow-hidden text-ellipsis whitespace-nowrap',
+              'text-medium18 text-gray500 truncate',
               createdByMe ? 'max-w-[calc(100%-14px)]' : 'flex-1'
             )}
           >
