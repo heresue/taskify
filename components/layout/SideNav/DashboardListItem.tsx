@@ -25,7 +25,7 @@ export default function DashboardListItem({
     <li className={clsx('rounded-sm', isSelected ? 'bg-violet8' : 'hover:bg-gray100')}>
       <Link
         href={`/dashboard/${dashboardId}`}
-        className="flex h-[42px] items-center gap-4 px-3 py-2"
+        className="flex h-[50px] items-center gap-4 px-3 py-2"
       >
         <DashboardColorIcon colorKey={colorKey} />
         <div className="flex min-w-0 items-center gap-[6px]">

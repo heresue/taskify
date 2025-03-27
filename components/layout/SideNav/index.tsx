@@ -11,7 +11,7 @@ import { usePathname } from 'next/navigation';
 export default function SideNav() {
   const pathname = usePathname();
   const selectedId = pathname?.split('/dashboard/')[1]?.split('/')[0];
-  
+
   // mock data 적용
   const [dashboards, setDashboards] = useState<MockDashboard[]>([]);
 
