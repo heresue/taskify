@@ -28,7 +28,7 @@ export default function SideNav() {
             <h2 className="text-semi12 text-gray500">Dash Boards</h2>
             <AddDashboardButton />
           </div>
-          <ul>
+          <ul className='space-y-2'>
             {dashboards.map((dashboard) => (
               <DashboardListItem
                 key={dashboard.id}
