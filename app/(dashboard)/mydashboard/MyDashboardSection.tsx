@@ -4,6 +4,7 @@ import Button from '@/components/common/Button';
 import { Invitation } from './invitations';
 import CreateDashboardModal from './CreateDashboardModal';
 import { useState } from 'react';
+import Image from 'next/image';
 
 interface Props {
   mydashboards: Invitation[];
@@ -17,7 +18,7 @@ export default function MyDashboardSection({ mydashboards }: Props) {
       <div className="mb-[114px] flex flex-col gap-3">
         <Button variant="outline" size="dashboardCard" onClick={() => setIsOpen(true)}>
           <span>새로운 대시보드</span>
-          <img src="/icons/plus.svg" alt="추가" width={16} height={16} className="mr-2 ml-3" />
+          <Image src="/icons/plus.svg" alt="추가" width={16} height={16} className="mr-2 ml-3" />
         </Button>
       </div>
     );
@@ -29,7 +30,7 @@ export default function MyDashboardSection({ mydashboards }: Props) {
         <div className="grid grid-cols-3 grid-rows-2 gap-[13px]">
           <Button variant="outline" size="dashboardCard" onClick={() => setIsOpen(true)}>
             <span>새로운 대시보드</span>
-            <img src="/icons/plus.svg" alt="추가" width={16} height={16} className="mr-2 ml-3" />
+            <Image src="/icons/plus.svg" alt="추가" width={16} height={16} className="mr-2 ml-3" />
           </Button>
 
           {mydashboards.map((mydashboard) => (

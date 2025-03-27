@@ -6,7 +6,7 @@ export const COLOR_MAP = {
   pink: '#e876ea',
 } as const;
 
-type ColorKey = keyof typeof COLOR_MAP;
+export type ColorKey = keyof typeof COLOR_MAP;
 
 interface Props {
   colorKey: ColorKey;
