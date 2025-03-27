@@ -5,14 +5,14 @@ import { DropdownItem } from '../common/Dropdown/types';
 interface ToDoData {
   title: string;
   description: string;
-  dueDate: string;
+  dueDate: Date | null;
   imageUrl: string | null;
 }
 
 const INITIAL_TO_DO_VALUE = {
   title: '',
   description: '',
-  dueDate: '',
+  dueDate: null,
   imageUrl: null,
 };
 
@@ -29,6 +29,13 @@ export default function useToDoData(columnId: number, dashboardId: number) {
     setToDoData((prev) => ({
       ...prev,
       [name]: value,
+    }));
+  };
+
+  const handleDueDateChange = (date: Date | null) => {
+    setToDoData((prev) => ({
+      ...prev,
+      dueDate: date,
     }));
   };
 
@@ -53,6 +60,8 @@ export default function useToDoData(columnId: number, dashboardId: number) {
   return {
     handleFormChange,
     handleAssigneeUserChange,
+    handleDueDateChange,
+    dueDate: toDoData.dueDate,
     handleTagsChange,
     handleToDoSubmit,
   };
