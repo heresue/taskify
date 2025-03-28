@@ -13,6 +13,7 @@ interface Props {
   initialMembers?: Member[];
 }
 
+// mock data 임시 적용
 const mockMembers = [
   { id: 1, nickname: '홍길동' },
   { id: 2, nickname: '김개발자' },
@@ -22,7 +23,7 @@ const mockMembers = [
 export default function MemberListSection({ initialMembers = mockMembers }: Props) {
   const [members, setMembers] = useState<Member[]>(initialMembers || []);
 
-  // 데이터 연동 후 수정
+  // TODO: 데이터 연동 후 수정
   const deleteMember = async (memberId: number) => {
     console.log(`[임시] 삭제 요청: 구성원 ID ${memberId}`);
     return Promise.resolve();
