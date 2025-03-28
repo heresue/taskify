@@ -1,6 +1,6 @@
 import AddColumnBtn from '@/components/Dashboard/AddColumnBtn';
 import DashboardColumn from '@/components/Dashboard/DashboardColumn/DashboardColum';
-import GetDashboardColumn from '@/components/Dashboard/DashboardColumn/action';
+import getDashboardColumn from '@/components/Dashboard/DashboardColumn/action';
 
 export default async function DashboardId({
   params,
@@ -9,7 +9,7 @@ export default async function DashboardId({
 }) {
   const dashboardId = (await params).dashboardId;
 
-  const columns = await GetDashboardColumn(Number(dashboardId));
+  const columns = await getDashboardColumn(Number(dashboardId));
   if (!columns) return;
 
   return (
