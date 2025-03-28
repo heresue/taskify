@@ -3,7 +3,8 @@ export interface PaginationProps<T> {
   itemsPerPage: number;
   showPageInfo?: boolean;
   wrapperClassName?: string;
-
+  itemsWrapperClassName?: string;
+  renderFixedItem?: () => React.ReactNode;
   /**
    * @example
    * renderItems={(pageItems) => (

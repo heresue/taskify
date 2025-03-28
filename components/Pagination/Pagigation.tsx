@@ -8,23 +8,36 @@ export default function Pagination<T>({
   data,
   itemsPerPage,
   showPageInfo = true,
+  renderFixedItem,
   renderItems,
   renderControls,
   wrapperClassName,
+  itemsWrapperClassName,
 }: PaginationProps<T>) {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { totalPages, currentItems } = useMemo(() => {
+  const getPaginatedItems = () => {
     const totalPages = Math.ceil(data.length / itemsPerPage);
+
+    if (currentPage === 1) {
+      const count = renderFixedItem ? itemsPerPage - 1 : itemsPerPage;
+      return { totalPages, currentItems: data.slice(0, count) };
+    }
+
     const start = (currentPage - 1) * itemsPerPage;
     const end = start + itemsPerPage;
     return {
       totalPages,
       currentItems: data.slice(start, end),
     };
-  }, [data, currentPage, itemsPerPage]);
+  };
 
-  const shouldRenderControls = totalPages > 1;
+  const { totalPages, currentItems } = useMemo(getPaginatedItems, [
+    data,
+    currentPage,
+    itemsPerPage,
+    renderFixedItem,
+  ]);
 
   const goToPrev = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
   const goToNext = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
@@ -37,6 +50,8 @@ export default function Pagination<T>({
     goToNext,
   };
 
+  const shouldRenderControls = totalPages > 1;
+
   const controls = renderControls ? (
     renderControls(controlsProps)
   ) : (
@@ -45,7 +60,10 @@ export default function Pagination<T>({
 
   return (
     <div className={wrapperClassName}>
-      <div>{renderItems(currentItems)}</div>
+      <div className={itemsWrapperClassName}>
+        {currentPage === 1 && renderFixedItem?.()}
+        {renderItems(currentItems)}
+      </div>
       {shouldRenderControls && controls}
     </div>
   );
