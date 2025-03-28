@@ -45,8 +45,12 @@ export default function InvitationListSection({ dashboardId }: Props) {
         <h3 className="text-bold24">초대 내역</h3>
         <div className="flex items-center gap-4">
           <div>페이지네이션 버튼</div>
-          <Button onClick={() => setIsOpen(true)}>
-            <AddBoxIcon width='14' height='14' color="white" />
+          <Button
+            size="w-[109px] h-[32px] rounded-sm"
+            className="flex gap-[10px]"
+            onClick={() => setIsOpen(true)}
+          >
+            <AddBoxIcon width="14" height="14" color="white" />
             <span className="text-medium14">초대하기</span>
           </Button>
         </div>
