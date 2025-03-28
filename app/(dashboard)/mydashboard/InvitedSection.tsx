@@ -35,7 +35,7 @@ export default function InvitedSection({ invitations: initialInvitations }: Prop
     console.log('수락된 대시보드:', accepted.dashboard.title);
   };
 
-  const handleDecline = (id: number) => {
+  const handleReject = (id: number) => {
     setInvitations((prev) => prev.filter((inv) => inv.id !== id));
     console.log('거절된 초대 ID:', id);
   };
@@ -79,7 +79,7 @@ export default function InvitedSection({ invitations: initialInvitations }: Prop
       <InvitedDashboardList
         invitations={filtered}
         onAccept={handleAccept}
-        onDecline={handleDecline}
+        onReject={handleReject}
       />
     </div>
   );
