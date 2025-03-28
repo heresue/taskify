@@ -4,14 +4,12 @@ import DashboardTitleSection from './DashboardTitleSection ';
 import MemberListSection from './MemberListSection ';
 import InvitationListSection from './InvitationListSection ';
 
-interface Props {
-  params: {
-    dashboardId: string;
-  };
-}
-
-export default async function DashboardIdEdit({ params }: Props) {
-  const { dashboardId } = params;
+export default async function DashboardIdEdit({
+  params,
+}: {
+  params: Promise<{ dashboardId: string }>;
+}) {
+  const dashboardId = (await params).dashboardId;
 
   return (
     <div id="wrapper" className="m-5 mb-[57px] flex flex-col gap-[34px]">
