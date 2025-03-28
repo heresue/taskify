@@ -1,6 +1,6 @@
 import Button from '@/components/common/Button';
 import BackLink from './BackLink';
-import DashboardNameSection from './DashboardNameSection ';
+import DashboardTitleSection from './DashboardTitleSection ';
 import MemberListSection from './MemberListSection ';
 import InvitationListSection from './InvitationListSection ';
 
@@ -18,7 +18,7 @@ export default async function DashboardIdEdit({ params }: Props) {
       <BackLink id={dashboardId} />
 
       <div className="flex w-[620px] flex-col gap-4">
-        <DashboardNameSection />
+        <DashboardTitleSection />
         <MemberListSection />
         <InvitationListSection dashboardId={dashboardId} />
 
