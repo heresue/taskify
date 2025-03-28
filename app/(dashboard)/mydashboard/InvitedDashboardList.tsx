@@ -2,7 +2,13 @@ import Button from '@/components/common/Button';
 import React from 'react';
 import { Invitation } from './invitations';
 
-const InvitedDashboardList = ({ invitations }: { invitations: Invitation[] }) => {
+interface Props {
+  invitations: Invitation[];
+  onAccept: (id: number) => void;
+  onReject: (id: number) => void;
+}
+
+const InvitedDashboardList = ({ invitations, onAccept, onReject }: Props) => {
   return (
     <div className="w-full overflow-hidden rounded-lg">
       {/* Header */}
@@ -20,8 +26,10 @@ const InvitedDashboardList = ({ invitations }: { invitations: Invitation[] }) =>
               <span>{invitation.dashboard.title}</span>
               <span>{invitation.inviter.nickname}</span>
               <span className="flex justify-center gap-2">
-                <Button>수락</Button>
-                <Button variant="outline">거절</Button>
+                <Button onClick={() => onAccept(invitation.id)}>수락</Button>
+                <Button variant="outline" onClick={() => onReject(invitation.id)}>
+                  거절
+                </Button>
               </span>
             </div>
           ))}

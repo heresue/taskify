@@ -1,9 +1,45 @@
+'use client';
+
 import Input from '@/components/common/Input';
 import Image from 'next/image';
 import InvitedDashboardList from './InvitedDashboardList';
 import { Invitation } from './invitations';
+import { useEffect, useState } from 'react';
 
-export default function InvitedSection({ invitations }: { invitations: Invitation[] }) {
+interface Props {
+  invitations: Invitation[];
+}
+
+// mock 데이터 기반으로 단순 기능만 구현함에 따라
+// 주석처리 된 코드가 있습니다.
+
+export default function InvitedSection({ invitations: initialInvitations }: Props) {
+  const [invitations, setInvitations] = useState<Invitation[]>([]);
+  // const [myDashboards, setMyDashboards] = useState<Invitation[]>([]);
+  const [keyword, setKeyword] = useState('');
+
+  useEffect(() => {
+    setInvitations(initialInvitations);
+  }, [initialInvitations]);
+
+  const filtered = invitations.filter((inv) =>
+    inv.dashboard.title.toLowerCase().includes(keyword.toLowerCase())
+  );
+
+  const handleAccept = (id: number) => {
+    const accepted = invitations.find((inv) => inv.id === id);
+    if (!accepted) return;
+
+    setInvitations((prev) => prev.filter((inv) => inv.id !== id));
+    // setMyDashboards((prev) => [...prev, accepted]);
+    console.log('수락된 대시보드:', accepted.dashboard.title);
+  };
+
+  const handleReject = (id: number) => {
+    setInvitations((prev) => prev.filter((inv) => inv.id !== id));
+    console.log('거절된 초대 ID:', id);
+  };
+
   if (invitations.length === 0) {
     return (
       <div className="relative h-[390px] rounded-2xl bg-white px-10 py-6">
@@ -24,6 +60,8 @@ export default function InvitedSection({ invitations }: { invitations: Invitatio
         <h3 className="text-bold24 text-black200">초대받은 대시보드</h3>
         <Input
           placeholder="검색"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
           size={16}
           customInputClass="h-6"
           customBorderClass="py-[7px]"
@@ -38,7 +76,11 @@ export default function InvitedSection({ invitations }: { invitations: Invitatio
           }
         />
       </div>
-      <InvitedDashboardList invitations={invitations} />
+      <InvitedDashboardList
+        invitations={filtered}
+        onAccept={handleAccept}
+        onReject={handleReject}
+      />
     </div>
   );
 }
