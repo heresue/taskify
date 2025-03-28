@@ -5,10 +5,10 @@ import { Invitation } from './invitations';
 interface Props {
   invitations: Invitation[];
   onAccept: (id: number) => void;
-  onDecline: (id: number) => void;
+  onReject: (id: number) => void;
 }
 
-const InvitedDashboardList = ({ invitations, onAccept, onDecline }: Props) => {
+const InvitedDashboardList = ({ invitations, onAccept, onReject }: Props) => {
   return (
     <div className="w-full overflow-hidden rounded-lg">
       {/* Header */}
@@ -27,7 +27,7 @@ const InvitedDashboardList = ({ invitations, onAccept, onDecline }: Props) => {
               <span>{invitation.inviter.nickname}</span>
               <span className="flex justify-center gap-2">
                 <Button onClick={() => onAccept(invitation.id)}>수락</Button>
-                <Button variant="outline" onClick={() => onDecline(invitation.id)}>
+                <Button variant="outline" onClick={() => onReject(invitation.id)}>
                   거절
                 </Button>
               </span>
