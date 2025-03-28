@@ -5,7 +5,7 @@ import MemberBadgeList from '@/components/layout/Header/MemberBadgeList';
 import Setting from '@/assets/icons/Setting';
 import { api } from '@/lib/api';
 import InvitationButton from '@/components/layout/Header/InvitationButton';
-import UserButton from '@/components/layout/Header/UserButton';
+import UserMenu from '@/components/layout/Header/UserMenu';
 
 interface Member {
   id: number;
@@ -66,7 +66,7 @@ export default async function DashboardHeader({ dashboardId }: { dashboardId: nu
         </div>
         <MemberBadgeList members={members} totalCount={totalCount} />
         <div className="bg-gray300 mx-3 h-8.5 w-[1px] md:mx-6 md:h-[9.5] lg:mx-8"></div>
-        <UserButton nickname={nickname} profileImageUrl={profileImageUrl} />
+        <UserMenu nickname={nickname} profileImageUrl={profileImageUrl} />
       </div>
     </header>
   );

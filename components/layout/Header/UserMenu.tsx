@@ -4,7 +4,7 @@ import UserBadge from '@/components/UserBadge/UserBadge';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 
-export default function UserButton({
+export default function UserMenu({
   nickname,
   profileImageUrl,
 }: {
