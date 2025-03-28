@@ -10,6 +10,14 @@ export default function PaginationControls({
 }: PaginationControlsProps) {
   if (totalPages <= 1) return null;
 
+  const baseButtonClass =
+    'border-gray300 flex h-10 w-10 items-center justify-center border bg-white';
+
+  const getArrowColor = (disabled: boolean) => (disabled ? '#D9D9D9' : '#787486');
+
+  const isPrevDisabled = currentPage === 1;
+  const isNextDisabled = currentPage === totalPages;
+
   return (
     <div className="flex items-center justify-end gap-4">
       {showPageInfo && (
@@ -19,14 +27,14 @@ export default function PaginationControls({
       )}
       <div className="flex">
         <button
-          className="border-gray300 flex h-10 w-10 items-center justify-center rounded-l-sm border bg-white"
+          className={`${baseButtonClass} rounded-l-sm`}
           onClick={goToPrev}
           disabled={currentPage === 1}
         >
-          <ArrowIcon width="7" height="12" color={currentPage === 1 ? '#D9D9D9' : '#787486'} />
+          <ArrowIcon width="7" height="12" color={getArrowColor(isPrevDisabled)} />
         </button>
         <button
-          className="border-gray300 flex h-10 w-10 items-center justify-center rounded-r-sm border bg-white"
+          className={`${baseButtonClass} rounded-r-sm`}
           onClick={goToNext}
           disabled={currentPage === totalPages}
         >
@@ -34,7 +42,7 @@ export default function PaginationControls({
             direction="right"
             width="7"
             height="12"
-            color={currentPage === totalPages ? '#D9D9D9' : '#787486'}
+            color={getArrowColor(isNextDisabled)}
           />
         </button>
       </div>
