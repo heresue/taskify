@@ -35,6 +35,7 @@ export default function ToDoFormModal({ open, onClose, cardId, columnId }: ToDoF
   const {
     dueDate,
     image,
+    isFormComplete,
     handleFormChange,
     handleAssigneeUserChange,
     handleDueDateChange,
@@ -84,6 +85,7 @@ export default function ToDoFormModal({ open, onClose, cardId, columnId }: ToDoF
       cancelMessage="취소"
       submitMessage={createOrUpdate}
       onSubmit={handleToDoSubmit}
+      disabled={!isFormComplete}
     >
       <div className="flex w-full flex-col gap-8">
         <h1 className="text-bold24 text-black200">할 일 {createOrUpdate}</h1>

@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { api } from '@/lib/api';
 import { DropdownItem } from '../common/Dropdown/types';
 import { postDashboardCardImage } from './action';
+import { checkAllFormComplete } from '@/utils/checkAllFormComplete';
+import formatDateTime from '@/utils/formatDateTime';
 
 interface ToDoData {
   title: string;
@@ -25,26 +27,21 @@ export default function useToDoData(columnId: number, dashboardId: number) {
   });
   const [tags, setTags] = useState<string[]>([]);
 
+  const data = {
+    title: toDoData.title,
+    description: toDoData.description,
+    dueDate: formatDateTime(toDoData.dueDate),
+    dashboardId,
+    assigneeUserId: assigneeUser.id,
+    columnId,
+  };
+
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setToDoData((prev) => ({
       ...prev,
       [name]: value,
     }));
-  };
-
-  const formatterDate = (dateValue: Date | null): string => {
-    if (!dateValue) return '';
-
-    const date = new Date(dateValue);
-
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-
-    return `${year}-${month}-${day} ${hours}:${minutes}`;
   };
 
   const handleDueDateChange = (date: Date | null) => {
@@ -75,22 +72,21 @@ export default function useToDoData(columnId: number, dashboardId: number) {
     }
   };
 
+  const isFormComplete = checkAllFormComplete(data) && tags.length !== 0;
   const handleToDoSubmit = async () => {
+    if (!isFormComplete) return;
+
     await api.post('/cards', {
-      title: toDoData.title,
-      description: toDoData.description,
-      imageUrl: toDoData.imageUrl,
-      dueDate: formatterDate(toDoData.dueDate),
+      data,
       tags,
-      dashboardId,
-      assigneeUserId: assigneeUser.id,
-      columnId,
+      imageUrl: toDoData.imageUrl,
     });
   };
 
   return {
     dueDate: toDoData.dueDate,
     image: toDoData.imageUrl,
+    isFormComplete,
     handleFormChange,
     handleAssigneeUserChange,
     handleImageChange,
