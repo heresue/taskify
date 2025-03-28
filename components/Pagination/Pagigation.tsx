@@ -10,6 +10,7 @@ export default function Pagination<T>({
   showPageInfo = true,
   renderItems,
   renderControls,
+  wrapperClassName,
 }: PaginationProps<T>) {
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -43,9 +44,9 @@ export default function Pagination<T>({
   );
 
   return (
-    <>
-      {renderItems(currentItems)}
+    <div className={wrapperClassName}>
+      <div>{renderItems(currentItems)}</div>
       {shouldRenderControls && controls}
-    </>
+    </div>
   );
 }

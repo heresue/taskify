@@ -2,6 +2,7 @@ export interface PaginationProps<T> {
   data: T[];
   itemsPerPage: number;
   showPageInfo?: boolean;
+  wrapperClassName?: string;
 
   /**
    * @example
