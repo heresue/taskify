@@ -1,8 +1,7 @@
 'use client';
-
-import UserBadge from '@/components/UserBadge/UserBadge';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import UserBadge from '@/components/UserBadge/UserBadge';
 
 export default function UserMenu({
   nickname,

@@ -2,10 +2,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { cookies } from 'next/headers';
 import MemberBadgeList from '@/components/layout/Header/MemberBadgeList';
-import Setting from '@/assets/icons/Setting';
-import { api } from '@/lib/api';
 import InvitationButton from '@/components/layout/Header/InvitationButton';
 import UserMenu from '@/components/layout/Header/UserMenu';
+import Setting from '@/assets/icons/Setting';
+import { api } from '@/lib/api';
 
 interface Member {
   id: number;
