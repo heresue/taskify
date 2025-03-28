@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { api } from '@/lib/api';
 import { DropdownItem } from '../common/Dropdown/types';
 import { postDashboardCardImage } from './action';
-import { checkAllFormComplete } from '@/utils/checkAllFormComplete';
+import checkAllFormComplete from '@/utils/checkAllFormComplete';
 import formatDateTime from '@/utils/formatDateTime';
 
 interface ToDoData {
@@ -77,9 +77,9 @@ export default function useToDoData(columnId: number, dashboardId: number) {
     if (!isFormComplete) return;
 
     await api.post('/cards', {
-      data,
+      ...data,
       tags,
-      imageUrl: toDoData.imageUrl,
+      imageUrl: toDoData.imageUrl ?? '',
     });
   };
 
