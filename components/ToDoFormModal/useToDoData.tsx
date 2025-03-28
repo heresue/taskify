@@ -18,7 +18,7 @@ const INITIAL_TO_DO_VALUE = {
 
 export default function useToDoData(columnId: number, dashboardId: number) {
   const [toDoData, setToDoData] = useState<ToDoData>(INITIAL_TO_DO_VALUE);
-  const [assigneeUser, setAssingeeUser] = useState<DropdownItem>({
+  const [assigneeUser, setAssigneeUser] = useState<DropdownItem>({
     id: 0,
     value: '',
   });
@@ -40,7 +40,7 @@ export default function useToDoData(columnId: number, dashboardId: number) {
   };
 
   const handleAssigneeUserChange = (userId: number | string) =>
-    setAssingeeUser({ ...assigneeUser, id: userId });
+    setAssigneeUser({ ...assigneeUser, id: userId });
 
   const handleTagsChange = (tags: string[]) => {
     setTags(tags);
