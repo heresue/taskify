@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 const DASHBOARD_COLORS = ['#ffa500', '#7ac555', '#76a5ea', '#e876ea', '#760dde'];
 
-export default function DashboardNameSection() {
+export default function DashboardTitleSection() {
   const [isSelected, setIsSelected] = useState(DASHBOARD_COLORS[0]);
   const [dashboardName, setDashboardName] = useState('');
 
