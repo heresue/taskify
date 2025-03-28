@@ -13,6 +13,7 @@ interface ModalProps {
   cancelMessage?: string;
   padding: PaddingSize;
   borderRadius: RadiusSize;
+  disabled: boolean;
 }
 
 export default function Modal({
@@ -24,6 +25,7 @@ export default function Modal({
   cancelMessage,
   padding,
   borderRadius,
+  disabled,
 }: ModalProps) {
   useBlockScroll(isOpen);
   if (!isOpen) return null;
@@ -67,7 +69,12 @@ export default function Modal({
             </Button>
           )}
           {submitMessage && (
-            <Button size={twoButton ? 'modal' : 'modalAlert'} onClick={handleSubmitClick} fullWidth>
+            <Button
+              size={twoButton ? 'modal' : 'modalAlert'}
+              onClick={handleSubmitClick}
+              disabled={disabled}
+              fullWidth
+            >
               {submitMessage}
             </Button>
           )}
