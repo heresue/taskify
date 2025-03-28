@@ -4,6 +4,7 @@ import { DropdownItem } from '../common/Dropdown/types';
 import { postDashboardCardImage } from './action';
 import checkAllFormComplete from '@/utils/checkAllFormComplete';
 import formatDateTime from '@/utils/formatDateTime';
+import DEFAULT_CARD_IMAGE from '@/constants/image/defaultCardImage';
 
 interface ToDoData {
   title: string;
@@ -79,7 +80,7 @@ export default function useToDoData(columnId: number, dashboardId: number) {
     await api.post('/cards', {
       ...data,
       tags,
-      imageUrl: toDoData.imageUrl ?? '',
+      imageUrl: toDoData.imageUrl ?? DEFAULT_CARD_IMAGE,
     });
   };
 
