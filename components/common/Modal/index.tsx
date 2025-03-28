@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { createPortal } from 'react-dom';
 import { borderRadiusCSS, paddingCSS, PaddingSize, RadiusSize } from './style';
 import Button from '../Button';
+import { useBlockScroll } from '@/hooks/useBlockScroll';
 
 interface ModalProps {
   isOpen: boolean;
@@ -24,6 +25,7 @@ export default function Modal({
   padding,
   borderRadius,
 }: ModalProps) {
+  useBlockScroll(isOpen);
   if (!isOpen) return null;
 
   const handleSubmitClick = () => {

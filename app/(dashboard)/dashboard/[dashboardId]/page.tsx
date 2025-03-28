@@ -8,9 +8,9 @@ export default async function DashboardId({
 }: {
   params: Promise<{ dashboardId: string }>;
 }) {
-  const dashboardId = Number(params);
+  const dashboardId = (await params).dashboardId;
 
-  const columns = await GetDashboardColumn(dashboardId);
+  const columns = await GetDashboardColumn(Number(dashboardId));
   if (!columns) return;
 
   return (
