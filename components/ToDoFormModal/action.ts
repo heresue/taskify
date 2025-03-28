@@ -1,3 +1,4 @@
+import EXTERNAL_API from '@/constants/api/external';
 import { api } from '@/lib/api';
 import { getItem } from '@/utils/localstorage';
 
@@ -14,7 +15,9 @@ interface MembersPromise {
 }
 
 export async function getMembers(dashboardId: number) {
-  const response = await api.get<MembersPromise>(`/members?dashboardId=${dashboardId}`);
+  const response = await api.get<MembersPromise>(
+    `${EXTERNAL_API.MEMBERS.ROOT}?dashboardId=${dashboardId}`
+  );
   return response;
 }
 

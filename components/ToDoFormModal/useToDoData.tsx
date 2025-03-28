@@ -5,6 +5,7 @@ import { postDashboardCardImage } from './action';
 import checkAllFormComplete from '@/utils/checkAllFormComplete';
 import formatDateTime from '@/utils/formatDateTime';
 import DEFAULT_CARD_IMAGE from '@/constants/image/defaultCardImage';
+import EXTERNAL_API from '@/constants/api/external';
 
 interface ToDoData {
   title: string;
@@ -77,7 +78,7 @@ export default function useToDoData(columnId: number, dashboardId: number) {
   const handleToDoSubmit = async () => {
     if (!isFormComplete) return;
 
-    await api.post('/cards', {
+    await api.post(`${EXTERNAL_API.CARDS.ROOT}`, {
       ...data,
       tags,
       imageUrl: toDoData.imageUrl ?? DEFAULT_CARD_IMAGE,
