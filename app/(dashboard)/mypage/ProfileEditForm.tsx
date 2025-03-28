@@ -4,8 +4,9 @@ import Button from '@/components/common/Button';
 import FormField from '@/components/compound/form/FormField';
 import UploadImage from '@/components/compound/upload/UploadImage';
 import { validateLimitLengthNickname } from '@/utils/authValidate';
-import React, { useRef, useState } from 'react';
+import { useState } from 'react';
 import { getItem } from '@/utils/localstorage';
+import { api } from '@/lib/api';
 
 type userInfo = {
   id: number;
@@ -23,19 +24,16 @@ export default function ProfileEditForm() {
   const initalProfileImageUrl = userInfo?.profileImageUrl ?? null;
   const [imagePreview, setImagePreview] = useState<string | null>(initalProfileImageUrl);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  // const [profileImageUrl, setProfileImageUrl] = useState(initalProfileImageUrl);
   const [nickname, setNickname] = useState(initialNickname);
   const [isNicknameValid, setIsNicknameValid] = useState(true);
-  const hasNicknameClickedRef = useRef<boolean>(false);
 
-  const canSubmit =
-    hasNicknameClickedRef.current && isNicknameValid && nickname !== initialNickname;
+  const canSubmit = isNicknameValid && !(nickname === initialNickname && imageFile === null);
 
   const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const file = e.target.files?.[0];
     if (file) {
-      setImageFile(file); // 파일 자체 저장
+      setImageFile(file);
       const reader = new FileReader();
 
       reader.onloadend = () => {
@@ -47,12 +45,47 @@ export default function ProfileEditForm() {
   };
 
   const handleNicknameBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    hasNicknameClickedRef.current = true;
     setIsNicknameValid(validateLimitLengthNickname(e.target.value));
   };
 
+  // content-type 헤더가 multipart/form-data라, fetch 함수를 사용했습니다. TODO: 리팩토링 필요
+  const uploadProfileImage = async (imageFile: File) => {
+    const token = getItem('accessToken');
+    const formData = new FormData();
+    formData.append('image', imageFile);
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users/me/image`, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('이미지 업로드에 실패했습니다.');
+    }
+
+    const data = await response.json();
+    return data;
+  };
+
+  // 사용자 정보를 성공적으로 업데이트해도, 현재 페이지에서 반영이 안됩니다.
+  // TODO: 사용자 정보 업데이트 시 사용자 현재 정보 업데이트 (localStorage와 cookie);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    let uploadedImageUrl: string | null = null;
+
+    if (imageFile) {
+      const { profileImageUrl } = await uploadProfileImage(imageFile);
+      uploadedImageUrl = profileImageUrl;
+    }
+
+    await api.put(`/users/me`, {
+      nickname: nickname,
+      profileImageUrl: uploadedImageUrl,
+    });
   };
 
   return (
