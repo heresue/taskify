@@ -4,6 +4,7 @@ import Button from '@/components/common/Button';
 import InviteModal from './InviteModal';
 import { useMemo, useState } from 'react';
 import { mockInvitations } from '@/mocks/invitations';
+import AddBoxIcon from '@/assets/icons/AddBoxIcon';
 
 interface Props {
   dashboardId: string;
@@ -45,8 +46,7 @@ export default function InvitationListSection({ dashboardId }: Props) {
         <div className="flex items-center gap-4">
           <div>페이지네이션 버튼</div>
           <Button onClick={() => setIsOpen(true)}>
-            {/* 아이콘 삽입 시 버튼 크기 재설정
-            <img src="/icons/addbox.svg" /> */}
+            <AddBoxIcon width='14' height='14' color="white" />
             <span className="text-medium14">초대하기</span>
           </Button>
         </div>

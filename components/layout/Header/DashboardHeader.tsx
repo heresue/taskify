@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { cookies } from 'next/headers';
-import AddBoxGrayIcon from '@/assets/icons/AddBoxGrayIcon';
+import AddBoxIcon from '@/assets/icons/AddBoxIcon';
 import UserBadge from '@/components/UserBadge/UserBadge';
 import MemberBadgeList from '@/components/layout/Header/MemberBadgeList';
 import Setting from '@/assets/icons/Setting';
@@ -67,7 +67,7 @@ export default async function DashboardHeader({ dashboardId }: { dashboardId: nu
             href={`/dashboard/${dashboardId}/edit`}
             className="text-medium14 text-gray500 border-gray300 flex items-center gap-2 truncate rounded-md border-1 px-3 py-1.5 md:rounded-lg md:px-4 md:py-2"
           >
-            <AddBoxGrayIcon width={16} height={16} className="hidden md:block" />
+            <AddBoxIcon width='16' height='16' className="hidden md:block" />
             초대하기
           </Link>
         </div>
