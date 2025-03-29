@@ -2,11 +2,14 @@
 
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import clsx from 'clsx';
 import FormField from '@/components/compound/form/FormField';
 import Button from '@/components/common/Button';
 import Modal from '@/components/common/Modal';
 import { validateEmail, validatePassword } from '@/utils/authValidate';
 import { setItem } from '@/utils/localstorage';
+import Open from '@/public/icons/openEye.svg';
+import Close from '@/public/icons/closeEye.svg';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -14,6 +17,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const hasEmailClickedRef = useRef<boolean>(false);
   const hasPasswordClickedRef = useRef<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -76,12 +80,18 @@ export default function LoginForm() {
             name="password"
             fieldType="input"
             label="비밀번호"
-            type="password"
+            type={isPasswordVisible ? 'text' : 'password'}
             errorMessage="8자 이상 작성해 주세요."
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onBlur={handlePasswordBlur}
             isValid={isPasswordValid}
+            rightIcon={
+              <PasswordToggle
+                isEyeOpen={!isPasswordVisible}
+                onClick={() => setIsPasswordVisible((prev) => !prev)}
+              />
+            }
           />
         </div>
         <Button size="auth" fullWidth={true} type="submit" disabled={!canSubmit}>
@@ -99,5 +109,21 @@ export default function LoginForm() {
         {modalMessage}
       </Modal>
     </>
+  );
+}
+
+function PasswordToggle({
+  isEyeOpen,
+  onClick,
+  className = '',
+}: {
+  isEyeOpen: boolean;
+  onClick: (event: React.MouseEvent) => void;
+  className?: string;
+}) {
+  return isEyeOpen ? (
+    <Open onClick={onClick} className={clsx('cursor-pointer', className)} />
+  ) : (
+    <Close onClick={onClick} className={clsx('cursor-pointer', className)} />
   );
 }
