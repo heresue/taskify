@@ -2,7 +2,7 @@ import CloseIcon from '@/assets/icons/CloseIcon';
 import Modal from '@/components/common/Modal';
 import FormField from '@/components/compound/form/FormField';
 import { validateEmail } from '@/utils/authValidate';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Props {
   isOpen: boolean;
@@ -17,6 +17,15 @@ export default function InviteModal({ isOpen, onClose, onInvite }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   const canSubmit = hasEmailBlurred && isEmailValid && !isLoading;
+
+  useEffect(() => {
+    if (!isOpen) {
+      setEmail('');
+      setIsEmailValid(true);
+      setHasEmailBlurred(false);
+      setIsLoading(false);
+    }
+  }, [isOpen]);
 
   const handleEmailBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     setHasEmailBlurred(true);
