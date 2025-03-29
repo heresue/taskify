@@ -1,9 +1,8 @@
-export interface PaginationProps<T> {
+export interface PaginationItemsProps<T> {
   data: T[];
   itemsPerPage: number;
-  showPageInfo?: boolean;
   wrapperClassName?: string;
-  itemsWrapperClassName?: string;
+  currentPage: number;
   renderFixedItem?: () => React.ReactNode;
   /**
    * @example
