@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { cookies } from 'next/headers';
-import AddBoxIcon from '@/assets/icons/AddBoxIcon';
-import UserBadge from '@/components/UserBadge/UserBadge';
 import MemberBadgeList from '@/components/layout/Header/MemberBadgeList';
+import InvitationButton from '@/components/layout/Header/InvitationButton';
+import UserMenu from '@/components/layout/Header/UserMenu';
 import Setting from '@/assets/icons/Setting';
 import { api } from '@/lib/api';
 
@@ -62,28 +62,11 @@ export default async function DashboardHeader({ dashboardId }: { dashboardId: nu
             <Setting width={18} height={18} className="hidden md:block" />
             관리
           </Link>
-          {/* FIXME: 클릭 시 edit 페이지로 이동하는게 아니라, 초대 모달을 띄워야 함 */}
-          <Link
-            href={`/dashboard/${dashboardId}/edit`}
-            className="text-medium14 text-gray500 border-gray300 flex items-center gap-2 truncate rounded-md border-1 px-3 py-1.5 md:rounded-lg md:px-4 md:py-2"
-          >
-            <AddBoxIcon width='16' height='16' className="hidden md:block" />
-            초대하기
-          </Link>
+          <InvitationButton />
         </div>
         <MemberBadgeList members={members} totalCount={totalCount} />
         <div className="bg-gray300 mx-3 h-8.5 w-[1px] md:mx-6 md:h-[9.5] lg:mx-8"></div>
-        {/* FIXME: Badge 유저명 텍스트 색상 black200으로 수정 필요 */}
-        <Link href={`/mypage`}>
-          <UserBadge
-            size={38}
-            gap={12}
-            userName={nickname}
-            profile={profileImageUrl}
-            fontSize="M16"
-            responsive={true}
-          />
-        </Link>
+        <UserMenu nickname={nickname} profileImageUrl={profileImageUrl} />
       </div>
     </header>
   );
