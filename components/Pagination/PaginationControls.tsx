@@ -4,7 +4,7 @@ import ArrowIcon from '@/assets/icons/ArrowIcon';
 export default function PaginationControls({
   currentPage,
   totalPages,
-  showPageInfo,
+  showPageInfo = true,
   goToPrev,
   goToNext,
 }: PaginationControlsProps) {
