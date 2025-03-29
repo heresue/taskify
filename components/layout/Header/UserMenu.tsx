@@ -1,8 +1,12 @@
 'use client';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState, useRef } from 'react';
 import UserBadge from '@/components/UserBadge/UserBadge';
 import { useClickOutside } from '@/hooks/useClickOutside';
+import ROUTES from '@/constants/routes';
+import INTERNAL_API from '@/constants/api/internal';
+import { removeItem } from '@/utils/localstorage';
 
 export default function UserMenu({
   nickname,
@@ -11,6 +15,7 @@ export default function UserMenu({
   nickname: string;
   profileImageUrl: string;
 }) {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
@@ -23,6 +28,22 @@ export default function UserMenu({
   };
 
   useClickOutside(dropdownRef, closeMenu);
+
+  const logout = async () => {
+    const res = await fetch(`${INTERNAL_API.AUTH.LOGOUT}`, {
+      method: 'POST',
+    });
+
+    const data: { success: boolean } = await res.json();
+
+    if (!data.success) {
+      return;
+    }
+
+    router.push(`${ROUTES.HOME}`);
+    removeItem('userInfo');
+    removeItem('accessToken');
+  };
 
   return (
     <div className="relative flex items-center" ref={dropdownRef}>
@@ -45,7 +66,7 @@ export default function UserMenu({
           </li>
           <li
             className="hover:bg-violet8 hover:text-violet flex min-h-8 cursor-pointer flex-row items-center justify-start gap-2 rounded-sm px-4 py-1"
-            // onClick={logout}
+            onClick={logout}
           >
             <button className="text-regular14 w-full cursor-pointer rounded-sm">
               <span className="truncate">로그아웃</span>
