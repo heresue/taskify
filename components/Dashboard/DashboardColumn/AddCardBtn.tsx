@@ -2,15 +2,15 @@
 
 import Button from '@/components/common/Button';
 import ToDoFormModal from '@/components/ToDoFormModal/ToDoFormModal';
+import { useModal } from '@/hooks/useModal';
 import Plus from '@/public/icons/plus.svg';
-import { useState } from 'react';
 
 export default function AddCardBtn({ columnId }: { columnId: number }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, open, close } = useModal();
   return (
     <>
-      <ToDoFormModal open={isOpen} onClose={() => setIsOpen(false)} columnId={columnId} />
-      <Button onClick={() => setIsOpen(true)} fullWidth size="addTodo" variant="outline">
+      <ToDoFormModal open={isOpen} onClose={close} columnId={columnId} />
+      <Button onClick={open} fullWidth size="addTodo" variant="outline">
         <Plus />
       </Button>
     </>
