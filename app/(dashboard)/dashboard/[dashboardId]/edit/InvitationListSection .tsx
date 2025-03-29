@@ -5,6 +5,8 @@ import InviteModal from './InviteModal';
 import { useMemo, useState } from 'react';
 import { mockInvitations } from '@/mocks/invitations';
 import AddBoxIcon from '@/assets/icons/AddBoxIcon';
+import { api } from '@/lib/api';
+import EXTERNAL_API from '@/constants/api/external';
 
 interface Props {
   dashboardId: string;
@@ -12,13 +14,14 @@ interface Props {
 
 export default function InvitationListSection({ dashboardId }: Props) {
   const [isOpen, setIsOpen] = useState(false);
+  const dashboardIdNum = Number(dashboardId);
 
   const invitees = useMemo(
     () =>
       mockInvitations.filter(
-        (inv) => inv.dashboard.id === Number(dashboardId) && inv.inviteAccepted === null
+        (inv) => inv.dashboard.id === dashboardIdNum && inv.inviteAccepted === null
       ),
-    [dashboardId]
+    [dashboardIdNum]
   );
 
   const [invitations, setInvitations] = useState(invitees);
@@ -37,7 +40,7 @@ export default function InvitationListSection({ dashboardId }: Props) {
     }
   };
 
-  console.log('dashboardId:', dashboardId);
+  console.log('dashboardId:', dashboardIdNum);
 
   return (
     <div id="section" className="rounded-2xl bg-white py-[32px]">
@@ -72,7 +75,16 @@ export default function InvitationListSection({ dashboardId }: Props) {
         ))}
       </div>
 
-      <InviteModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <InviteModal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        onInvite={async (email) => {
+          await api.post(EXTERNAL_API.DASHBOARDS.invite(dashboardIdNum), {
+            email,
+            dashboardIdNum,
+          });
+        }}
+      />
     </div>
   );
 }

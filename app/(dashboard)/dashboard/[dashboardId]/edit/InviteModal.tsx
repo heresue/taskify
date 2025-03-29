@@ -1,13 +1,29 @@
 import CloseIcon from '@/assets/icons/CloseIcon';
 import Input from '@/components/common/Input';
 import Modal from '@/components/common/Modal';
+import { useState } from 'react';
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  onInvite: (email: string) => Promise<void>;
 }
 
-export default function InviteModal({ isOpen, onClose }: Props) {
+export default function InviteModal({ isOpen, onClose, onInvite }: Props) {
+  const [email, setEmail] = useState('');
+
+  const handleInvite = async () => {
+    try {
+      await onInvite(email);
+
+      setEmail('');
+      onClose();
+    } catch (error) {
+      console.error('초대 실패:', error);
+    } finally {
+    }
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -16,6 +32,7 @@ export default function InviteModal({ isOpen, onClose }: Props) {
       cancelMessage="취소"
       padding="24/24"
       borderRadius="8"
+      onSubmit={handleInvite}
     >
       <div className="w-full">
         <div className="flex items-center justify-between">
@@ -24,9 +41,15 @@ export default function InviteModal({ isOpen, onClose }: Props) {
             <CloseIcon width="36" height="36" />
           </button>
         </div>
-        <label htmlFor="dashboardName" className="mt-6 mb-1 flex flex-col gap-2">
+        <label htmlFor="inviteEmail" className="mt-6 mb-1 flex flex-col gap-2">
           <span className="text-medium18 text-black200 mb-2">이메일</span>
-          <Input id="dashboardName" name="dashboardName" placeholder="이메일을 입력하세요" />
+          <Input
+            id="inviteEmail"
+            name="inviteEmail"
+            placeholder="이메일을 입력하세요"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </label>
       </div>
     </Modal>
