@@ -31,7 +31,8 @@ export default function Modal({
   if (!isOpen) return null;
 
   const handleSubmitClick = () => {
-    onSubmit?.();
+    if (!onSubmit) return onClose();
+    onSubmit();
   };
 
   const twoButton = cancelMessage && submitMessage;
