@@ -52,7 +52,7 @@ export default function PaginationItems<T>({
 //     renderItems={(pageItems) => (
 //       <>
 //         {pageItems.map((item) => (
-//           <MyDashboardListItem key={item.id} {...item} />
+//           <div key={item.id} {...item} />
 //         ))}
 //       </>
 //     )}
