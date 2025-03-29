@@ -27,3 +27,42 @@ export default function PaginationItems<T>({
     </div>
   );
 }
+
+/** 💡 PaginationItems & PaginationControls 사용 예시
+ *
+ * 필요 시 커스터마이징 가능한 props 목록:
+ * - wrapperClassName: 전체 컨테이너 스타일
+ * - renderFixedItem?: 첫 페이지에 고정적으로 노출할 요소
+ *
+ * 사용자는 페이지 상태와 컨트롤 핸들러를 직접 정의하고 전달해야 합니다.
+ */
+
+// const [currentPage, setCurrentPage] = useState(1);
+// const itemsPerPage = ; // 한 페이지당 아이템 수
+// const totalPages = Math.ceil(데이터.length / itemsPerPage);
+
+// const goToPrev = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+// const goToNext = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+
+// return (
+//   <PaginationItems
+//     data={데이터}
+//     itemsPerPage={itemsPerPage}
+//     currentPage={currentPage}
+//     renderItems={(pageItems) => (
+//       <>
+//         {pageItems.map((item) => (
+//           <MyDashboardListItem key={item.id} {...item} />
+//         ))}
+//       </>
+//     )}
+//     {...props}  // 커스터마이징 시 필요한 옵션 전달
+//   />
+
+// <PaginationControls
+//   currentPage={currentPage}
+//   totalPages={totalPages}
+//   goToPrev={goToPrev}
+//   goToNext={goToNext}
+// />
+// )
