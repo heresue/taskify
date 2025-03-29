@@ -1,7 +1,8 @@
 'use client';
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
+import { useState, useRef } from 'react';
 import UserBadge from '@/components/UserBadge/UserBadge';
+import { useClickOutside } from '@/hooks/useClickOutside';
 
 export default function UserMenu({
   nickname,
@@ -10,8 +11,8 @@ export default function UserMenu({
   nickname: string;
   profileImageUrl: string;
 }) {
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
@@ -21,20 +22,7 @@ export default function UserMenu({
     setIsOpen(false);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        event.target instanceof Node &&
-        !dropdownRef.current.contains(event.target)
-      ) {
-        closeMenu();
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  useClickOutside(dropdownRef, closeMenu);
 
   return (
     <div className="relative flex items-center" ref={dropdownRef}>
