@@ -11,6 +11,7 @@ import UserBadge from '../UserBadge/UserBadge';
 import { getMembers, Member } from './action';
 import DueDate from './DueDate';
 import useDashboardParamsId from '../Dashboard/useDashboardParamsId';
+import Pencil from '@/public/icons/pencil.svg';
 
 interface ToDoFormProps {
   open: boolean;
@@ -32,10 +33,13 @@ export default function ToDoFormModal({ open, onClose, cardId, columnId }: ToDoF
   const { dashboardId } = useDashboardParamsId();
 
   const {
+    dueDate,
+    image,
+    isFormComplete,
     handleFormChange,
     handleAssigneeUserChange,
     handleDueDateChange,
-    dueDate,
+    handleImageChange,
     handleTagsChange,
     handleToDoSubmit,
   } = useToDoData(columnId, dashboardId);
@@ -59,7 +63,7 @@ export default function ToDoFormModal({ open, onClose, cardId, columnId }: ToDoF
   const memberList = useMemo(() => {
     return dashboardMembers.map((member) => ({
       value: member.nickname,
-      id: member.id,
+      id: member.userId,
       renderItem: () => (
         <UserBadge
           size={26}
@@ -80,7 +84,8 @@ export default function ToDoFormModal({ open, onClose, cardId, columnId }: ToDoF
       borderRadius="16"
       cancelMessage="취소"
       submitMessage={createOrUpdate}
-      onSubmit={() => handleToDoSubmit}
+      onSubmit={handleToDoSubmit}
+      disabled={!isFormComplete}
     >
       <div className="flex w-full flex-col gap-8">
         <h1 className="text-bold24 text-black200">할 일 {createOrUpdate}</h1>
@@ -130,8 +135,16 @@ export default function ToDoFormModal({ open, onClose, cardId, columnId }: ToDoF
         <TagInput onChange={(tags: string[]) => handleTagsChange(tags)} />
         <div className="flex flex-col gap-[5px]">
           <label className="text-black200 text-medium18">이미지</label>
-          <div className="relative h-[58px] w-[58px] md:h-[76px] md:w-[76px]">
-            <UploadImage image={''} id="" onChange={() => {}} />
+          <div className="relative h-[58px] w-[58px] rounded-lg md:h-[76px] md:w-[76px]">
+            <UploadImage image={image} id="image" onChange={handleImageChange} />
+            {image && (
+              <div
+                className="absolute top-0 left-0 flex h-[58px] w-[58px] cursor-pointer items-center justify-center rounded-lg bg-black opacity-40 md:h-[76px] md:w-[76px]"
+                onClick={() => document.getElementById('image')?.click()}
+              >
+                <Pencil />
+              </div>
+            )}
           </div>
         </div>
       </div>
