@@ -18,12 +18,16 @@ export default function InviteModal({ isOpen, onClose, onInvite }: Props) {
 
   const canSubmit = hasEmailBlurred && isEmailValid && !isLoading;
 
+  const resetForm = () => {
+    setEmail('');
+    setIsEmailValid(true);
+    setHasEmailBlurred(false);
+    setIsLoading(false);
+  };
+
   useEffect(() => {
     if (!isOpen) {
-      setEmail('');
-      setIsEmailValid(true);
-      setHasEmailBlurred(false);
-      setIsLoading(false);
+      resetForm();
     }
   }, [isOpen]);
 
@@ -38,8 +42,7 @@ export default function InviteModal({ isOpen, onClose, onInvite }: Props) {
     try {
       setIsLoading(true);
       await onInvite(email);
-      setEmail('');
-      setIsEmailValid(true);
+      resetForm();
       onClose();
     } catch (error) {
       console.error('초대 실패:', error);
