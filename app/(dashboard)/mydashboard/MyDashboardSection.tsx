@@ -7,7 +7,7 @@ import { useModal } from '@/hooks/useModal';
 import { MockDashboard } from '@/mocks/dashboards';
 import Button from '@/components/common/Button';
 import MyDashboardListItem from './MyDashboardListItem';
-import PaginationItems from '@/components/Pagination/PagigationItems';
+import PaginationItems from '@/components/Pagination/PaginationItems';
 import PaginationControls from '@/components/Pagination/PaginationControls';
 import CreateDashboardModal from './CreateDashboardModal';
 

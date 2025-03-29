@@ -3,7 +3,7 @@
 import Button from '@/components/common/Button';
 import UserIcon from '@/assets/icons/UserIcon';
 import { useState } from 'react';
-import PaginationItems from '@/components/Pagination/PagigationItems';
+import PaginationItems from '@/components/Pagination/PaginationItems';
 import PaginationControls from '@/components/Pagination/PaginationControls';
 
 interface Member {

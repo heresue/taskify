@@ -5,7 +5,7 @@ import InviteModal from './InviteModal';
 import { useMemo, useState } from 'react';
 import { mockInvitations } from '@/mocks/invitations';
 import AddBoxIcon from '@/assets/icons/AddBoxIcon';
-import PaginationItems from '@/components/Pagination/PagigationItems';
+import PaginationItems from '@/components/Pagination/PaginationItems';
 import PaginationControls from '@/components/Pagination/PaginationControls';
 
 interface Props {
