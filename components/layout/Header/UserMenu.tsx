@@ -1,8 +1,9 @@
 'use client';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import UserBadge from '@/components/UserBadge/UserBadge';
-import { useRouter } from 'next/navigation';
+import ROUTES from '@/constants/routes';
 import INTERNAL_API from '@/constants/api/internal';
 import { removeItem } from '@/utils/localstorage';
 
@@ -51,7 +52,7 @@ export default function UserMenu({
       return;
     }
 
-    router.push(`/`);
+    router.push(`${ROUTES.HOME}`);
     removeItem('userInfo');
     removeItem('accessToken');
   };
