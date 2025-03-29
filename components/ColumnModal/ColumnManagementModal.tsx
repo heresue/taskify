@@ -1,22 +1,18 @@
+import { useEffect, useState } from 'react';
 import { api } from '@/lib/api';
+import EXTERNAL_API from '@/constants/api/external';
+import { ModalProps } from '@/types/modalProps';
 import Modal from '../common/Modal';
 import FormField from '../compound/form/FormField';
 import useDashboardParamsId from '../Dashboard/useDashboardParamsId';
-import EXTERNAL_API from '@/constants/api/external';
-import { useEffect, useState } from 'react';
 import getDashboardColumn, { ColumnsType } from '../Dashboard/DashboardColumn/action';
-
-interface AddColumnProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
 
 const COLUMN_NAME_ERROR_MESSAGE = {
   ALREADY_EXISTS: '중복된 컬럼 이름입니다',
   MAX_COLUMNS_REACHED: '컬럼은 10개까지 가능합니다',
 };
 
-export default function ColumnManagementModal({ isOpen, onClose }: AddColumnProps) {
+export default function ColumnManagementModal({ isOpen, onClose }: ModalProps) {
   const [columnName, setColumnName] = useState('');
   const [dashboardColumns, setDashboardColumns] = useState<ColumnsType[]>([]);
   const [columnErrorMessage, setColumnErrorMessage] = useState('');
