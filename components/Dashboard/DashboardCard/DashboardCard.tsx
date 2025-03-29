@@ -3,6 +3,7 @@ import DateIcon from '@/public/icons/date.svg';
 import UserBadge from '@/components/UserBadge/UserBadge';
 import Tag from '@/components/Tag/Tag';
 import { separateTagColor } from '@/utils/separateTagColor';
+import { formatDate } from '@/utils/formatDateTime';
 
 interface CardProps {
   imageUrl?: string;
@@ -33,7 +34,7 @@ export default function Card({ imageUrl, title, tags, dueDate, profile }: CardPr
             <div className="flex w-full items-center justify-between">
               <div className="border-gray300 flex items-center justify-center gap-1.5">
                 <DateIcon width={18} height={18} alt="date" />
-                <p className="text-gray500 text-medium12">{dueDate}</p>
+                <p className="text-gray500 text-medium12">{formatDate(dueDate)}</p>
               </div>
               <UserBadge size={24} profile={profile} />
             </div>
