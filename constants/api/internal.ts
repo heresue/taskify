@@ -1,7 +1,8 @@
-const EXTERNAL_API = {
+const INTERNAL_API = {
   AUTH: {
     LOGIN: '/api/auth/login',
+    LOGOUT: '/api/auth/logout',
   },
 };
 
-export default EXTERNAL_API;
+export default INTERNAL_API;
