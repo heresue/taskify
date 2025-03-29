@@ -28,37 +28,32 @@ export default function PaginationItems<T>({
   );
 }
 
-/** 💡 PaginationItems + PaginationControls 기본 사용법
- *
- * const itemsPerPage = ; // 한 페이지에 표시할 데이터 개수
- *
- * const filteredData = useMemo(() => 필터링된 데이터, [의존성]);
- *
- * const [data, setData] = useState(filteredData);
- *
- * useEffect(() => {
- *   setData(filteredData);
- * }, [filteredData]);
- *
- * const { currentPage, totalPages, goToPrev, goToNext } = usePagination(data, itemsPerPage);
- *
- * <PaginationControls
- *   currentPage={currentPage}
- *   totalPages={totalPages}
- *   goToPrev={goToPrev}
- *   goToNext={goToNext}
- * />
- *
- * <PaginationItems
- *   data={data}
- *   itemsPerPage={itemsPerPage}
- *   currentPage={currentPage}
- *   renderItems={(items) => (
- *     <>
- *       {items.map((item) => (
- *         <div key={item.id}>{item.title}</div>
- *       ))}
- *     </>
- *   )}
- * />
- */
+/** 💡 PaginationItems + PaginationControls 기본 사용법 */
+
+// const itemsPerPage = ; // 페이지에 렌더할 아이템 수
+
+// const { currentPage, totalPages, goToPrev, goToNext } = usePagination(paginatedData, itemsPerPage);
+
+// return (
+//   <>
+//     <PaginationControls
+//       currentPage={currentPage}
+//       totalPages={totalPages}
+//       goToPrev={goToPrev}
+//       goToNext={goToNext}
+//     />
+
+//     <PaginationItems
+//       data={paginatedData}
+//       itemsPerPage={itemsPerPage}
+//       currentPage={currentPage}
+//       renderItems={(items) => (
+//         <>
+//           {items.map((item) => (
+//             <div key={item.id}>{item.title}</div>
+//           ))}
+//         </>
+//       )}
+//     />
+//   </>
+// );
