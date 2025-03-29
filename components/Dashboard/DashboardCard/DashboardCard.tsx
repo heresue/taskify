@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import DateIcon from '@/public/icons/date.svg';
 import UserBadge from '@/components/UserBadge/UserBadge';
+import Tag from '@/components/Tag/Tag';
+import { separateTagColor } from '@/utils/separateTagColor';
 
 interface CardProps {
   imageUrl?: string;
@@ -10,7 +12,9 @@ interface CardProps {
   profile: string | null;
 }
 
-export default function Card({ imageUrl, title, dueDate, profile }: CardProps) {
+export default function Card({ imageUrl, title, tags, dueDate, profile }: CardProps) {
+  const tag = separateTagColor(tags);
+
   return (
     <div className="border-gray300 flex w-full items-center justify-center rounded-md border border-solid bg-white p-3 sm:p-3 md:p-4 md:px-5 md:py-[18px]">
       <div className="flex w-full flex-col items-start justify-center gap-1 sm:gap-1 md:flex-row md:gap-5">
@@ -22,8 +26,10 @@ export default function Card({ imageUrl, title, dueDate, profile }: CardProps) {
         <div className="flex w-full flex-col items-start justify-center gap-2.5">
           <h3 className="text-medium16">{title}</h3>
           <div className="flex w-full flex-col items-start justify-center gap-2.5 md:flex-row lg:flex-col">
-            {/* 추후 tags 컴포넌트로 만들고 추가하겠습니다! */}
-            <div className="bg-violet h-7 w-[147px]" />
+            {tag.map((t) => (
+              <Tag key={t.text} tag={t.text} color={t.color} />
+            ))}
+            <div className="bg-violet w-147px] h-7" />
             <div className="flex w-full items-center justify-between">
               <div className="border-gray300 flex items-center justify-center gap-1.5">
                 <DateIcon width={18} height={18} alt="date" />
