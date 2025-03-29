@@ -56,6 +56,7 @@ export default function InviteModal({ isOpen, onClose, onInvite }: Props) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmitInvite}
+      disabled={!canSubmit}
       submitMessage="생성"
       cancelMessage="취소"
       padding="24/24"
