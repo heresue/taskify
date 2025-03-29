@@ -1,13 +1,15 @@
 'use client';
 
-import Button from '@/components/common/Button';
-import CreateDashboardModal from './CreateDashboardModal';
-import { useModal } from '@/hooks/useModal';
 import Image from 'next/image';
-import MyDashboardListItem from './MyDashboardListItem';
-import { MockDashboard } from '@/mocks/dashboards';
 import { usePathname } from 'next/navigation';
-import Pagination from '@/components/Pagination/Pagigation';
+import { useState } from 'react';
+import { useModal } from '@/hooks/useModal';
+import { MockDashboard } from '@/mocks/dashboards';
+import Button from '@/components/common/Button';
+import MyDashboardListItem from './MyDashboardListItem';
+import PaginationItems from '@/components/Pagination/PagigationItems';
+import PaginationControls from '@/components/Pagination/PaginationControls';
+import CreateDashboardModal from './CreateDashboardModal';
 
 interface Props {
   mydashboards: MockDashboard[];
@@ -15,8 +17,9 @@ interface Props {
 
 export default function MyDashboardSection({ mydashboards }: Props) {
   const pathname = usePathname();
-  const selectedId = pathname?.split('/dashboard/')[1]?.split('/')[0];
+  const [currentPage, setCurrentPage] = useState(1);
   const { isOpen, open, close } = useModal();
+  const selectedId = pathname?.split('/dashboard/')[1]?.split('/')[0];
 
   if (mydashboards.length === 0) {
     return (
@@ -29,13 +32,19 @@ export default function MyDashboardSection({ mydashboards }: Props) {
     );
   }
 
+  const itemsPerPage = 6;
+  const totalPages = Math.ceil(mydashboards.length / itemsPerPage);
+
+  const goToPrev = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+  const goToNext = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+
   return (
-    <div className="mb-[40px]">
-      <Pagination
+    <div className="mb-[40px] flex flex-col gap-3">
+      <PaginationItems
         data={mydashboards}
-        itemsPerPage={6}
-        wrapperClassName="flex flex-col gap-3"
-        itemsWrapperClassName="grid grid-cols-3 grid-rows-2 gap-[13px]"
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        wrapperClassName="grid grid-cols-3 grid-rows-2 gap-[13px]"
         renderFixedItem={() => (
           <Button variant="outline" size="dashboardCard" onClick={open}>
             <span className="text-black200 text-semi14 md:text-semi16">새로운 대시보드</span>
@@ -56,6 +65,13 @@ export default function MyDashboardSection({ mydashboards }: Props) {
             ))}
           </>
         )}
+      />
+
+      <PaginationControls
+        currentPage={currentPage}
+        totalPages={totalPages}
+        goToPrev={goToPrev}
+        goToNext={goToNext}
       />
 
       <CreateDashboardModal isOpen={isOpen} onClose={close} />
