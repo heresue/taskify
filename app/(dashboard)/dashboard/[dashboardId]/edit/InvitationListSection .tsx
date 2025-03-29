@@ -40,8 +40,6 @@ export default function InvitationListSection({ dashboardId }: Props) {
     }
   };
 
-  console.log('dashboardId:', dashboardIdNum);
-
   return (
     <div id="section" className="rounded-2xl bg-white py-[32px]">
       <div className="mb-[27px] flex items-center justify-between px-[28px]">
