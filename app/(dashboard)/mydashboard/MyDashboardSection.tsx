@@ -2,13 +2,13 @@
 
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
 import { useModal } from '@/hooks/useModal';
 import { MockDashboard } from '@/mocks/dashboards';
+import { usePagination } from '@/components/Pagination/usePagination';
 import Button from '@/components/common/Button';
-import MyDashboardListItem from './MyDashboardListItem';
 import PaginationItems from '@/components/Pagination/PaginationItems';
 import PaginationControls from '@/components/Pagination/PaginationControls';
+import MyDashboardListItem from './MyDashboardListItem';
 import CreateDashboardModal from './CreateDashboardModal';
 
 interface Props {
@@ -17,9 +17,12 @@ interface Props {
 
 export default function MyDashboardSection({ mydashboards }: Props) {
   const pathname = usePathname();
-  const [currentPage, setCurrentPage] = useState(1);
   const { isOpen, open, close } = useModal();
   const selectedId = pathname?.split('/dashboard/')[1]?.split('/')[0];
+
+  const itemsPerPage = 6;
+
+  const { currentPage, totalPages, goToPrev, goToNext } = usePagination(mydashboards, itemsPerPage);
 
   if (mydashboards.length === 0) {
     return (
@@ -31,12 +34,6 @@ export default function MyDashboardSection({ mydashboards }: Props) {
       </div>
     );
   }
-
-  const itemsPerPage = 6;
-  const totalPages = Math.ceil(mydashboards.length / itemsPerPage);
-
-  const goToPrev = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
-  const goToNext = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
 
   return (
     <div className="mb-[40px] flex flex-col gap-3">

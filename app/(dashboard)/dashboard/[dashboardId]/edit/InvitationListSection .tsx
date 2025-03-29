@@ -1,12 +1,13 @@
 'use client';
 
-import Button from '@/components/common/Button';
-import InviteModal from './InviteModal';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { mockInvitations } from '@/mocks/invitations';
 import AddBoxIcon from '@/assets/icons/AddBoxIcon';
+import Button from '@/components/common/Button';
+import { usePagination } from '@/components/Pagination/usePagination';
 import PaginationItems from '@/components/Pagination/PaginationItems';
 import PaginationControls from '@/components/Pagination/PaginationControls';
+import InviteModal from './InviteModal';
 
 interface Props {
   dashboardId: string;
@@ -14,16 +15,21 @@ interface Props {
 
 export default function InvitationListSection({ dashboardId }: Props) {
   const [isOpen, setIsOpen] = useState(false);
+  const itemsPerPage = 5;
 
-  const invitees = useMemo(
-    () =>
-      mockInvitations.filter(
-        (inv) => inv.dashboard.id === Number(dashboardId) && inv.inviteAccepted === null
-      ),
-    [dashboardId]
-  );
+  const pendingInvitations = useMemo(() => {
+    return mockInvitations.filter(
+      (inv) => inv.dashboard.id === Number(dashboardId) && inv.inviteAccepted === null
+    );
+  }, [dashboardId]);
 
-  const [invitations, setInvitations] = useState(invitees);
+  const [invitations, setInvitations] = useState(pendingInvitations);
+
+  useEffect(() => {
+    setInvitations(pendingInvitations);
+  }, [pendingInvitations]);
+
+  const { currentPage, totalPages, goToPrev, goToNext } = usePagination(invitations, itemsPerPage);
 
   const cancelInvitation = async (id: number) => {
     console.log(`[임시] 초대 취소 요청: 초대 ID ${id}`);
@@ -38,13 +44,6 @@ export default function InvitationListSection({ dashboardId }: Props) {
       console.error('초대 취소 실패:', err);
     }
   };
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
-  const totalPages = Math.ceil(invitations.length / itemsPerPage);
-
-  const goToPrev = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
-  const goToNext = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
 
   return (
     <div id="section" className="rounded-2xl bg-white py-[32px]">

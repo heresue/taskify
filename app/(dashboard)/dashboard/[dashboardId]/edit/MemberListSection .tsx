@@ -1,10 +1,11 @@
 'use client';
 
+import { useState } from 'react';
 import Button from '@/components/common/Button';
 import UserIcon from '@/assets/icons/UserIcon';
-import { useState } from 'react';
 import PaginationItems from '@/components/Pagination/PaginationItems';
 import PaginationControls from '@/components/Pagination/PaginationControls';
+import { usePagination } from '@/components/Pagination/usePagination';
 
 interface Member {
   id: number;
@@ -30,12 +31,8 @@ const mockMembers = [
 
 export default function MemberListSection({ initialMembers = mockMembers }: Props) {
   const [members, setMembers] = useState<Member[]>(initialMembers || []);
-  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 3;
-  const totalPages = Math.ceil(mockMembers.length / itemsPerPage);
-
-  const goToPrev = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
-  const goToNext = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  const { currentPage, totalPages, goToPrev, goToNext } = usePagination(members, itemsPerPage);
 
   // TODO: 데이터 연동 후 수정
   const deleteMember = async (memberId: number) => {
@@ -73,23 +70,21 @@ export default function MemberListSection({ initialMembers = mockMembers }: Prop
           renderItems={(members) => (
             <>
               {members.map((member) => (
-                <>
-                  <div key={member.id} className="border-gray200 border-b">
-                    <div className="flex justify-between px-[28px] py-[16px]">
-                      <div className="flex items-center gap-[12px]">
-                        <UserIcon width={38} height={38} />
-                        <span>{member.nickname}</span>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="delete"
-                        onClick={() => handleDeleteMember(member.id)}
-                      >
-                        삭제
-                      </Button>
+                <div key={member.id} className="border-gray200 border-b">
+                  <div className="flex justify-between px-[28px] py-[16px]">
+                    <div className="flex items-center gap-[12px]">
+                      <UserIcon width={38} height={38} />
+                      <span>{member.nickname}</span>
                     </div>
+                    <Button
+                      variant="ghost"
+                      size="delete"
+                      onClick={() => handleDeleteMember(member.id)}
+                    >
+                      삭제
+                    </Button>
                   </div>
-                </>
+                </div>
               ))}
             </>
           )}
