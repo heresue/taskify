@@ -13,7 +13,7 @@ interface ModalProps {
   cancelMessage?: string;
   padding: PaddingSize;
   borderRadius: RadiusSize;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 export default function Modal({
