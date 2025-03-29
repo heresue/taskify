@@ -1,8 +1,8 @@
 import Card from '../DashboardCard/DashboardCard';
-import Setting from '@/assets/icons/Setting';
 import { ColumnsType } from '@/components/Dashboard/DashboardColumn/action';
 import GetDashboardCard from '../DashboardCard/action';
 import AddCardBtn from './AddCardBtn';
+import ColumnSettingList from './ColumnSettingList';
 
 export default async function DashboardColumn({ title, id }: ColumnsType) {
   const data = await GetDashboardCard(id);
@@ -21,7 +21,7 @@ export default async function DashboardColumn({ title, id }: ColumnsType) {
               {totalCounts}
             </span>
           </div>
-          <Setting width={24} height={24} />
+          <ColumnSettingList columnId={id} />
         </div>
         <div className="flex w-full flex-col gap-2 md:gap-4">
           <AddCardBtn columnId={id} />
