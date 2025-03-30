@@ -14,10 +14,25 @@ import PaginationControls from '@/components/Pagination/PaginationControls';
 export default function SideNav() {
   const pathname = usePathname();
   const selectedId = pathname?.split('/dashboard/')[1]?.split('/')[0];
-  const itemsPerPage = 15;
+  const [itemsPerPage, setItemsPerPage] = useState(15);
   // mock data 적용
   const [dashboards, setDashboards] = useState<MockDashboard[]>([]);
   const { currentPage, totalPages, goToPrev, goToNext } = usePagination(dashboards, itemsPerPage);
+
+  useEffect(() => {
+    const calculateItemsPerPage = () => {
+      const itemHeight = 50;
+      const topOffset = 150;
+      const bottomOffset = 206;
+      const availableHeight = window.innerHeight - (topOffset + bottomOffset);
+      const possibleItems = Math.floor(availableHeight / itemHeight);
+      setItemsPerPage(possibleItems > 0 ? possibleItems : 1);
+    };
+
+    calculateItemsPerPage();
+    window.addEventListener('resize', calculateItemsPerPage);
+    return () => window.removeEventListener('resize', calculateItemsPerPage);
+  }, []);
 
   useEffect(() => {
     setDashboards(mockDashboards);
