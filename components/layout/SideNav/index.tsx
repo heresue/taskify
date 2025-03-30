@@ -7,13 +7,17 @@ import AddDashboardButton from './AddDashboardButton';
 import { useEffect, useState } from 'react';
 import { mockDashboards, MockDashboard } from '@/mocks/dashboards';
 import { usePathname } from 'next/navigation';
+import PaginationItems from '@/components/Pagination/PaginationItems';
+import { usePagination } from '@/components/Pagination/usePagination';
+import PaginationControls from '@/components/Pagination/PaginationControls';
 
 export default function SideNav() {
   const pathname = usePathname();
   const selectedId = pathname?.split('/dashboard/')[1]?.split('/')[0];
-
+  const itemsPerPage = 15;
   // mock data 적용
   const [dashboards, setDashboards] = useState<MockDashboard[]>([]);
+  const { currentPage, totalPages, goToPrev, goToNext } = usePagination(dashboards, itemsPerPage);
 
   useEffect(() => {
     setDashboards(mockDashboards);
@@ -46,17 +50,32 @@ export default function SideNav() {
             <AddDashboardButton />
           </div>
           <ul className="space-y-2">
-            {dashboards.map((dashboard) => (
-              <DashboardListItem
-                key={dashboard.id}
-                dashboardId={dashboard.id}
-                title={dashboard.title}
-                colorKey={dashboard.color}
-                createdByMe={dashboard.createdByMe}
-                isSelected={String(dashboard.id) === selectedId}
-              />
-            ))}
+            <PaginationItems
+              data={dashboards}
+              itemsPerPage={itemsPerPage}
+              currentPage={currentPage}
+              renderItems={(dashboards) => (
+                <>
+                  {dashboards.map((dashboard) => (
+                    <DashboardListItem
+                      key={dashboard.id}
+                      dashboardId={dashboard.id}
+                      title={dashboard.title}
+                      colorKey={dashboard.color}
+                      createdByMe={dashboard.createdByMe}
+                      isSelected={String(dashboard.id) === selectedId}
+                    />
+                  ))}
+                </>
+              )}
+            />
           </ul>
+          <PaginationControls
+            currentPage={currentPage}
+            totalPages={totalPages}
+            goToPrev={goToPrev}
+            goToNext={goToNext}
+          />
         </div>
       </div>
     </nav>
