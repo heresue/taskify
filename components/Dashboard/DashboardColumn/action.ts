@@ -12,10 +12,6 @@ interface ColumnPromise {
 }
 
 export default async function getDashboardColumn(dashboardId: number) {
-  try {
-    const response = await api.get<ColumnPromise>(`/columns?dashboardId=${dashboardId}`);
-    return response.data;
-  } catch (err) {
-    console.error(err);
-  }
+  const response = await api.get<ColumnPromise>(`/columns?dashboardId=${dashboardId}`);
+  return response.data;
 }

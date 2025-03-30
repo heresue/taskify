@@ -13,10 +13,11 @@ import DueDate from './DueDate';
 import useDashboardParamsId from '../Dashboard/useDashboardParamsId';
 import Pencil from '@/public/icons/pencil.svg';
 import { ModalProps } from '@/types/modalProps';
+import getDashboardColumn, { ColumnsType } from '../Dashboard/DashboardColumn/action';
 
 interface ToDoFormProps extends ModalProps {
-  cardId?: number;
   columnId: number;
+  cardId?: number;
 }
 
 const INITIAL_MEMBER_VALUE = {
@@ -26,8 +27,9 @@ const INITIAL_MEMBER_VALUE = {
   userId: 0,
 };
 
-export default function ToDoFormModal({ isOpen, onClose, cardId, columnId }: ToDoFormProps) {
+export default function ToDoFormModal({ isOpen, onClose, columnId, cardId }: ToDoFormProps) {
   const [dashboardMembers, setDashboardMembers] = useState<Member[]>([INITIAL_MEMBER_VALUE]);
+  const [columnsName, setColumnsName] = useState<ColumnsType[]>([{ id: 0, title: '' }]);
 
   const { dashboardId } = useDashboardParamsId();
 
@@ -48,15 +50,21 @@ export default function ToDoFormModal({ isOpen, onClose, cardId, columnId }: ToD
   useEffect(() => {
     if (!dashboardId) return;
 
-    const getMembersData = () => {
-      getMembers(dashboardId)
-        .then((result) => {
-          if (!result) return;
-          setDashboardMembers(result.members);
-        })
-        .catch((err) => console.error(err));
+    const fetchDashboardData = async () => {
+      try {
+        const [columns, membersData] = await Promise.all([
+          getDashboardColumn(dashboardId),
+          getMembers(dashboardId),
+        ]);
+
+        if (columns) setColumnsName(columns);
+        if (membersData) setDashboardMembers(membersData.members);
+      } catch (err) {
+        console.error('Failed to fetch dashboard data:', err);
+      }
     };
-    getMembersData();
+
+    fetchDashboardData();
   }, [dashboardId]);
 
   const memberList = useMemo(() => {
@@ -75,6 +83,14 @@ export default function ToDoFormModal({ isOpen, onClose, cardId, columnId }: ToD
     }));
   }, [dashboardMembers]);
 
+  const columnList = useMemo(() => {
+    return columnsName.map((column) => ({
+      value: column.title,
+      id: column.id,
+      renderItem: () => <ColumnName columnName={column.title} />,
+    }));
+  }, [columnsName]);
+
   return (
     <Modal
       onClose={onClose}
@@ -92,12 +108,7 @@ export default function ToDoFormModal({ isOpen, onClose, cardId, columnId }: ToD
           {cardId && (
             <div className="flex flex-1 flex-col gap-2">
               <label className="text-black200 text-medium18">상태</label>
-              <SelectionDropdown
-                options={[
-                  { value: 'to do', id: 1, renderItem: () => <ColumnName columnName="todo" /> },
-                ]}
-                onSelect={() => {}}
-              />
+              <SelectionDropdown options={columnList} onSelect={() => {}} />
             </div>
           )}
           <div className="flex flex-1 flex-col gap-2">

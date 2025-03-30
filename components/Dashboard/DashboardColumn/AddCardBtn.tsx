@@ -9,7 +9,7 @@ export default function AddCardBtn({ columnId }: { columnId: number }) {
   const { isOpen, open, close } = useModal();
   return (
     <>
-      <ToDoFormModal isOpen={isOpen} onClose={close} columnId={columnId} />
+      <ToDoFormModal isOpen={isOpen} onClose={close} columnId={columnId} cardId={11810} />
       <Button onClick={open} fullWidth size="addTodo" variant="outline">
         <Plus />
       </Button>
