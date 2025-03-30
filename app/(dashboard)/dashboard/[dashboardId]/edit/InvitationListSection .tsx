@@ -9,20 +9,15 @@ import { api } from '@/lib/api';
 import EXTERNAL_API from '@/constants/api/external';
 import { useModal } from '@/hooks/useModal';
 
-interface Props {
-  dashboardId: string;
-}
-
-export default function InvitationListSection({ dashboardId }: Props) {
+export default function InvitationListSection({ dashboardId }: { dashboardId: number }) {
   const { isOpen, open, close } = useModal();
-  const dashboardIdNum = Number(dashboardId);
 
   const invitees = useMemo(
     () =>
       mockInvitations.filter(
-        (inv) => inv.dashboard.id === dashboardIdNum && inv.inviteAccepted === null
+        (inv) => inv.dashboard.id === dashboardId && inv.inviteAccepted === null
       ),
-    [dashboardIdNum]
+    [dashboardId]
   );
 
   const [invitations, setInvitations] = useState(invitees);
@@ -74,9 +69,9 @@ export default function InvitationListSection({ dashboardId }: Props) {
         isOpen={isOpen}
         onClose={close}
         onInvite={async (email) => {
-          await api.post(EXTERNAL_API.DASHBOARDS.invite(dashboardIdNum), {
+          await api.post(EXTERNAL_API.DASHBOARDS.invite(dashboardId), {
             email,
-            dashboardIdNum,
+            dashboardId,
           });
         }}
       />
