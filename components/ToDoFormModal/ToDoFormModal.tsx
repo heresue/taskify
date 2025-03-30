@@ -12,10 +12,9 @@ import { getMembers, Member } from './action';
 import DueDate from './DueDate';
 import useDashboardParamsId from '../Dashboard/useDashboardParamsId';
 import Pencil from '@/public/icons/pencil.svg';
+import { ModalProps } from '@/types/modalProps';
 
-interface ToDoFormProps {
-  open: boolean;
-  onClose: () => void;
+interface ToDoFormProps extends ModalProps {
   cardId?: number;
   columnId: number;
 }
@@ -27,7 +26,7 @@ const INITIAL_MEMBER_VALUE = {
   userId: 0,
 };
 
-export default function ToDoFormModal({ open, onClose, cardId, columnId }: ToDoFormProps) {
+export default function ToDoFormModal({ isOpen, onClose, cardId, columnId }: ToDoFormProps) {
   const [dashboardMembers, setDashboardMembers] = useState<Member[]>([INITIAL_MEMBER_VALUE]);
 
   const { dashboardId } = useDashboardParamsId();
@@ -79,7 +78,7 @@ export default function ToDoFormModal({ open, onClose, cardId, columnId }: ToDoF
   return (
     <Modal
       onClose={onClose}
-      isOpen={open}
+      isOpen={isOpen}
       padding="32/32"
       borderRadius="16"
       cancelMessage="취소"
