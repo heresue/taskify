@@ -1,8 +1,8 @@
 import Card from '../DashboardCard/DashboardCard';
-import Setting from '@/assets/icons/Setting';
 import { ColumnsType } from '@/components/Dashboard/DashboardColumn/action';
 import GetDashboardCard from '../DashboardCard/action';
 import AddCardBtn from './AddCardBtn';
+import ColumnSettingList from './ColumnSettingList';
 
 export default async function DashboardColumn({ title, id }: ColumnsType) {
   const data = await GetDashboardCard(id);
@@ -11,7 +11,7 @@ export default async function DashboardColumn({ title, id }: ColumnsType) {
   const cards = data?.cards;
 
   return (
-    <div className="border-gray200 h-full w-full border-b border-solid px-5 py-[18px] lg:w-[354px] lg:border-r lg:border-b-0">
+    <div className="border-gray200 w-full shrink-0 border-b border-solid px-5 py-[18px] lg:w-[354px] lg:border-r lg:border-b-0">
       <div>
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center justify-center gap-2">
@@ -21,13 +21,14 @@ export default async function DashboardColumn({ title, id }: ColumnsType) {
               {totalCounts}
             </span>
           </div>
-          <Setting width={24} height={24} />
+          <ColumnSettingList columnId={id} />
         </div>
         <div className="flex w-full flex-col gap-2 md:gap-4">
           <AddCardBtn columnId={id} />
           {cards?.map((card) => (
             <Card
               key={card.id}
+              imageUrl={card.imageUrl}
               title={card.title}
               tags={card.tags}
               dueDate={card.dueDate}
