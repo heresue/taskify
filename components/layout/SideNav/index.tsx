@@ -23,7 +23,7 @@ export default function SideNav() {
     const calculateItemsPerPage = () => {
       const itemHeight = 50;
       const topOffset = 150;
-      const bottomOffset = 206;
+      const bottomOffset = 157;
       const availableHeight = window.innerHeight - (topOffset + bottomOffset);
       const possibleItems = Math.floor(availableHeight / itemHeight);
       setItemsPerPage(possibleItems > 0 ? possibleItems : 1);
@@ -40,7 +40,7 @@ export default function SideNav() {
 
   return (
     <nav className="h-screen w-[67px] md:w-[160px] lg:w-[300px]">
-      <div id="sideNavWrapper" className="flex flex-col gap-14 pt-5 pr-3 pl-2">
+      <div id="sideNavWrapper" className="flex h-full flex-col gap-14 pt-5 pr-3 pb-[96px] pl-2">
         <h2 id="sideNavHeader">
           <Link href="/">
             <Image
@@ -59,37 +59,41 @@ export default function SideNav() {
             />
           </Link>
         </h2>
-        <div id="sideNavItems" className="flex flex-1 flex-col gap-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-semi12 text-gray500 hidden md:block">Dash Boards</h2>
-            <AddDashboardButton />
+        <div id="sideNavItems" className="flex flex-1 flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between">
+              <h2 className="text-semi12 text-gray500 hidden md:block">Dash Boards</h2>
+              <AddDashboardButton />
+            </div>
+            <ul className="my-4 space-y-2">
+              <PaginationItems
+                data={dashboards}
+                itemsPerPage={itemsPerPage}
+                currentPage={currentPage}
+                renderItems={(dashboards) => (
+                  <>
+                    {dashboards.map((dashboard) => (
+                      <DashboardListItem
+                        key={dashboard.id}
+                        dashboardId={dashboard.id}
+                        title={dashboard.title}
+                        colorKey={dashboard.color}
+                        createdByMe={dashboard.createdByMe}
+                        isSelected={String(dashboard.id) === selectedId}
+                      />
+                    ))}
+                  </>
+                )}
+              />
+            </ul>
           </div>
-          <ul className="space-y-2">
-            <PaginationItems
-              data={dashboards}
-              itemsPerPage={itemsPerPage}
-              currentPage={currentPage}
-              renderItems={(dashboards) => (
-                <>
-                  {dashboards.map((dashboard) => (
-                    <DashboardListItem
-                      key={dashboard.id}
-                      dashboardId={dashboard.id}
-                      title={dashboard.title}
-                      colorKey={dashboard.color}
-                      createdByMe={dashboard.createdByMe}
-                      isSelected={String(dashboard.id) === selectedId}
-                    />
-                  ))}
-                </>
-              )}
-            />
-          </ul>
           <PaginationControls
             currentPage={currentPage}
             totalPages={totalPages}
+            showPageInfo={false}
             goToPrev={goToPrev}
             goToNext={goToNext}
+            justify="start"
           />
         </div>
       </div>
