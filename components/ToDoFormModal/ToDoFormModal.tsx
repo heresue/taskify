@@ -14,10 +14,12 @@ import useDashboardParamsId from '../Dashboard/useDashboardParamsId';
 import Pencil from '@/public/icons/pencil.svg';
 import { ModalProps } from '@/types/modalProps';
 import getDashboardColumn, { ColumnsType } from '../Dashboard/DashboardColumn/action';
+import { CardType } from '../Dashboard/DashboardCard/DashboardCard';
+import DEFAULT_CARD_IMAGE from '@/constants/image/defaultCardImage';
 
 interface ToDoFormProps extends ModalProps {
   columnId: number;
-  cardId?: number;
+  card?: CardType;
 }
 
 const INITIAL_MEMBER_VALUE = {
@@ -27,30 +29,32 @@ const INITIAL_MEMBER_VALUE = {
   userId: 0,
 };
 
-export default function ToDoFormModal({ isOpen, onClose, columnId, cardId }: ToDoFormProps) {
+export default function ToDoFormModal({ isOpen, onClose, columnId, card }: ToDoFormProps) {
   const [dashboardMembers, setDashboardMembers] = useState<Member[]>([INITIAL_MEMBER_VALUE]);
   const [columnsName, setColumnsName] = useState<ColumnsType[]>([{ id: 0, title: '' }]);
 
   const { dashboardId } = useDashboardParamsId();
 
   const {
+    toDoData,
     dueDate,
     image,
     isFormComplete,
     handleFormChange,
     handleAssigneeUserChange,
+    handleColumnChange,
     handleDueDateChange,
     handleImageChange,
     handleTagsChange,
     handleToDoSubmit,
-  } = useToDoData(columnId, dashboardId);
+  } = useToDoData(columnId, dashboardId, onClose, card);
 
-  const createOrUpdate = cardId ? '수정' : '생성';
+  const createOrUpdate = card?.id ? '수정' : '생성';
 
   useEffect(() => {
     if (!dashboardId) return;
 
-    const fetchDashboardData = async () => {
+    (async () => {
       try {
         const [columns, membersData] = await Promise.all([
           getDashboardColumn(dashboardId),
@@ -60,11 +64,9 @@ export default function ToDoFormModal({ isOpen, onClose, columnId, cardId }: ToD
         if (columns) setColumnsName(columns);
         if (membersData) setDashboardMembers(membersData.members);
       } catch (err) {
-        console.error('Failed to fetch dashboard data:', err);
+        console.error(err);
       }
-    };
-
-    fetchDashboardData();
+    })();
   }, [dashboardId]);
 
   const memberList = useMemo(() => {
@@ -83,6 +85,8 @@ export default function ToDoFormModal({ isOpen, onClose, columnId, cardId }: ToD
     }));
   }, [dashboardMembers]);
 
+  const memberSelectedItem = memberList.find((member) => member.id === card?.assignee?.id);
+
   const columnList = useMemo(() => {
     return columnsName.map((column) => ({
       value: column.title,
@@ -90,6 +94,8 @@ export default function ToDoFormModal({ isOpen, onClose, columnId, cardId }: ToD
       renderItem: () => <ColumnName columnName={column.title} />,
     }));
   }, [columnsName]);
+
+  const columnSelectedItem = columnList.find((column) => column.id === columnId);
 
   return (
     <Modal
@@ -105,10 +111,16 @@ export default function ToDoFormModal({ isOpen, onClose, columnId, cardId }: ToD
       <div className="flex w-full flex-col gap-8">
         <h1 className="text-bold24 text-black200">할 일 {createOrUpdate}</h1>
         <div className="flex flex-col gap-8 md:flex-row">
-          {cardId && (
+          {card?.id && (
             <div className="flex flex-1 flex-col gap-2">
               <label className="text-black200 text-medium18">상태</label>
-              <SelectionDropdown options={columnList} onSelect={() => {}} />
+              <SelectionDropdown
+                options={columnList}
+                onSelect={(option: DropdownItem) => {
+                  handleColumnChange(option.id);
+                }}
+                selectedItem={columnSelectedItem}
+              />
             </div>
           )}
           <div className="flex flex-1 flex-col gap-2">
@@ -119,6 +131,7 @@ export default function ToDoFormModal({ isOpen, onClose, columnId, cardId }: ToD
                 handleAssigneeUserChange(option.id);
               }}
               placeholder="이름을 입력해 주세요"
+              selectedItem={memberSelectedItem}
             />
           </div>
         </div>
@@ -126,6 +139,7 @@ export default function ToDoFormModal({ isOpen, onClose, columnId, cardId }: ToD
           fieldType="input"
           label="제목"
           name="title"
+          value={toDoData.title}
           placeholder="제목을 입력해 주세요"
           onChange={handleFormChange}
           required
@@ -134,6 +148,7 @@ export default function ToDoFormModal({ isOpen, onClose, columnId, cardId }: ToD
           fieldType="textarea"
           label="설명"
           name="description"
+          value={toDoData.description}
           placeholder="설명을 입력해 주세요"
           onChange={handleFormChange}
           required
@@ -142,12 +157,16 @@ export default function ToDoFormModal({ isOpen, onClose, columnId, cardId }: ToD
           dueDate={dueDate}
           onDueDateChange={(date: Date | null) => handleDueDateChange(date)}
         />
-        <TagInput onChange={(tags: string[]) => handleTagsChange(tags)} />
+        <TagInput writtenTags={card?.tags} onChange={(tags: string[]) => handleTagsChange(tags)} />
         <div className="flex flex-col gap-[5px]">
           <label className="text-black200 text-medium18">이미지</label>
           <div className="relative h-[58px] w-[58px] rounded-lg md:h-[76px] md:w-[76px]">
-            <UploadImage image={image} id="image" onChange={handleImageChange} />
-            {image && (
+            <UploadImage
+              image={image === DEFAULT_CARD_IMAGE ? '' : image}
+              id="image"
+              onChange={handleImageChange}
+            />
+            {image && image !== DEFAULT_CARD_IMAGE && (
               <div
                 className="absolute top-0 left-0 flex h-[58px] w-[58px] cursor-pointer items-center justify-center rounded-lg bg-black opacity-40 md:h-[76px] md:w-[76px]"
                 onClick={() => document.getElementById('image')?.click()}
