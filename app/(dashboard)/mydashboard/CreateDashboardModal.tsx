@@ -30,10 +30,14 @@ export default function CreateDashboardModal({ isOpen, onClose }: Props) {
 
   const canSubmit = Boolean(title.trim() && isColorSelected);
 
+  const resetForm = () => {
+    setTitle('');
+    setIsColorSelected(null);
+  };
+
   useEffect(() => {
     if (!isOpen) {
-      setTitle('');
-      setIsColorSelected(null);
+      resetForm();
     }
   }, [isOpen]);
 
@@ -45,7 +49,7 @@ export default function CreateDashboardModal({ isOpen, onClose }: Props) {
         title,
         color: isColorSelected,
       });
-      console.log('생성된 대시보드 ID:', response.id);
+      resetForm();
 
       const dashboardId = response.id;
       router.push(EXTERNAL_API.DASHBOARDS.getDetail(dashboardId));
