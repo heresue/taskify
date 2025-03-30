@@ -6,11 +6,11 @@ import ArrowLeft from '@/assets/icons/ArrowLeft';
 export default function Page() {
   return (
     <div className="w-full max-w-[680px] px-3 py-4 md:p-4 lg:p-5">
-      <Link href="/mydashboard" className="flex items-center gap-2 md:hidden">
+      <Link href="/mydashboard" className="flex w-fit items-center gap-2 md:hidden">
         <ArrowLeft width="16" height="16" />
         <span className="text-medium14 text-black200">돌아가기</span>
       </Link>
-      <Link href="/mydashboard" className="hidden items-center gap-2 md:flex">
+      <Link href="/mydashboard" className="hidden w-fit items-center gap-2 md:flex">
         <ArrowLeft width="18" height="18" />
         <span className="text-medium16 text-black200">돌아가기</span>
       </Link>
