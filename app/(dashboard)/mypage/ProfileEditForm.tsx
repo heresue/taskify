@@ -5,8 +5,10 @@ import FormField from '@/components/compound/form/FormField';
 import UploadImage from '@/components/compound/upload/UploadImage';
 import { validateLimitLengthNickname } from '@/utils/authValidate';
 import { useState } from 'react';
-import { getItem } from '@/utils/localstorage';
-import { api } from '@/lib/api';
+import { getItem, setItem } from '@/utils/localstorage';
+// import { api } from '@/lib/api';
+import INTERNAL_API from '@/constants/api/internal';
+import { useRouter } from 'next/navigation';
 
 type userInfo = {
   id: number;
@@ -18,6 +20,7 @@ type userInfo = {
 };
 
 export default function ProfileEditForm() {
+  const router = useRouter();
   const userInfo = getItem<userInfo>('userInfo');
   const email = userInfo?.email ?? '';
   const initialNickname = userInfo?.nickname ?? '';
@@ -70,8 +73,6 @@ export default function ProfileEditForm() {
     return data;
   };
 
-  // 사용자 정보를 성공적으로 업데이트해도, 현재 페이지에서 반영이 안됩니다.
-  // TODO: 사용자 정보 업데이트 시 사용자 현재 정보 업데이트 (localStorage와 cookie);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -82,10 +83,23 @@ export default function ProfileEditForm() {
       uploadedImageUrl = profileImageUrl;
     }
 
-    await api.put(`/users/me`, {
-      nickname: nickname,
-      profileImageUrl: uploadedImageUrl,
+    const response = await fetch(`${INTERNAL_API.USER.ME}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nickname: nickname,
+        profileImageUrl: uploadedImageUrl,
+      }),
     });
+
+    const data = await response.json();
+
+    if (!data.success) {
+      return;
+    }
+
+    setItem('userInfo', data?.userInfo);
+    router.refresh();
   };
 
   return (
