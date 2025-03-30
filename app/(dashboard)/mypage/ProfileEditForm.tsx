@@ -1,14 +1,13 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import Button from '@/components/common/Button';
 import FormField from '@/components/compound/form/FormField';
 import UploadImage from '@/components/compound/upload/UploadImage';
 import { validateLimitLengthNickname } from '@/utils/authValidate';
 import { useState } from 'react';
 import { getItem, setItem } from '@/utils/localstorage';
-// import { api } from '@/lib/api';
 import INTERNAL_API from '@/constants/api/internal';
-import { useRouter } from 'next/navigation';
 
 type userInfo = {
   id: number;
