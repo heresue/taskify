@@ -1,11 +1,11 @@
 import Card from '../DashboardCard/DashboardCard';
 import { ColumnsType } from '@/components/Dashboard/DashboardColumn/action';
-import GetDashboardCard from '../DashboardCard/action';
+import getDashboardCard from '../DashboardCard/action';
 import AddCardBtn from './AddCardBtn';
 import ColumnSettingList from './ColumnSettingList';
 
 export default async function DashboardColumn({ title, id }: ColumnsType) {
-  const data = await GetDashboardCard(id);
+  const data = await getDashboardCard(id);
 
   const totalCounts = data?.totalCount;
   const cards = data?.cards;
@@ -25,16 +25,7 @@ export default async function DashboardColumn({ title, id }: ColumnsType) {
         </div>
         <div className="flex w-full flex-col gap-2 md:gap-4">
           <AddCardBtn columnId={id} />
-          {cards?.map((card) => (
-            <Card
-              key={card.id}
-              imageUrl={card.imageUrl}
-              title={card.title}
-              tags={card.tags}
-              dueDate={card.dueDate}
-              profile={card.assignee.profileImageUrl}
-            />
-          ))}
+          {cards?.map((card) => <Card key={card.id} card={card} columnId={id} />)}
         </div>
       </div>
     </div>
