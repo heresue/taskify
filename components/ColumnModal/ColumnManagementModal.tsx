@@ -10,41 +10,55 @@ import getDashboardColumn, { ColumnsType } from '../Dashboard/DashboardColumn/ac
 const COLUMN_NAME_ERROR_MESSAGE = {
   ALREADY_EXISTS: '중복된 컬럼 이름입니다',
   MAX_COLUMNS_REACHED: '컬럼은 10개까지 가능합니다',
+  EQUAL_TITLE: '기존 칼럼과 동일한 이름입니다',
 };
 
-export default function ColumnManagementModal({ isOpen, onClose }: ModalProps) {
-  const [columnName, setColumnName] = useState('');
+interface ColumnManagementProps extends ModalProps {
+  columnId?: number;
+  columnTitle?: string;
+}
+
+export default function ColumnManagementModal({
+  isOpen,
+  onClose,
+  columnId,
+  columnTitle,
+}: ColumnManagementProps) {
+  const [columnName, setColumnName] = useState(columnTitle ?? '');
   const [dashboardColumns, setDashboardColumns] = useState<ColumnsType[]>([]);
   const [columnErrorMessage, setColumnErrorMessage] = useState('');
   const { dashboardId } = useDashboardParamsId();
 
-  const hasColumnName = columnName.length !== 0;
-  const checkSameColumnName = dashboardColumns.some((column) => column.title === columnName);
+  const hasColumnName = columnName.trim();
+  const isCheckedSameColumnName = dashboardColumns.some((column) => column.title === columnName);
   const isMaxColumnList = dashboardColumns.length === 10;
+  const isEqualTitle = columnTitle === columnName;
+  const createOrUpdate = columnId ? '변경' : '생성';
 
   useEffect(() => {
-    const getDashboardColumns = async () => {
+    (async () => {
       const data = await getDashboardColumn(dashboardId);
-      if (!data) return;
-      setDashboardColumns(data);
-    };
-    getDashboardColumns();
+      if (data) setDashboardColumns(data);
+    })();
   }, [dashboardId]);
 
-  const handleColumnNameSubmit = async () => {
-    if (!hasColumnName) return;
-    if (checkSameColumnName) {
+  const handleColumnSubmit = async () => {
+    if (!columnName.trim()) return;
+    if (columnId && isEqualTitle)
+      return setColumnErrorMessage(COLUMN_NAME_ERROR_MESSAGE.EQUAL_TITLE);
+    if (isCheckedSameColumnName)
       return setColumnErrorMessage(COLUMN_NAME_ERROR_MESSAGE.ALREADY_EXISTS);
-    }
-    if (isMaxColumnList) {
+    if (!columnId && isMaxColumnList)
       return setColumnErrorMessage(COLUMN_NAME_ERROR_MESSAGE.MAX_COLUMNS_REACHED);
-    }
 
     try {
-      await api.post(`${EXTERNAL_API.COLUMNS.ROOT}`, {
-        title: columnName,
-        dashboardId,
-      });
+      await api[columnId ? 'put' : 'post'](
+        `${EXTERNAL_API.COLUMNS.ROOT}${columnId ? `/${columnId}` : ''}`,
+        {
+          title: columnName,
+          ...(!columnId && { dashboardId }),
+        }
+      );
 
       onClose();
     } catch (err) {
@@ -62,11 +76,11 @@ export default function ColumnManagementModal({ isOpen, onClose }: ModalProps) {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      submitMessage="생성"
+      submitMessage={createOrUpdate}
       cancelMessage="취소"
       padding="24/24"
       borderRadius="8"
-      onSubmit={handleColumnNameSubmit}
+      onSubmit={handleColumnSubmit}
       disabled={!hasColumnName}
     >
       <div className="flex w-full flex-col gap-6">

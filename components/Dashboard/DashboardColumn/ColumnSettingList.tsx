@@ -1,18 +1,20 @@
 'use client';
 
 import Setting from '@/assets/icons/Setting';
+import ColumnManagementModal from '@/components/ColumnModal/ColumnManagementModal';
 import { MenuOption } from '@/components/common/Dropdown/Item';
 import { DropdownItem } from '@/components/common/Dropdown/types';
 import DeleteColumnModal from '@/components/DeleteColumnModal/DeleteColumnModal';
 import { useModal } from '@/hooks/useModal';
 import { useState } from 'react';
+import { ColumnType } from '../type';
 
 const COLUMN_DROPDOWN_LIST = [
   { id: 'edit', value: '수정하기' },
   { id: 'delete', value: '삭제하기' },
 ];
 
-export default function ColumnSettingList({ columnId }: { columnId: number }) {
+export default function ColumnSettingList({ columnId, columnTitle }: ColumnType) {
   const [modalId, setModalId] = useState('');
   const [openColumnId, setOpenColumnId] = useState<number | null>(null);
   const { isOpen, open, close } = useModal();
@@ -32,6 +34,12 @@ export default function ColumnSettingList({ columnId }: { columnId: number }) {
         isOpen={modalId === 'delete' && isOpen}
         onClose={close}
         columnId={openColumnId ?? 0}
+      />
+      <ColumnManagementModal
+        isOpen={modalId === 'edit' && isOpen}
+        onClose={close}
+        columnId={openColumnId ?? 0}
+        columnTitle={columnTitle}
       />
       <Setting width={24} height={24} onClick={toggleDropdown} />
       {openColumnId === columnId && (
