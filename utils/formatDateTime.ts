@@ -18,3 +18,11 @@ export function formatDate(dateString: string): string {
   const [date] = dateString.split(' ');
   return date.replace(/-/g, '.');
 }
+
+export function parseDateTime(dateString: string): Date | null {
+  if (!dateString) return null;
+
+  const formattedString = dateString.replace(' ', 'T') + ':00';
+  const date = new Date(formattedString);
+  return date;
+}

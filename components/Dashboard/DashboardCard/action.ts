@@ -21,11 +21,7 @@ interface CardsPromise {
   totalCount: number;
 }
 
-export default async function GetDashboardCard(id: number) {
-  try {
-    const response = await api.get<CardsPromise>(`/cards?columnId=${id}`);
-    return response;
-  } catch (err) {
-    console.error(err);
-  }
+export default async function getDashboardCard(id: number) {
+  const response = await api.get<CardsPromise>(`/cards?columnId=${id}`);
+  return response;
 }

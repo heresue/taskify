@@ -8,13 +8,12 @@ import { usePagination } from '@/components/Pagination/usePagination';
 import PaginationItems from '@/components/Pagination/PaginationItems';
 import PaginationControls from '@/components/Pagination/PaginationControls';
 import InviteModal from './InviteModal';
+import { api } from '@/lib/api';
+import EXTERNAL_API from '@/constants/api/external';
+import { useModal } from '@/hooks/useModal';
 
-interface Props {
-  dashboardId: string;
-}
-
-export default function InvitationListSection({ dashboardId }: Props) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function InvitationListSection({ dashboardId }: { dashboardId: number }) {
+  const { isOpen, open, close } = useModal();
   const itemsPerPage = 5;
 
   const pendingInvitations = useMemo(() => {
@@ -56,11 +55,7 @@ export default function InvitationListSection({ dashboardId }: Props) {
             goToPrev={goToPrev}
             goToNext={goToNext}
           />
-          <Button
-            size="w-[109px] h-[32px] rounded-sm"
-            className="flex gap-[10px]"
-            onClick={() => setIsOpen(true)}
-          >
+          <Button size="w-[109px] h-[32px] rounded-sm" className="flex gap-[10px]" onClick={open}>
             <AddBoxIcon width="14" height="14" color="white" />
             <span className="text-medium14">초대하기</span>
           </Button>
@@ -93,7 +88,16 @@ export default function InvitationListSection({ dashboardId }: Props) {
         />
       </div>
 
-      <InviteModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <InviteModal
+        isOpen={isOpen}
+        onClose={close}
+        onInvite={async (email) => {
+          await api.post(EXTERNAL_API.DASHBOARDS.invite(dashboardId), {
+            email,
+            dashboardId,
+          });
+        }}
+      />
     </div>
   );
 }

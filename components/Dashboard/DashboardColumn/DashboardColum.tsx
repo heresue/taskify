@@ -1,11 +1,11 @@
 import Card from '../DashboardCard/DashboardCard';
-import { ColumnsType } from '@/components/Dashboard/DashboardColumn/action';
-import GetDashboardCard from '../DashboardCard/action';
+import getDashboardCard from '../DashboardCard/action';
 import AddCardBtn from './AddCardBtn';
 import ColumnSettingList from './ColumnSettingList';
+import { ColumnType } from '../type';
 
-export default async function DashboardColumn({ title, id }: ColumnsType) {
-  const data = await GetDashboardCard(id);
+export default async function DashboardColumn({ columnTitle, columnId }: ColumnType) {
+  const data = await getDashboardCard(columnId);
 
   const totalCounts = data?.totalCount;
   const cards = data?.cards;
@@ -16,25 +16,17 @@ export default async function DashboardColumn({ title, id }: ColumnsType) {
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center justify-center gap-2">
             <div className="bg-violet h-2 w-2 rounded-full" />
-            <h2 className="text-bold16 text-black">{title}</h2>
+            <h2 className="text-bold16 text-black">{columnTitle}</h2>
             <span className="bg-gray200 text-medium12 text-gray500 ml-1 flex items-center justify-center rounded-sm px-1.5 py-[3px]">
               {totalCounts}
             </span>
           </div>
-          <ColumnSettingList columnId={id} />
+          <ColumnSettingList columnId={columnId} columnTitle={columnTitle} />
+          <ColumnSettingList columnId={columnId} columnTitle={columnTitle} />
         </div>
         <div className="flex w-full flex-col gap-2 md:gap-4">
-          <AddCardBtn columnId={id} />
-          {cards?.map((card) => (
-            <Card
-              key={card.id}
-              imageUrl={card.imageUrl}
-              title={card.title}
-              tags={card.tags}
-              dueDate={card.dueDate}
-              profile={card.assignee.profileImageUrl}
-            />
-          ))}
+          <AddCardBtn columnId={columnId} />
+          {cards?.map((card) => <Card key={card.id} card={card} columnId={columnId} />)}
         </div>
       </div>
     </div>
