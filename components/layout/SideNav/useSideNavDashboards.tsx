@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Dashboard, getMyDashboards } from '@/app/(dashboard)/mydashboard/actions';
+import { Dashboard, getMyDashboards } from '@/app/(dashboard)/mydashboard/types';
 
 export function useSideNavDashboards(itemsPerPage: number) {
   const [dashboards, setDashboards] = useState<Dashboard[]>([]);

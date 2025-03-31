@@ -9,7 +9,7 @@ import PaginationItems from '@/components/Pagination/PaginationItems';
 import PaginationControls from '@/components/Pagination/PaginationControls';
 import MyDashboardListItem from './MyDashboardListItem';
 import CreateDashboardModal from './CreateDashboardModal';
-import { Dashboard } from './actions';
+import { Dashboard } from './types';
 
 interface Props {
   mydashboards: Dashboard[];

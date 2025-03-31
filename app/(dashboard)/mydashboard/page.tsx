@@ -1,6 +1,6 @@
 import MyDashboardSection from './MyDashboardSection';
 import InvitedSection from './InvitedSection';
-import { Dashboard, getInvitations, getMyDashboards, Invitation } from './actions';
+import { Dashboard, getInvitations, getMyDashboards, Invitation } from './types';
 
 export default async function MyDashboard() {
   let dashboards: Dashboard[] = [];

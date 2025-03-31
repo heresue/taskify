@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import DashboardColorIcon from '@/components/DashboardColorIcon/DashboardColorIcon';
 import clsx from 'clsx';
-import { Dashboard } from './actions';
+import { Dashboard } from './types';
 
 interface DashboardListItemProps extends Dashboard {
   dashboardId: number;

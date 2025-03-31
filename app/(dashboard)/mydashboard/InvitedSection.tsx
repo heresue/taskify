@@ -5,7 +5,7 @@ import Image from 'next/image';
 import InvitedDashboardList from './InvitedDashboardList';
 import { Invitation } from './invitations';
 import { useEffect, useState } from 'react';
-import { acceptInvitation, rejectInvitation } from './actions';
+import { acceptInvitation, rejectInvitation } from './types';
 import { useRouter } from 'next/navigation';
 
 interface Props {
