@@ -1,10 +1,20 @@
 import MyDashboardSection from './MyDashboardSection';
 import InvitedSection from './InvitedSection';
-import { getInvitations, getMyDashboards } from './actions';
+import { Dashboard, getInvitations, getMyDashboards, Invitation } from './actions';
 
 export default async function MyDashboard() {
-  const { dashboards } = await getMyDashboards();
-  const { invitations } = await getInvitations();
+  let dashboards: Dashboard[] = [];
+  let invitations: Invitation[] = [];
+
+  try {
+    const dashboardData = await getMyDashboards();
+    dashboards = dashboardData.dashboards;
+
+    const invitationData = await getInvitations();
+    invitations = invitationData.invitations;
+  } catch (err) {
+    console.error('대시보드 목록 불러오기 에러:', err);
+  }
 
   const pendingInvitations = invitations.filter((invitation) => invitation.inviteAccepted === null);
 

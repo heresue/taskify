@@ -20,7 +20,6 @@ export type DashboardListResponse = {
 
 export type Invitation = {
   id: number;
-  inviteAccepted: boolean | null;
   inviter: {
     nickname: string;
     email: string;
@@ -36,13 +35,14 @@ export type Invitation = {
     title: string;
     id: number;
   };
+  inviteAccepted: boolean | null;
   createdAt: string;
   updatedAt: string;
 };
 
 export type InvitationListResponse = {
   invitations: Invitation[];
-  totalCount: number;
+  cursorId: number;
 };
 
 export async function getMyDashboards(
@@ -54,7 +54,7 @@ export async function getMyDashboards(
     return await api.get<DashboardListResponse>(`${EXTERNAL_API.DASHBOARDS.ROOT}${query}`);
   } catch (err) {
     console.error(err);
-    return { dashboards: [], totalCount: 0 };
+    throw err;
   }
 }
 
@@ -63,6 +63,28 @@ export async function getInvitations(): Promise<InvitationListResponse> {
     return await api.get<InvitationListResponse>(EXTERNAL_API.INVITATIONS.ROOT);
   } catch (err) {
     console.error(err);
-    return { invitations: [], totalCount: 0 };
+    throw err;
+  }
+}
+
+export async function acceptInvitation(id: number): Promise<Invitation> {
+  try {
+    return await api.put<Invitation>(EXTERNAL_API.INVITATIONS.acceptInvitation(id), {
+      inviteAccepted: true,
+    });
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
+
+export async function rejectInvitation(id: number): Promise<Invitation> {
+  try {
+    return await api.put<Invitation>(EXTERNAL_API.INVITATIONS.acceptInvitation(id), {
+      inviteAccepted: false,
+    });
+  } catch (err) {
+    console.error(err);
+    throw err;
   }
 }
