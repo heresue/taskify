@@ -7,8 +7,15 @@ export default function PaginationControls({
   showPageInfo = true,
   goToPrev,
   goToNext,
+  justify = 'end',
 }: PaginationControlsProps) {
   if (totalPages <= 1) return null;
+
+  const justifyClass = {
+    start: 'justify-start',
+    center: 'justify-center',
+    end: 'justify-end',
+  }[justify];
 
   const baseButtonClass =
     'border-gray300 flex h-10 w-10 items-center justify-center border bg-white';
@@ -19,7 +26,7 @@ export default function PaginationControls({
   const isNextDisabled = currentPage === totalPages;
 
   return (
-    <div className="flex items-center justify-end gap-4">
+    <div className={`flex items-center gap-4 ${justifyClass}`}>
       {showPageInfo && (
         <span className="text-black200 text-regular14">
           {totalPages} 페이지 중 {currentPage}

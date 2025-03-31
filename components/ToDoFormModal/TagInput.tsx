@@ -5,10 +5,16 @@ import { separateTagColor } from '@/utils/separateTagColor';
 
 const COLORS = ['#ffa500', '#7ac555', '#76a5ea', '#ea91bc', '#787486'];
 
-export default function TagInput({ onChange }: { onChange: (tags: string[]) => void }) {
+export default function TagInput({
+  writtenTags,
+  onChange,
+}: {
+  writtenTags?: string[];
+  onChange: (tags: string[]) => void;
+}) {
   const [isSelected, setIsSelected] = useState(COLORS[0]);
   const [tag, setTag] = useState('');
-  const [tagList, setTagList] = useState<string[]>([]);
+  const [tagList, setTagList] = useState<string[]>(writtenTags ?? []);
   const [isEqual, setIsEqual] = useState(false);
 
   const handleSelectColorClick = (color: string) => {

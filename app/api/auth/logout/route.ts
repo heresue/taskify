@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 
-// req: Request
 export async function POST() {
   const response = NextResponse.json({ success: true }, { status: 200 });
 
