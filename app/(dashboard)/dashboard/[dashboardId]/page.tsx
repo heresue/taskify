@@ -15,7 +15,7 @@ export default async function DashboardId({
   return (
     <div className="flex h-full flex-col overflow-x-scroll lg:flex-row">
       {columns.map((column) => (
-        <DashboardColumn key={column.id} title={column.title} id={column.id} />
+        <DashboardColumn key={column.id} columnTitle={column.title} columnId={column.id} />
       ))}
       <div className="fixed inset-x-3 bottom-7 lg:static lg:mx-5 lg:mt-[68px]">
         <AddColumnBtn />
