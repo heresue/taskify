@@ -22,7 +22,6 @@ export default async function DashboardColumn({ columnTitle, columnId }: ColumnT
             </span>
           </div>
           <ColumnSettingList columnId={columnId} columnTitle={columnTitle} />
-          <ColumnSettingList columnId={columnId} columnTitle={columnTitle} />
         </div>
         <div className="flex w-full flex-col gap-2 md:gap-4">
           <AddCardBtn columnId={columnId} />
