@@ -53,9 +53,10 @@ export default function MyDashboardSection({ mydashboards }: Props) {
             {pageItems.map((dashboard) => (
               <MyDashboardListItem
                 key={dashboard.id}
+                id={dashboard.id}
                 dashboardId={dashboard.id}
                 title={dashboard.title}
-                colorKey={dashboard.color}
+                color={dashboard.color}
                 createdByMe={dashboard.createdByMe}
                 isSelected={String(dashboard.id) === selectedId}
               />

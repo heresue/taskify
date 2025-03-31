@@ -1,13 +1,13 @@
 import Input from '@/components/common/Input';
 import Modal from '@/components/common/Modal';
-import DashboardColorIcon, { COLOR_MAP } from '@/components/DashboardColorIcon/DashboardColorIcon';
+import DashboardColorIcon from '@/components/DashboardColorIcon/DashboardColorIcon';
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const DASHBOARD_COLOR_KEYS = Object.keys(COLOR_MAP) as (keyof typeof COLOR_MAP)[];
+const DASHBOARD_COLORS = ['#ffa500', '#7ac555', '#76a5ea', '#e876ea', '#760dde'];
 
 export default function CreateDashboardModal({ isOpen, onClose }: Props) {
   return (
@@ -26,8 +26,8 @@ export default function CreateDashboardModal({ isOpen, onClose }: Props) {
           <Input id="dashboardName" name="dashboardName" placeholder="이름을 입력하세요" />
         </label>
         <div className="mb-6 flex gap-2">
-          {DASHBOARD_COLOR_KEYS.map((key) => (
-            <DashboardColorIcon key={key} size={30} colorKey={key} />
+          {DASHBOARD_COLORS.map((color) => (
+            <DashboardColorIcon key={color} size={30} color={color} />
           ))}
         </div>
       </div>
