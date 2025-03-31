@@ -3,16 +3,16 @@
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useModal } from '@/hooks/useModal';
-import { MockDashboard } from '@/mocks/dashboards';
 import { usePagination } from '@/components/Pagination/usePagination';
 import Button from '@/components/common/Button';
 import PaginationItems from '@/components/Pagination/PaginationItems';
 import PaginationControls from '@/components/Pagination/PaginationControls';
 import MyDashboardListItem from './MyDashboardListItem';
 import CreateDashboardModal from './CreateDashboardModal';
+import { Dashboard } from './actions';
 
 interface Props {
-  mydashboards: MockDashboard[];
+  mydashboards: Dashboard[];
 }
 
 export default function MyDashboardSection({ mydashboards }: Props) {
