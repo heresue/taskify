@@ -46,7 +46,7 @@ export default async function DashboardHeader({ dashboardId }: { dashboardId: nu
   const { nickname, profileImageUrl } = JSON.parse(cookieStore.get('userInfo')?.value || '');
 
   return (
-    <header className="border-b-gray300 sticky top-0 flex h-15 items-center justify-between border-b-1 bg-white px-3 md:h-17.5 md:px-10 lg:px-20">
+    <header className="border-b-gray300 sticky top-0 z-990 flex h-15 items-center justify-between border-b-1 bg-white px-3 md:h-17.5 md:px-10 lg:px-20">
       <div className="invisible lg:visible lg:flex lg:gap-2">
         <span className="text-bold20 select-none">{title}</span>
         {createdByMe && (
