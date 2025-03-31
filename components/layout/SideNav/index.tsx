@@ -10,7 +10,6 @@ import PaginationItems from '@/components/Pagination/PaginationItems';
 import { usePagination } from '@/components/Pagination/usePagination';
 import PaginationControls from '@/components/Pagination/PaginationControls';
 import { Dashboard, getMyDashboards } from '@/app/(dashboard)/mydashboard/actions';
-import { Dashboard, getMyDashboards } from '@/app/(dashboard)/mydashboard/actions';
 
 export default function SideNav() {
   const pathname = usePathname();
@@ -36,15 +35,6 @@ export default function SideNav() {
   }, []);
 
   useEffect(() => {
-    async function getSideNavDashboards() {
-      try {
-        const dashboardData = await getMyDashboards(1, 100);
-        setDashboards(dashboardData.dashboards);
-      } catch (err) {
-        console.error('sidenav 목록 불러오기 에러:', err);
-      }
-    }
-    getSideNavDashboards();
     async function getSideNavDashboards() {
       try {
         const dashboardData = await getMyDashboards(1, 100);
@@ -93,9 +83,10 @@ export default function SideNav() {
                     {dashboards.map((dashboard) => (
                       <DashboardListItem
                         key={dashboard.id}
+                        id={dashboard.id}
                         dashboardId={dashboard.id}
                         title={dashboard.title}
-                        colorKey={dashboard.color}
+                        color={dashboard.color}
                         createdByMe={dashboard.createdByMe}
                         isSelected={String(dashboard.id) === selectedId}
                       />
