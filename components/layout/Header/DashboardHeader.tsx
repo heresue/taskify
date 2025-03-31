@@ -62,7 +62,7 @@ export default async function DashboardHeader({ dashboardId }: { dashboardId: nu
             <Setting width={18} height={18} className="hidden md:block" />
             관리
           </Link>
-          <InvitationButton />
+          <InvitationButton dashboardId={dashboardId} />
         </div>
         <MemberBadgeList members={members} totalCount={totalCount} />
         <div className="bg-gray300 mx-3 h-8.5 w-[1px] md:mx-6 md:h-[9.5] lg:mx-8"></div>
