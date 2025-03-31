@@ -5,18 +5,18 @@ import Image from 'next/image';
 import InvitedDashboardList from './InvitedDashboardList';
 import { Invitation } from './invitations';
 import { useEffect, useState } from 'react';
+import { acceptInvitation, rejectInvitation } from './actions';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   invitations: Invitation[];
 }
 
-// mock 데이터 기반으로 단순 기능만 구현함에 따라
-// 주석처리 된 코드가 있습니다.
-
 export default function InvitedSection({ invitations: initialInvitations }: Props) {
+  const [isLoading, setIsLoading] = useState(false);
   const [invitations, setInvitations] = useState<Invitation[]>([]);
-  // const [myDashboards, setMyDashboards] = useState<Invitation[]>([]);
   const [keyword, setKeyword] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     setInvitations(initialInvitations);
@@ -26,18 +26,33 @@ export default function InvitedSection({ invitations: initialInvitations }: Prop
     inv.dashboard.title.toLowerCase().includes(keyword.toLowerCase())
   );
 
-  const handleAccept = (id: number) => {
-    const accepted = invitations.find((inv) => inv.id === id);
-    if (!accepted) return;
+  const handleAccept = async (id: number) => {
+    if (isLoading) return;
+    setIsLoading(true);
 
-    setInvitations((prev) => prev.filter((inv) => inv.id !== id));
-    // setMyDashboards((prev) => [...prev, accepted]);
-    console.log('수락된 대시보드:', accepted.dashboard.title);
+    try {
+      await acceptInvitation(id);
+      router.refresh();
+      setInvitations((prev) => prev.filter((inv) => inv.id !== id));
+    } catch (err) {
+      console.error('초대 수락 에러:', err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleReject = (id: number) => {
-    setInvitations((prev) => prev.filter((inv) => inv.id !== id));
-    console.log('거절된 초대 ID:', id);
+  const handleReject = async (id: number) => {
+    if (isLoading) return;
+    setIsLoading(true);
+
+    try {
+      await rejectInvitation(id);
+      router.refresh();
+      setInvitations((prev) => prev.filter((inv) => inv.id !== id));
+      console.log('거절된 초대 ID:', id);
+    } catch (err) {
+      console.error('초대 거절 에러:', err);
+    }
   };
 
   if (invitations.length === 0) {
@@ -77,6 +92,7 @@ export default function InvitedSection({ invitations: initialInvitations }: Prop
         />
       </div>
       <InvitedDashboardList
+        isLoading={isLoading}
         invitations={filtered}
         onAccept={handleAccept}
         onReject={handleReject}
