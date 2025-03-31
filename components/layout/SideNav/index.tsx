@@ -5,19 +5,26 @@ import Image from 'next/image';
 import DashboardListItem from './DashboardListItem';
 import AddDashboardButton from './AddDashboardButton';
 import { useEffect, useState } from 'react';
-import { mockDashboards } from '@/mocks/dashboards';
 import { usePathname } from 'next/navigation';
-import { Dashboard } from '@/app/(dashboard)/mydashboard/actions';
+import { Dashboard, getMyDashboards } from '@/app/(dashboard)/mydashboard/actions';
 
 export default function SideNav() {
   const pathname = usePathname();
   const selectedId = pathname?.split('/dashboard/')[1]?.split('/')[0];
 
-  // mock data 적용
+  // const { dashboards, loading, error } = useSideNavDashboards(itemsPerPage);
   const [dashboards, setDashboards] = useState<Dashboard[]>([]);
 
   useEffect(() => {
-    setDashboards(mockDashboards);
+    async function getSideNavDashboards() {
+      try {
+        const dashboardData = await getMyDashboards(1, 100);
+        setDashboards(dashboardData.dashboards);
+      } catch (err) {
+        console.error('sidenav 목록 불러오기 에러:', err);
+      }
+    }
+    getSideNavDashboards();
   }, []);
 
   return (

@@ -1,7 +1,5 @@
 // mocks/mockDashboards.ts
 
-import { ColorKey } from '@/components/DashboardColorIcon/DashboardColorIcon';
-
 export interface MockDashboard {
   id: number;
   title: string;
