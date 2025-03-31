@@ -1,9 +1,11 @@
 'use client';
 import InviteModal from '@/app/(dashboard)/dashboard/[dashboardId]/edit/InviteModal';
 import AddBoxIcon from '@/assets/icons/AddBoxIcon';
+import EXTERNAL_API from '@/constants/api/external';
 import { useModal } from '@/hooks/useModal';
+import { api } from '@/lib/api';
 
-export default function InvitationButton() {
+export default function InvitationButton({ dashboardId }: { dashboardId: number }) {
   const { isOpen, open, close } = useModal();
 
   return (
@@ -15,7 +17,16 @@ export default function InvitationButton() {
         <AddBoxIcon width="16" height="16" className="hidden md:block" />
         초대하기
       </button>
-      <InviteModal isOpen={isOpen} onClose={close} />
+      <InviteModal
+        isOpen={isOpen}
+        onClose={close}
+        onInvite={async (email) => {
+          await api.post(EXTERNAL_API.DASHBOARDS.invite(dashboardId), {
+            email,
+            dashboardId,
+          });
+        }}
+      />
     </>
   );
 }

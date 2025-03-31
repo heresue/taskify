@@ -18,7 +18,7 @@ export default async function DashboardIdEdit({
       <div className="flex w-[620px] flex-col gap-4">
         <DashboardTitleSection />
         <MemberListSection />
-        <InvitationListSection dashboardId={dashboardId} />
+        <InvitationListSection dashboardId={Number(dashboardId)} />
 
         <Button variant="outline" size="deleteDashboard">
           대시보드 삭제하기
