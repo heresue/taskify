@@ -61,13 +61,14 @@ export default function SignupForm() {
           const { label, name, placeholder } = input;
           const isPasswordInput = ['password', 'checkPassword'].includes(name);
           const isPasswordValueVisible = isPasswordVisible[name];
+          const passwordType = isPasswordValueVisible ? 'text' : 'password';
           const isInputFieldValid = state?.field === name;
 
           return (
             <div key={label} className="relative">
               <FormField
                 name={name}
-                type={isPasswordInput && isPasswordValueVisible ? 'text' : 'password'}
+                type={isPasswordInput ? passwordType : 'text'}
                 value={formData[name]}
                 label={label}
                 placeholder={placeholder}
