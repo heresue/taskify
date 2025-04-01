@@ -49,7 +49,6 @@ export default function InvitedSection({ invitations: initialInvitations }: Prop
       await rejectInvitation(id);
       router.refresh();
       setInvitations((prev) => prev.filter((inv) => inv.id !== id));
-      console.log('거절된 초대 ID:', id);
     } catch (err) {
       console.error('초대 거절 에러:', err);
     } finally {

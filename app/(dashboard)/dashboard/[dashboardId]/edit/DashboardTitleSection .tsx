@@ -42,7 +42,6 @@ export default function DashboardTitleSection({ dashboardId }: { dashboardId: nu
 
     try {
       await updateDashboard(dashboardId, payload);
-      console.log('대시보드 수정 성공!');
       router.push(ROUTES.DASHBOARD.root(dashboardId));
       router.refresh();
     } catch (error) {
