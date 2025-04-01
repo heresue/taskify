@@ -17,6 +17,7 @@ import { SortableContext, arrayMove, verticalListSortingStrategy } from '@dnd-ki
 import { useEffect, useState } from 'react';
 import { CardType } from '../DashboardCard/DashboardCard';
 import SortableCard from '../DashboardCard/SortableCard';
+import { cardOrdersTable } from './db';
 
 export default function DashboardColumn({ columnId, columnTitle }: ColumnType) {
   const [cards, setCards] = useState<CardType[]>([]);
@@ -25,26 +26,42 @@ export default function DashboardColumn({ columnId, columnTitle }: ColumnType) {
   useEffect(() => {
     const getCards = async () => {
       try {
-        const data = await getDashboardCard(columnId);
-        setCards(data.cards);
-        setTotalCounts(data.totalCount);
+        const dbOrder = await cardOrdersTable.get(columnId);
+
+        if (dbOrder) {
+          const data = await getDashboardCard(columnId);
+          const orderedCards = dbOrder.order
+            .map((id: number) => data.cards.find((card) => card.id === id))
+            .filter(Boolean) as CardType[];
+
+          setCards(orderedCards);
+          setTotalCounts(data.totalCount);
+        } else {
+          const data = await getDashboardCard(columnId);
+          setCards(data.cards);
+          setTotalCounts(data.totalCount);
+        }
       } catch (err) {
         console.error(err);
       }
     };
+
     getCards();
   }, [columnId]);
 
-  const handleDragEnd = (event: DragEndEvent) => {
+  const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
 
     const oldIndex = cards.findIndex((card) => card.id === active.id);
     const newIndex = cards.findIndex((card) => card.id === over.id);
 
-    if (oldIndex !== -1 && newIndex !== -1) {
-      setCards(arrayMove(cards, oldIndex, newIndex));
-    }
+    if (oldIndex === -1 && newIndex === -1) return;
+
+    const newCardsOrder = arrayMove(cards, oldIndex, newIndex);
+    setCards(newCardsOrder);
+
+    await cardOrdersTable.put({ columnId, order: newCardsOrder.map((c) => c.id) });
   };
 
   const sensors = useSensors(
