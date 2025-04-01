@@ -34,3 +34,14 @@ export async function deleteMembers(memberId: number): Promise<DashboardWithMemb
     throw err;
   }
 }
+
+export async function inviteMember(dashboardId: number, email: string) {
+  try {
+    return await api.post(EXTERNAL_API.DASHBOARDS.invite(dashboardId), {
+      email,
+      dashboardId,
+    });
+  } catch (err) {
+    throw err;
+  }
+}

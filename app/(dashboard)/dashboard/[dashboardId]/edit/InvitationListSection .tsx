@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { useModal } from '@/hooks/useModal';
 import { mockInvitations } from '@/mocks/invitations';
 import AddBoxIcon from '@/assets/icons/AddBoxIcon';
 import Button from '@/components/common/Button';
@@ -8,9 +9,7 @@ import { usePagination } from '@/components/Pagination/usePagination';
 import PaginationItems from '@/components/Pagination/PaginationItems';
 import PaginationControls from '@/components/Pagination/PaginationControls';
 import InviteModal from './InviteModal';
-import { api } from '@/lib/api';
-import EXTERNAL_API from '@/constants/api/external';
-import { useModal } from '@/hooks/useModal';
+import { inviteMember } from './data';
 
 export default function InvitationListSection({ dashboardId }: { dashboardId: number }) {
   const { isOpen, open, close } = useModal();
@@ -92,10 +91,11 @@ export default function InvitationListSection({ dashboardId }: { dashboardId: nu
         isOpen={isOpen}
         onClose={close}
         onInvite={async (email) => {
-          await api.post(EXTERNAL_API.DASHBOARDS.invite(dashboardId), {
-            email,
-            dashboardId,
-          });
+          try {
+            await inviteMember(dashboardId, email);
+          } catch (err) {
+            console.error('초대 실패:', err);
+          }
         }}
       />
     </div>

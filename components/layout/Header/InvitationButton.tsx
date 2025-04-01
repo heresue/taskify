@@ -1,9 +1,8 @@
 'use client';
+import { inviteMember } from '@/app/(dashboard)/dashboard/[dashboardId]/edit/data';
 import InviteModal from '@/app/(dashboard)/dashboard/[dashboardId]/edit/InviteModal';
 import AddBoxIcon from '@/assets/icons/AddBoxIcon';
-import EXTERNAL_API from '@/constants/api/external';
 import { useModal } from '@/hooks/useModal';
-import { api } from '@/lib/api';
 
 export default function InvitationButton({ dashboardId }: { dashboardId: number }) {
   const { isOpen, open, close } = useModal();
@@ -21,10 +20,11 @@ export default function InvitationButton({ dashboardId }: { dashboardId: number 
         isOpen={isOpen}
         onClose={close}
         onInvite={async (email) => {
-          await api.post(EXTERNAL_API.DASHBOARDS.invite(dashboardId), {
-            email,
-            dashboardId,
-          });
+          try {
+            await inviteMember(dashboardId, email);
+          } catch (err) {
+            console.error('초대 실패:', err);
+          }
         }}
       />
     </>
