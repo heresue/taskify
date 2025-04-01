@@ -1,12 +1,10 @@
-import Link from 'next/link';
 import Image from 'next/image';
 import { cookies } from 'next/headers';
 import MemberBadgeList from '@/components/layout/Header/MemberBadgeList';
-import InvitationButton from '@/components/layout/Header/InvitationButton';
 import UserMenu from '@/components/layout/Header/UserMenu';
-import Setting from '@/assets/icons/Setting';
 import { api } from '@/lib/api';
 import EXTERNAL_API from '@/constants/api/external';
+import Navigation from './Navigation';
 
 interface Member {
   id: number;
@@ -54,18 +52,7 @@ export default async function DashboardHeader({ dashboardId }: { dashboardId: nu
         )}
       </div>
       <div className="flex items-center">
-        {createdByMe && (
-          <div className="flex gap-1.5 md:gap-3">
-            <Link
-              href={`/dashboard/${dashboardId}/edit`}
-              className="text-medium14 text-gray500 border-gray300 flex items-center gap-2 truncate rounded-md border-1 px-3 py-1.5 md:rounded-lg md:px-4 md:py-2"
-            >
-              <Setting width={18} height={18} className="hidden md:block" />
-              관리
-            </Link>
-            <InvitationButton dashboardId={dashboardId} />
-          </div>
-        )}
+        {createdByMe && <Navigation dashboardId={dashboardId} />}
         <MemberBadgeList members={members} totalCount={totalCount} />
         <div className="bg-gray300 mx-3 h-8.5 w-[1px] md:mx-6 md:h-[9.5] lg:mx-8"></div>
         <UserMenu nickname={nickname} profileImageUrl={profileImageUrl} />
