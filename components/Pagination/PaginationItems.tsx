@@ -45,12 +45,14 @@ export default function PaginationItems<T>({
 //       totalPages={totalPages}
 //       goToPrev={goToPrev}
 //       goToNext={goToNext}
+//       // ptional: showPageInfo, justify 등
 //     />
 
 //     <PaginationItems
 //       data={paginatedData}
 //       itemsPerPage={itemsPerPage}
 //       currentPage={currentPage}
+//       // optional: renderFixedItem, wrapperClassName 등
 //       renderItems={(items) => (
 //         <>
 //           {items.map((item) => (
