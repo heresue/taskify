@@ -1,17 +1,18 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import useDashboardParamsId from '@/components/Dashboard/useDashboardParamsId';
+import ROUTES from '@/constants/routes';
 import Button from '@/components/common/Button';
 import BackLink from './BackLink';
 import DashboardTitleSection from './DashboardTitleSection ';
 import MemberListSection from './MemberListSection ';
 import InvitationListSection from './InvitationListSection ';
 import { deleteDashboard } from './data';
-import ROUTES from '@/constants/routes';
 
-export default function DashboardIdEdit({ params }: { params: { dashboardId: string } }) {
-  const dashboardId = Number(params.dashboardId);
-  const router = useRouter();
+export default function DashboardIdEdit() {
+  const { dashboardId } = useDashboardParamsId();
+  const router = useRouter()
 
   const handleDelete = async () => {
     // 임시
