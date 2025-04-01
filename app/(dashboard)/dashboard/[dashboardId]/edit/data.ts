@@ -26,3 +26,11 @@ export async function getMembers(dashboardId: number): Promise<DashboardWithMemb
     throw err;
   }
 }
+
+export async function deleteMembers(memberId: number): Promise<DashboardWithMembers> {
+  try {
+    return await api.delete(EXTERNAL_API.MEMBERS.getDetail(memberId));
+  } catch (err) {
+    throw err;
+  }
+}

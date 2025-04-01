@@ -6,7 +6,7 @@ import UserIcon from '@/assets/icons/UserIcon';
 import PaginationItems from '@/components/Pagination/PaginationItems';
 import PaginationControls from '@/components/Pagination/PaginationControls';
 import { usePagination } from '@/components/Pagination/usePagination';
-import { getMembers } from './data';
+import { deleteMembers, getMembers } from './data';
 
 interface Member {
   id: number;
@@ -33,15 +33,9 @@ export default function MemberListSection({ dashboardId }: { dashboardId: number
     fetchMembers();
   }, [dashboardId]);
 
-  // TODO: 데이터 연동 후 수정
-  const deleteMember = async (memberId: number) => {
-    console.log(`[임시] 삭제 요청: 구성원 ID ${memberId}`);
-    return Promise.resolve();
-  };
-
   const handleDeleteMember = async (memberId: number) => {
     try {
-      await deleteMember(memberId);
+      await deleteMembers(memberId);
       setMembers((prev) => prev.filter((m) => m.id !== memberId));
     } catch (error) {
       console.error('구성원 삭제 실패:', error);
