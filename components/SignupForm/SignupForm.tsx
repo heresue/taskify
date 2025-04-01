@@ -1,6 +1,5 @@
 'use client';
 
-import { redirect } from 'next/navigation';
 import CheckBox from './CheckBox';
 import FormField from '../compound/form/FormField';
 import Button from '../common/Button';
@@ -39,8 +38,10 @@ export default function SignupForm() {
     handlePreventSpace,
     isPasswordVisible,
     toggleVisiblePassword,
-    isFormIncomplete,
+    isFomrComplete,
     handleFormSubmit,
+    isModalOpen,
+    onClose,
     state,
     isPending,
   } = useSignupForm();
@@ -48,13 +49,13 @@ export default function SignupForm() {
   return (
     <form onSubmit={handleFormSubmit} className="flex w-full flex-col gap-6">
       <Modal
-        isOpen={(state && state.status) || false}
+        isOpen={isModalOpen}
         padding="64/40"
         borderRadius="16"
         submitMessage="확인"
-        onClose={() => redirect('/login')}
+        onClose={onClose}
       >
-        가입이 완료되었습니다!
+        {state?.message}
       </Modal>
       <div className="flex flex-col gap-4">
         {INPUT_FIELD_LIST.map((input) => {
@@ -75,7 +76,7 @@ export default function SignupForm() {
                 onChange={handleFormChange}
                 onKeyDown={handlePreventSpace}
                 isValid={!isInputFieldValid}
-                errorMessage={isInputFieldValid ? state.err : ''}
+                errorMessage={isInputFieldValid ? state.message : ''}
                 fieldType="input"
                 rightIcon={
                   isPasswordInput && (
@@ -89,9 +90,9 @@ export default function SignupForm() {
             </div>
           );
         })}
-        <CheckBox isChecked={formData.isChecked} handleIsChecked={handleIsChecked} />
+        <CheckBox isChecked={isPending || formData.isChecked} handleIsChecked={handleIsChecked} />
       </div>
-      <Button disabled={isPending || isFormIncomplete} type="submit" fullWidth size="auth">
+      <Button disabled={!isFomrComplete} type="submit" fullWidth size="auth">
         {isPending ? '...' : '가입하기'}
       </Button>
     </form>
