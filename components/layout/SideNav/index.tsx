@@ -49,7 +49,7 @@ export default function SideNav() {
             />
           </Link>
         </h2>
-        <SideNavItems selectedId={selectedId} itemsPerPage={itemsPerPage} />
+        <SideNavItems key={pathname} selectedId={selectedId} itemsPerPage={itemsPerPage} />
       </div>
     </nav>
   );
