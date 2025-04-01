@@ -8,9 +8,10 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
   onInvite: (email: string) => Promise<void>;
+  onSuccess?: () => void;
 }
 
-export default function InviteModal({ isOpen, onClose, onInvite }: Props) {
+export default function InviteModal({ isOpen, onClose, onInvite, onSuccess }: Props) {
   const [email, setEmail] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [hasEmailBlurred, setHasEmailBlurred] = useState(false);
@@ -42,6 +43,7 @@ export default function InviteModal({ isOpen, onClose, onInvite }: Props) {
     try {
       setIsLoading(true);
       await onInvite(email);
+      onSuccess?.();
       resetForm();
       onClose();
     } catch (error) {

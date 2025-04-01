@@ -3,16 +3,16 @@
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useModal } from '@/hooks/useModal';
-import { MockDashboard } from '@/mocks/dashboards';
 import { usePagination } from '@/components/Pagination/usePagination';
 import Button from '@/components/common/Button';
 import PaginationItems from '@/components/Pagination/PaginationItems';
 import PaginationControls from '@/components/Pagination/PaginationControls';
 import MyDashboardListItem from './MyDashboardListItem';
 import CreateDashboardModal from './CreateDashboardModal';
+import { Dashboard } from './types';
 
 interface Props {
-  mydashboards: MockDashboard[];
+  mydashboards: Dashboard[];
 }
 
 export default function MyDashboardSection({ mydashboards }: Props) {
@@ -53,9 +53,10 @@ export default function MyDashboardSection({ mydashboards }: Props) {
             {pageItems.map((dashboard) => (
               <MyDashboardListItem
                 key={dashboard.id}
+                id={dashboard.id}
                 dashboardId={dashboard.id}
                 title={dashboard.title}
-                colorKey={dashboard.color}
+                color={dashboard.color}
                 createdByMe={dashboard.createdByMe}
                 isSelected={String(dashboard.id) === selectedId}
               />
