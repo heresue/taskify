@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 interface ColorType {
-  isSelected: string;
+  isSelected: string | null;
   colors: string[];
   onColorSelect: (color: string) => void;
 }

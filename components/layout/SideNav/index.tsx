@@ -7,21 +7,40 @@ import AddDashboardButton from './AddDashboardButton';
 import { useEffect, useState } from 'react';
 import { mockDashboards, MockDashboard } from '@/mocks/dashboards';
 import { usePathname } from 'next/navigation';
+import PaginationItems from '@/components/Pagination/PaginationItems';
+import { usePagination } from '@/components/Pagination/usePagination';
+import PaginationControls from '@/components/Pagination/PaginationControls';
 
 export default function SideNav() {
   const pathname = usePathname();
   const selectedId = pathname?.split('/dashboard/')[1]?.split('/')[0];
-
+  const [itemsPerPage, setItemsPerPage] = useState(15);
   // mock data 적용
   const [dashboards, setDashboards] = useState<MockDashboard[]>([]);
+  const { currentPage, totalPages, goToPrev, goToNext } = usePagination(dashboards, itemsPerPage);
+
+  useEffect(() => {
+    const calculateItemsPerPage = () => {
+      const itemHeight = 50;
+      const topOffset = 150;
+      const bottomOffset = 157;
+      const availableHeight = window.innerHeight - (topOffset + bottomOffset);
+      const possibleItems = Math.floor(availableHeight / itemHeight);
+      setItemsPerPage(possibleItems > 0 ? possibleItems : 1);
+    };
+
+    calculateItemsPerPage();
+    window.addEventListener('resize', calculateItemsPerPage);
+    return () => window.removeEventListener('resize', calculateItemsPerPage);
+  }, []);
 
   useEffect(() => {
     setDashboards(mockDashboards);
   }, []);
 
   return (
-    <nav className="h-screen w-[67px] md:w-[160px] lg:w-[300px]">
-      <div id="sideNavWrapper" className="flex flex-col gap-14 pt-5 pr-3 pl-2">
+    <nav className="border-r-gray300 h-screen w-[67px] border-r md:w-[160px] lg:w-[300px]">
+      <div id="sideNavWrapper" className="flex h-full flex-col gap-14 pt-5 pr-3 pb-[96px] pl-2">
         <h2 id="sideNavHeader">
           <Link href="/">
             <Image
@@ -40,23 +59,42 @@ export default function SideNav() {
             />
           </Link>
         </h2>
-        <div id="sideNavItems" className="flex flex-1 flex-col gap-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-semi12 text-gray500 hidden md:block">Dash Boards</h2>
-            <AddDashboardButton />
-          </div>
-          <ul className="space-y-2">
-            {dashboards.map((dashboard) => (
-              <DashboardListItem
-                key={dashboard.id}
-                dashboardId={dashboard.id}
-                title={dashboard.title}
-                colorKey={dashboard.color}
-                createdByMe={dashboard.createdByMe}
-                isSelected={String(dashboard.id) === selectedId}
+        <div id="sideNavItems" className="flex flex-1 flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between">
+              <h2 className="text-semi12 text-gray500 hidden md:block">Dash Boards</h2>
+              <AddDashboardButton />
+            </div>
+            <ul className="my-4 space-y-2">
+              <PaginationItems
+                data={dashboards}
+                itemsPerPage={itemsPerPage}
+                currentPage={currentPage}
+                renderItems={(dashboards) => (
+                  <>
+                    {dashboards.map((dashboard) => (
+                      <DashboardListItem
+                        key={dashboard.id}
+                        dashboardId={dashboard.id}
+                        title={dashboard.title}
+                        colorKey={dashboard.color}
+                        createdByMe={dashboard.createdByMe}
+                        isSelected={String(dashboard.id) === selectedId}
+                      />
+                    ))}
+                  </>
+                )}
               />
-            ))}
-          </ul>
+            </ul>
+          </div>
+          <PaginationControls
+            currentPage={currentPage}
+            totalPages={totalPages}
+            showPageInfo={false}
+            goToPrev={goToPrev}
+            goToNext={goToNext}
+            justify="start"
+          />
         </div>
       </div>
     </nav>

@@ -9,12 +9,14 @@ import { useClickOutside } from '@/hooks/useClickOutside';
 export interface DropdownProps {
   options: DropdownItem[];
   onSelect: (option: DropdownItem) => void;
+  selectedItem?: DropdownItem;
 }
 
 export interface SearchableDropdownProps {
   options: SearchableDropdownItem[];
   onSelect: (option: SearchableDropdownItem) => void;
   placeholder?: string;
+  selectedItem?: SearchableDropdownItem;
 }
 
 export function MenuDropdown({ options, onSelect }: DropdownProps) {
@@ -51,9 +53,9 @@ export function MenuDropdown({ options, onSelect }: DropdownProps) {
   );
 }
 
-export function SelectionDropdown({ options, onSelect }: DropdownProps) {
+export function SelectionDropdown({ options, onSelect, selectedItem }: DropdownProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selected, setSelected] = useState<DropdownItem>(options[0]);
+  const [selected, setSelected] = useState<DropdownItem>(selectedItem || options[0]);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const toggleList = () => {
@@ -88,11 +90,16 @@ export function SelectionDropdown({ options, onSelect }: DropdownProps) {
   );
 }
 
-export function SearchableDropdown({ options, onSelect, placeholder }: SearchableDropdownProps) {
+export function SearchableDropdown({
+  options,
+  onSelect,
+  placeholder,
+  selectedItem,
+}: SearchableDropdownProps) {
   const [query, setQuery] = useState<string>('');
   const [filteredOptions, setFilteredOptions] = useState<SearchableDropdownItem[]>(options);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selected, setSelected] = useState<SearchableDropdownItem | null>(null);
+  const [selected, setSelected] = useState<SearchableDropdownItem | null>(selectedItem || null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const toggleList = () => {
