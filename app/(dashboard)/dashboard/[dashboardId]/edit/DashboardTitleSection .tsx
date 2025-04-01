@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import ROUTES from '@/constants/routes';
 import Button from '@/components/common/Button';
 import ColorPalette from '@/components/Dashboard/ColorPalette';
-import { updateDashboard } from './data';
+import { getDashboardDetail, updateDashboard } from './data';
 import FormField from '@/components/compound/form/FormField';
 
 const DASHBOARD_COLORS = ['#ffa500', '#7ac555', '#76a5ea', '#e876ea', '#760dde'];
@@ -19,6 +19,20 @@ export default function DashboardTitleSection({ dashboardId }: { dashboardId: nu
   const handleSelectColorClick = (color: string) => {
     setIsSelected(color);
   };
+
+  useEffect(() => {
+    const fetchDashboard = async () => {
+      try {
+        const dashboardData = await getDashboardDetail(dashboardId);
+        setDashboardTitle(dashboardData.title);
+        setIsSelected(dashboardData.color);
+      } catch (error) {
+        console.error('대시보드 정보 불러오기 실패:', error);
+      }
+    };
+
+    fetchDashboard();
+  }, [dashboardId]);
 
   const handleUpdateDashboard = async () => {
     const payload = {
