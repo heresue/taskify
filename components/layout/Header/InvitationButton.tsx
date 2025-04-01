@@ -20,11 +20,7 @@ export default function InvitationButton({ dashboardId }: { dashboardId: number 
         isOpen={isOpen}
         onClose={close}
         onInvite={async (email) => {
-          try {
-            await inviteMember(dashboardId, email);
-          } catch (err) {
-            console.error('초대 실패:', err);
-          }
+          await inviteMember(dashboardId, email);
         }}
       />
     </>
