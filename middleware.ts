@@ -3,19 +3,23 @@ import type { NextRequest } from 'next/server';
 import ROUTES from '@/constants/routes';
 
 const PUBLIC_PATHS = [ROUTES.HOME, ROUTES.LOGIN, ROUTES.SIGNUP];
+const PROTECTED_PATHS = [ROUTES.MYPAGE, ROUTES.MY_DASHBOARD, ROUTES.DASHBOARD.BASE];
 
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const token = request.cookies.get('accessToken')?.value;
   const isLoggedIn = !!token;
-  const isPublicPath = PUBLIC_PATHS.includes(pathname);
+
+  const isProtectedPath = PROTECTED_PATHS.some((path) => pathname.startsWith(path));
+
+  if (!isLoggedIn && isProtectedPath) {
+    return NextResponse.redirect(new URL(ROUTES.LOGIN, request.url));
+  }
+
+  const isPublicPath = PUBLIC_PATHS.some((path) => pathname === path);
 
   if (isLoggedIn && isPublicPath) {
     return NextResponse.redirect(new URL(ROUTES.MY_DASHBOARD, request.url));
-  }
-
-  if (!isLoggedIn && !isPublicPath) {
-    return NextResponse.redirect(new URL(ROUTES.HOME, request.url));
   }
 
   return NextResponse.next();
