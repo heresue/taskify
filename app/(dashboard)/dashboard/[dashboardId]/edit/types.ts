@@ -13,3 +13,30 @@ export type Member = {
 export type DashboardWithMembers = Dashboard & {
   members: Member[];
 };
+
+export type DashboardInvitation = {
+  id: number;
+  inviter: {
+    nickname: string;
+    email: string;
+    id: number;
+  };
+  invitee: {
+    nickname: string;
+    email: string;
+    id: number;
+  };
+  dashboard: {
+    id: number;
+    title: string;
+  };
+  teamId: string;
+  inviteAccepted: boolean | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type DashboardInvitationListResponse = {
+  invitations: DashboardInvitation[];
+  totalCount: number;
+};

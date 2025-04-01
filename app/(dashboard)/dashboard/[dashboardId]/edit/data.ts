@@ -1,6 +1,10 @@
 import EXTERNAL_API from '@/constants/api/external';
 import { api } from '@/lib/api';
-import { DashboardWithMembers, UpdateDashboardPayload } from './types';
+import {
+  DashboardInvitationListResponse,
+  DashboardWithMembers,
+  UpdateDashboardPayload,
+} from './types';
 import { Dashboard } from '@/app/(dashboard)/mydashboard/types';
 
 export async function updateDashboard(dashboardId: number, payload: UpdateDashboardPayload) {
@@ -42,6 +46,26 @@ export async function inviteMember(dashboardId: number, email: string) {
       dashboardId,
     });
   } catch (err) {
+    throw err;
+  }
+}
+
+export async function getDashboardInvitations(
+  dashboardId: number
+): Promise<DashboardInvitationListResponse> {
+  const url = `${EXTERNAL_API.DASHBOARDS.invite(dashboardId)}`;
+  try {
+    return await api.get<DashboardInvitationListResponse>(url);
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function cancelInvitation(dashboardId: number, invitationId: number) {
+  try {
+    await api.delete(EXTERNAL_API.DASHBOARDS.cancelInvite(dashboardId, invitationId));
+  } catch (err) {
+    console.error('초대 취소 실패:', err);
     throw err;
   }
 }
