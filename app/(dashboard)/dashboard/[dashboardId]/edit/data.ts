@@ -56,8 +56,8 @@ export async function getDashboardInvitations(
   const url = `${EXTERNAL_API.DASHBOARDS.invite(dashboardId)}`;
   try {
     return await api.get<DashboardInvitationListResponse>(url);
-  } catch (error) {
-    throw error;
+  } catch (err) {
+    throw err;
   }
 }
 
@@ -66,6 +66,15 @@ export async function cancelInvitation(dashboardId: number, invitationId: number
     await api.delete(EXTERNAL_API.DASHBOARDS.cancelInvite(dashboardId, invitationId));
   } catch (err) {
     console.error('초대 취소 실패:', err);
+    throw err;
+  }
+}
+
+export async function deleteDashboard(dashboardId: number) {
+  try {
+    return await api.delete(EXTERNAL_API.DASHBOARDS.getDetail(dashboardId));
+  } catch (err) {
+    console.error('대시보드 삭제 실패:', err);
     throw err;
   }
 }
