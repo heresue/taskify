@@ -4,15 +4,15 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import ROUTES from '@/constants/routes';
 import Button from '@/components/common/Button';
-import Input from '@/components/common/Input';
 import ColorPalette from '@/components/Dashboard/ColorPalette';
 import { updateDashboard } from './data';
+import FormField from '@/components/compound/form/FormField';
 
 const DASHBOARD_COLORS = ['#ffa500', '#7ac555', '#76a5ea', '#e876ea', '#760dde'];
 
 export default function DashboardTitleSection({ dashboardId }: { dashboardId: number }) {
   const [isSelected, setIsSelected] = useState(DASHBOARD_COLORS[0]);
-  const [dashboardName, setDashboardName] = useState('');
+  const [dashboardTitle, setDashboardTitle] = useState('');
 
   const router = useRouter();
 
@@ -22,7 +22,7 @@ export default function DashboardTitleSection({ dashboardId }: { dashboardId: nu
 
   const handleUpdateDashboard = async () => {
     const payload = {
-      title: dashboardName,
+      title: dashboardTitle,
       color: isSelected,
     };
 
@@ -39,17 +39,16 @@ export default function DashboardTitleSection({ dashboardId }: { dashboardId: nu
   return (
     <div id="section" className="rounded-2xl bg-white px-[28px] py-[32px]">
       <h3 className="text-bold24 mb-6">대시보드 이름</h3>
-      <label htmlFor="dashboardName" className="mb-4 flex flex-col gap-2">
-        <span className="text-medium18 text-black200">대시보드 이름</span>
-        <Input
-          id="dashboardName"
-          name="dashboardName"
-          placeholder="이름을 입력하세요"
-          value={dashboardName}
-          onChange={(e) => setDashboardName(e.target.value)}
-        />
-      </label>
-      <div className="mb-6 flex gap-2">
+      <FormField
+        fieldType="input"
+        label="대시보드 이름"
+        id="title"
+        name="title"
+        value={dashboardTitle}
+        placeholder="대시보드 이름을 입력해 주세요"
+        onChange={(e) => setDashboardTitle(e.target.value)}
+      />
+      <div className="mt-4 mb-6 flex gap-2">
         <ColorPalette
           isSelected={isSelected}
           colors={DASHBOARD_COLORS}
