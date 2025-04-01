@@ -70,7 +70,7 @@ export default function useSignupForm() {
     }));
   };
 
-  const isFomrComplete = checkAllFormComplete({
+  const isFormComplete = checkAllFormComplete({
     email: formData.email,
     nickname: formData.nickname,
     password: formData.password,
@@ -113,7 +113,7 @@ export default function useSignupForm() {
     handlePreventSpace,
     isPasswordVisible,
     toggleVisiblePassword,
-    isFomrComplete,
+    isFormComplete,
     handleFormSubmit,
     isModalOpen,
     onClose,

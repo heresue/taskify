@@ -38,7 +38,7 @@ export default function SignupForm() {
     handlePreventSpace,
     isPasswordVisible,
     toggleVisiblePassword,
-    isFomrComplete,
+    isFormComplete,
     handleFormSubmit,
     isModalOpen,
     onClose,
@@ -92,7 +92,7 @@ export default function SignupForm() {
         })}
         <CheckBox isChecked={isPending || formData.isChecked} handleIsChecked={handleIsChecked} />
       </div>
-      <Button disabled={!isFomrComplete} type="submit" fullWidth size="auth">
+      <Button disabled={!isFormComplete} type="submit" fullWidth size="auth">
         {isPending ? '...' : '가입하기'}
       </Button>
     </form>
