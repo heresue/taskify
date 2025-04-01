@@ -9,7 +9,7 @@ import PaginationItems from '@/components/Pagination/PaginationItems';
 import PaginationControls from '@/components/Pagination/PaginationControls';
 import InviteModal from './InviteModal';
 import { Invitation } from '@/app/(dashboard)/mydashboard/types';
-import { getDashboardInvitations, inviteMember } from './data';
+import { cancelInvitation, getDashboardInvitations, inviteMember } from './data';
 
 export default function InvitationListSection({ dashboardId }: { dashboardId: number }) {
   const [invitations, setInvitations] = useState<Invitation[]>([]);
@@ -28,15 +28,10 @@ export default function InvitationListSection({ dashboardId }: { dashboardId: nu
     fetchInvitations();
   }, [fetchInvitations]);
 
-  const cancelInvitation = async (id: number) => {
-    console.log(`[임시] 초대 취소 요청: 초대 ID ${id}`);
-    return Promise.resolve();
-  };
-
-  const handleCancel = async (id: number) => {
+  const handleCancel = async (invitationId: number) => {
     try {
-      await cancelInvitation(id);
-      setInvitations((prev) => prev.filter((inv) => inv.id !== id));
+      await cancelInvitation(dashboardId, invitationId);
+      setInvitations((prev) => prev.filter((inv) => inv.id !== invitationId));
     } catch (err) {
       console.error('초대 취소 실패:', err);
     }
