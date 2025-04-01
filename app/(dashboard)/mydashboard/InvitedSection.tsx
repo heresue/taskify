@@ -1,12 +1,12 @@
 'use client';
 
-import Input from '@/components/common/Input';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Input from '@/components/common/Input';
 import InvitedDashboardList from './InvitedDashboardList';
 import { Invitation } from './invitations';
-import { useEffect, useState } from 'react';
-import { acceptInvitation, rejectInvitation } from './types';
-import { useRouter } from 'next/navigation';
+import { acceptInvitation, rejectInvitation } from './data';
 
 interface Props {
   invitations: Invitation[];
