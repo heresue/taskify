@@ -52,6 +52,8 @@ export default function InvitedSection({ invitations: initialInvitations }: Prop
       console.log('거절된 초대 ID:', id);
     } catch (err) {
       console.error('초대 거절 에러:', err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
