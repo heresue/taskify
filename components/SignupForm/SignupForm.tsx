@@ -59,6 +59,16 @@ export default function SignupForm() {
     },
   ];
 
+  const handleCloseModal = async () => {
+    const credentials = state?.credentials;
+    if (!credentials) return;
+    const res = await login(credentials);
+    if (!res.success) return;
+    router.push('/mydashboard');
+    setItem('userInfo', res.data.user);
+    setItem('accessToken', res.data.accessToken);
+  };
+
   return (
     <form onSubmit={handleFormSubmit} className="flex w-full flex-col gap-6">
       <Modal
@@ -66,15 +76,7 @@ export default function SignupForm() {
         padding="64/40"
         borderRadius="16"
         submitMessage="확인"
-        onClose={async () => {
-          const credentials = state?.credentials;
-          if (!credentials) return;
-          const res = await login(credentials);
-          if (!res.success) return;
-          router.push('/mydashboard');
-          setItem('userInfo', res.data.user);
-          setItem('accessToken', res.data.accessToken);
-        }}
+        onClose={handleCloseModal}
       >
         가입이 완료되었습니다!
       </Modal>
