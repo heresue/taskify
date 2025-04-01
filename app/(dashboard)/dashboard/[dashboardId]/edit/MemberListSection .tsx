@@ -1,48 +1,41 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@/components/common/Button';
 import UserIcon from '@/assets/icons/UserIcon';
 import PaginationItems from '@/components/Pagination/PaginationItems';
 import PaginationControls from '@/components/Pagination/PaginationControls';
 import { usePagination } from '@/components/Pagination/usePagination';
+import { deleteMembers, getMembers } from './data';
 
 interface Member {
   id: number;
   nickname: string;
 }
 
-interface Props {
-  initialMembers?: Member[];
-}
-
-// mock data 임시 적용
-const mockMembers = [
-  { id: 1, nickname: '홍길동' },
-  { id: 2, nickname: '김개발자' },
-  { id: 3, nickname: '이테스트' },
-  { id: 4, nickname: '박동길' },
-  { id: 5, nickname: '이수박' },
-  { id: 6, nickname: '김자갈' },
-  { id: 7, nickname: '강바울' },
-  { id: 8, nickname: '한폴리' },
-  { id: 9, nickname: '주백호' },
-];
-
-export default function MemberListSection({ initialMembers = mockMembers }: Props) {
-  const [members, setMembers] = useState<Member[]>(initialMembers || []);
+export default function MemberListSection({ dashboardId }: { dashboardId: number }) {
+  const [members, setMembers] = useState<Member[]>([]);
   const itemsPerPage = 3;
   const { currentPage, totalPages, goToPrev, goToNext } = usePagination(members, itemsPerPage);
 
-  // TODO: 데이터 연동 후 수정
-  const deleteMember = async (memberId: number) => {
-    console.log(`[임시] 삭제 요청: 구성원 ID ${memberId}`);
-    return Promise.resolve();
-  };
+  useEffect(() => {
+    if (!dashboardId) return;
+
+    const fetchMembers = async () => {
+      try {
+        const { members } = await getMembers(dashboardId);
+        setMembers(members);
+      } catch (error) {
+        console.error('구성원 목록 불러오기 실패:', error);
+      }
+    };
+
+    fetchMembers();
+  }, [dashboardId]);
 
   const handleDeleteMember = async (memberId: number) => {
     try {
-      await deleteMember(memberId);
+      await deleteMembers(memberId);
       setMembers((prev) => prev.filter((m) => m.id !== memberId));
     } catch (error) {
       console.error('구성원 삭제 실패:', error);

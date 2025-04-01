@@ -28,4 +28,5 @@ export interface PaginationControlsProps {
   showPageInfo?: boolean;
   goToPrev: () => void;
   goToNext: () => void;
+  justify?: 'start' | 'center' | 'end';
 }

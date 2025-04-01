@@ -1,44 +1,37 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
-import { mockInvitations } from '@/mocks/invitations';
+import { useCallback, useEffect, useState } from 'react';
+import { useModal } from '@/hooks/useModal';
 import AddBoxIcon from '@/assets/icons/AddBoxIcon';
 import Button from '@/components/common/Button';
 import { usePagination } from '@/components/Pagination/usePagination';
 import PaginationItems from '@/components/Pagination/PaginationItems';
 import PaginationControls from '@/components/Pagination/PaginationControls';
 import InviteModal from './InviteModal';
-import { api } from '@/lib/api';
-import EXTERNAL_API from '@/constants/api/external';
-import { useModal } from '@/hooks/useModal';
+import { Invitation } from '@/app/(dashboard)/mydashboard/types';
+import { cancelInvitation, getDashboardInvitations, inviteMember } from './data';
 
 export default function InvitationListSection({ dashboardId }: { dashboardId: number }) {
+  const [invitations, setInvitations] = useState<Invitation[]>([]);
   const { isOpen, open, close } = useModal();
   const itemsPerPage = 5;
 
-  const pendingInvitations = useMemo(() => {
-    return mockInvitations.filter(
-      (inv) => inv.dashboard.id === Number(dashboardId) && inv.inviteAccepted === null
-    );
-  }, [dashboardId]);
-
-  const [invitations, setInvitations] = useState(pendingInvitations);
-
-  useEffect(() => {
-    setInvitations(pendingInvitations);
-  }, [pendingInvitations]);
-
   const { currentPage, totalPages, goToPrev, goToNext } = usePagination(invitations, itemsPerPage);
 
-  const cancelInvitation = async (id: number) => {
-    console.log(`[임시] 초대 취소 요청: 초대 ID ${id}`);
-    return Promise.resolve();
-  };
+  const fetchInvitations = useCallback(async () => {
+    const data = await getDashboardInvitations(dashboardId);
+    const pending = data.invitations.filter((inv) => inv.inviteAccepted === null);
+    setInvitations(pending);
+  }, [dashboardId]);
 
-  const handleCancel = async (id: number) => {
+  useEffect(() => {
+    fetchInvitations();
+  }, [fetchInvitations]);
+
+  const handleCancel = async (invitationId: number) => {
     try {
-      await cancelInvitation(id);
-      setInvitations((prev) => prev.filter((inv) => inv.id !== id));
+      await cancelInvitation(dashboardId, invitationId);
+      setInvitations((prev) => prev.filter((inv) => inv.id !== invitationId));
     } catch (err) {
       console.error('초대 취소 실패:', err);
     }
@@ -92,11 +85,9 @@ export default function InvitationListSection({ dashboardId }: { dashboardId: nu
         isOpen={isOpen}
         onClose={close}
         onInvite={async (email) => {
-          await api.post(EXTERNAL_API.DASHBOARDS.invite(dashboardId), {
-            email,
-            dashboardId,
-          });
+          await inviteMember(dashboardId, email);
         }}
+        onSuccess={() => fetchInvitations()}
       />
     </div>
   );
