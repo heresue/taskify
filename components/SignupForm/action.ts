@@ -35,12 +35,14 @@ export default async function signupAction(_: unknown, formData: FormData) {
     return {
       status: true,
       err: '가입이 완료되었습니다!',
+      credentials: { email, password },
     };
   } catch (error) {
     console.error(error);
     return {
       status: false,
       err: '다시 시도해 주세요!',
+      credentials: null,
     };
   }
 }
