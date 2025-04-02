@@ -4,7 +4,7 @@ import { DashboardListResponse, Invitation, InvitationListResponse } from './typ
 
 export async function getMyDashboards(
   page: number = 1,
-  size: number = 6
+  size: number = 100
 ): Promise<DashboardListResponse> {
   const query = `?navigationMethod=pagination&page=${page}&size=${size}`;
   try {

@@ -11,7 +11,7 @@ export function useSideNavDashboards(itemsPerPage: number) {
 
     async function fetchDashboards() {
       try {
-        const response = await getMyDashboards(1, itemsPerPage);
+        const response = await getMyDashboards();
         setDashboards(response.dashboards);
       } catch (err) {
         console.error('sidenav 목록 불러오기 에러:', err);
