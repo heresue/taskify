@@ -20,6 +20,7 @@ export default function LoginForm() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const hasEmailClickedRef = useRef<boolean>(false);
   const hasPasswordClickedRef = useRef<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
 
@@ -37,6 +38,9 @@ export default function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isLoading) return;
+
+    setIsLoading(true);
 
     const res = await fetch('/api/auth/login', {
       method: 'POST',
@@ -47,6 +51,8 @@ export default function LoginForm() {
     });
 
     const result = await res.json();
+
+    setIsLoading(false);
 
     if (result.success) {
       router.push('/mydashboard');
