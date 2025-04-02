@@ -26,11 +26,13 @@ export default function MyDashboardSection({ mydashboards }: Props) {
 
   if (mydashboards.length === 0) {
     return (
-      <div className="mb-[114px] flex flex-col gap-3">
-        <Button variant="outline" size="dashboardCard" onClick={open}>
-          <span className="text-black200 text-semi14 md:text-semi16">새로운 대시보드</span>
-          <Image src="/icons/plus.svg" alt="추가" width={16} height={16} className="mr-2 ml-3" />
-        </Button>
+      <div className="w-full md:w-[247px] lg:w-[332px]">
+        <div className="mb-[114px] flex flex-col gap-3">
+          <Button variant="outline" size="dashboardCard" onClick={open} fullWidth>
+            <span className="text-black200 text-semi14 md:text-semi16">새로운 대시보드</span>
+            <Image src="/icons/plus.svg" alt="추가" width={16} height={16} className="mr-2 ml-3" />
+          </Button>
+        </div>
       </div>
     );
   }
@@ -41,7 +43,7 @@ export default function MyDashboardSection({ mydashboards }: Props) {
         data={mydashboards}
         itemsPerPage={itemsPerPage}
         currentPage={currentPage}
-        wrapperClassName="grid grid-cols-3 grid-rows-2 gap-[13px]"
+        wrapperClassName="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  grid-rows-2 gap-[13px]"
         renderFixedItem={() => (
           <Button variant="outline" size="dashboardCard" onClick={open}>
             <span className="text-black200 text-semi14 md:text-semi16">새로운 대시보드</span>
