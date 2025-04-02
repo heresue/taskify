@@ -35,7 +35,8 @@ export default function UserBadge({
           width={size}
           height={size}
           alt="user"
-          className="border-[1px] border-solid border-white"
+          style={{ width: size, height: size }}
+          className="rounded-full border border-white object-cover"
         />
       ) : (
         <UserIcon width={size} height={size} />
