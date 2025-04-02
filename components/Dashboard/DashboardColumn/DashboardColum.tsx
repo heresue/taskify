@@ -1,14 +1,82 @@
-import Card from '../DashboardCard/DashboardCard';
+'use client';
+
 import getDashboardCard from '../DashboardCard/action';
 import AddCardBtn from './AddCardBtn';
 import ColumnSettingList from './ColumnSettingList';
 import { ColumnType } from '../type';
+import {
+  DndContext,
+  DragEndEvent,
+  closestCenter,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import { SortableContext, arrayMove, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { useEffect, useState } from 'react';
+import { CardType } from '../DashboardCard/DashboardCard';
+import SortableCard from '../DashboardCard/SortableCard';
+import { cardOrdersTable } from './db';
 
-export default async function DashboardColumn({ columnTitle, columnId }: ColumnType) {
-  const data = await getDashboardCard(columnId);
+export default function DashboardColumn({ columnId, columnTitle }: ColumnType) {
+  const [cards, setCards] = useState<CardType[]>([]);
+  const [totalCounts, setTotalCounts] = useState(0);
 
-  const totalCounts = data?.totalCount;
-  const cards = data?.cards;
+  useEffect(() => {
+    const getCards = async () => {
+      try {
+        const dbOrder = await cardOrdersTable.get(columnId);
+
+        if (dbOrder) {
+          const data = await getDashboardCard(columnId);
+          const orderedCards = dbOrder.order
+            .map((id: number) => data.cards.find((card) => card.id === id))
+            .filter(Boolean) as CardType[];
+
+          setCards(orderedCards);
+          setTotalCounts(data.totalCount);
+        } else {
+          const data = await getDashboardCard(columnId);
+          setCards(data.cards);
+          setTotalCounts(data.totalCount);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    getCards();
+  }, [columnId]);
+
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+
+    const oldIndex = cards.findIndex((card) => card.id === active.id);
+    const newIndex = cards.findIndex((card) => card.id === over.id);
+
+    if (oldIndex === -1 && newIndex === -1) return;
+
+    const newCardsOrder = arrayMove(cards, oldIndex, newIndex);
+    setCards(newCardsOrder);
+
+    await cardOrdersTable.put({ columnId, order: newCardsOrder.map((c) => c.id) });
+  };
+
+  const sensors = useSensors(
+    useSensor(MouseSensor, {
+      activationConstraint: {
+        distance: 10,
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 250,
+        tolerance: 5,
+      },
+    })
+  );
 
   return (
     <div className="border-gray200 w-full shrink-0 border-b border-solid px-5 py-[18px] lg:w-[354px] lg:border-r lg:border-b-0">
@@ -22,12 +90,17 @@ export default async function DashboardColumn({ columnTitle, columnId }: ColumnT
             </span>
           </div>
           <ColumnSettingList columnId={columnId} columnTitle={columnTitle} />
-          <ColumnSettingList columnId={columnId} columnTitle={columnTitle} />
         </div>
-        <div className="flex w-full flex-col gap-2 md:gap-4">
-          <AddCardBtn columnId={columnId} />
-          {cards?.map((card) => <Card key={card.id} card={card} columnId={columnId} />)}
-        </div>
+        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} sensors={sensors}>
+          <SortableContext items={cards} strategy={verticalListSortingStrategy}>
+            <div className="flex w-full flex-col gap-2 md:gap-4">
+              <AddCardBtn columnId={columnId} />
+              {cards.map((card) => (
+                <SortableCard key={card.id} card={card} columnId={columnId} />
+              ))}
+            </div>
+          </SortableContext>
+        </DndContext>
       </div>
     </div>
   );
