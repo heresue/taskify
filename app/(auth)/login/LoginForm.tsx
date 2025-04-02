@@ -74,6 +74,7 @@ export default function LoginForm() {
             fieldType="input"
             label="이메일"
             type="email"
+            placeholder="이메일을 입력해 주세요"
             errorMessage="이메일 형식으로 작성해 주세요."
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -86,6 +87,7 @@ export default function LoginForm() {
             fieldType="input"
             label="비밀번호"
             type={isPasswordVisible ? 'text' : 'password'}
+            placeholder="비밀번호를 입력해 주세요"
             errorMessage="8자 이상 작성해 주세요."
             value={password}
             onChange={(e) => setPassword(e.target.value)}
