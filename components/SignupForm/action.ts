@@ -50,6 +50,7 @@ export default async function signupAction(formData: FormData) {
         status: true,
         code: 'success',
         message: SIGNUP_MESSAGE.SUCCESS,
+        credentials: { email, password },
       };
     }
 
@@ -58,6 +59,7 @@ export default async function signupAction(formData: FormData) {
         status: false,
         code: '409',
         message: SIGNUP_MESSAGE.DUPLICATE_EMAIL,
+        credentials: null,
       };
     }
   } catch (error) {
@@ -66,6 +68,7 @@ export default async function signupAction(formData: FormData) {
       status: false,
       code: 'server-error',
       message: SIGNUP_MESSAGE.SERVER_ERROR,
+      credentials: null,
     };
   }
 }

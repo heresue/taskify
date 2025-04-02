@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import signupAction from './action';
 import checkAllFormComplete from '@/utils/checkAllFormComplete';
-import { redirect } from 'next/navigation';
+import { setItem } from '@/utils/localstorage';
+import login from './login';
+import { useRouter } from 'next/navigation';
 
 interface SignupType {
   email: string;
@@ -16,6 +18,7 @@ interface SignupState {
   code?: string;
   field?: string;
   message: string;
+  credentials?: { email: string; password: string } | null;
 }
 
 const INITIAL_SIGNUP_FORM_VALUE = {
@@ -42,6 +45,7 @@ export default function useSignupForm() {
     message: '',
   });
   const [isPending, setIsPending] = useState(false);
+  const router = useRouter();
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -98,9 +102,19 @@ export default function useSignupForm() {
     }
   };
 
+  const handleCloseModal = async () => {
+    const credentials = state?.credentials;
+    if (!credentials) return;
+    const res = await login(credentials);
+    if (!res.success) return;
+    router.push('/mydashboard');
+    setItem('userInfo', res.data.user);
+    setItem('accessToken', res.data.accessToken);
+  };
+
   const onClose = () => {
     if (state?.status === true) {
-      redirect('/login');
+      handleCloseModal();
     } else {
       setIsModalOpen(false);
     }
