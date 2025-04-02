@@ -33,6 +33,10 @@ export default function Comment({ comment }: Comment) {
     setIsEdit(false);
   };
 
+  const handleCommentDelete = async () => {
+    await api.delete(`${EXTERNAL_API.COMMENTS.ROOT}/${comment.id}`);
+  };
+
   return (
     <div key={comment.id} className="flex w-full gap-4">
       <div className="flex w-full items-start gap-3">
@@ -68,7 +72,9 @@ export default function Comment({ comment }: Comment) {
               <p className="cursor-pointer underline" onClick={() => setIsEdit(true)}>
                 수정
               </p>
-              <p className="cursor-pointer underline">삭제</p>
+              <p className="cursor-pointer underline" onClick={handleCommentDelete}>
+                삭제
+              </p>
             </div>
           )}
         </div>
