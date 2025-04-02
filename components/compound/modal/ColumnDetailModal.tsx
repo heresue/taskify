@@ -17,6 +17,7 @@ import { useModal } from '@/hooks/useModal';
 import ToDoFormModal from '@/components/ToDoFormModal/ToDoFormModal';
 import { api } from '@/lib/api';
 import EXTERNAL_API from '@/constants/api/external';
+import Comment from '@/components/Comment/Comment';
 
 interface ColumnDetailModalProps {
   isOpen: boolean;
@@ -204,17 +205,7 @@ const ColumnDetailModal = ({
 
   const renderComments = () => (
     <>
-      {comments?.map((comment) => (
-        <div key={comment.id} className="flex gap-4">
-          <div className="flex gap-3">
-            {renderProfileImage(comment.author.profileImageUrl)}
-            <div>
-              <p>{comment.author.nickname}</p>
-              <p>{comment.content}</p>
-            </div>
-          </div>
-        </div>
-      ))}
+      {comments?.map((comment) => <Comment key={comment.id} comment={comment} />)}
       {/* {renderCommentsPagination()} */}
     </>
   );
