@@ -45,7 +45,7 @@ export default function MemberListSection({ dashboardId }: { dashboardId: number
   return (
     <div id="section" className="rounded-2xl bg-white pt-[32px]">
       <div className="mb-[27px] flex items-center justify-between px-[28px]">
-        <h3 className="text-bold24">구성원</h3>
+        <h3 className="text-bold20 md:text-bold24">구성원</h3>
         <PaginationControls
           currentPage={currentPage}
           totalPages={totalPages}
@@ -55,7 +55,7 @@ export default function MemberListSection({ dashboardId }: { dashboardId: number
       </div>
 
       <div className="w-full rounded-lg">
-        <h4 className="text-gray400 text-regular16 px-[28px]">이름</h4>
+        <h4 className="text-gray400 text-regular14 md:text-regular16 px-[28px]">이름</h4>
         <PaginationItems
           data={members}
           itemsPerPage={itemsPerPage}

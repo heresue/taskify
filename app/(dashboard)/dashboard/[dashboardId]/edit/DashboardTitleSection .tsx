@@ -51,7 +51,7 @@ export default function DashboardTitleSection({ dashboardId }: { dashboardId: nu
 
   return (
     <div id="section" className="rounded-2xl bg-white px-[28px] py-[32px]">
-      <h3 className="text-bold24 mb-6">대시보드 이름</h3>
+      <h3 className="text-bold20 md:text-bold24 mb-6">대시보드 이름</h3>
       <FormField
         fieldType="input"
         label="대시보드 이름"
