@@ -54,7 +54,7 @@ export default function ToDoFormModal({ isOpen, onClose, columnId, card }: ToDoF
   useEffect(() => {
     if (!dashboardId) return;
 
-    (async () => {
+    const getDatas = async () => {
       try {
         const [columns, membersData] = await Promise.all([
           getDashboardColumn(dashboardId),
@@ -66,7 +66,9 @@ export default function ToDoFormModal({ isOpen, onClose, columnId, card }: ToDoF
       } catch (err) {
         console.error(err);
       }
-    })();
+    };
+
+    getDatas();
   }, [dashboardId]);
 
   const memberList = useMemo(() => {

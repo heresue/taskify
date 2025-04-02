@@ -115,8 +115,8 @@ export default function useToDoData(
         tags,
         imageUrl: toDoData.imageUrl ?? DEFAULT_CARD_IMAGE,
       });
-
       onClose();
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }
