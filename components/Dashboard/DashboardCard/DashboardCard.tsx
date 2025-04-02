@@ -20,7 +20,7 @@ export interface CardType {
   assignee: { profileImageUrl: string | null; id?: number; nickname?: string };
 }
 
-interface CardProps {
+export interface CardProps {
   card: CardType;
   columnId: number;
 }
