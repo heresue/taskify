@@ -23,7 +23,9 @@ export default function DeleteColumnModal({ isOpen, onClose, columnId }: DeleteC
         cancelMessage="취소"
         onSubmit={handelColumnDelete}
       >
-        컬럼의 모든 카드가 삭제됩니다.
+        <div className="text-medium20 text-black200 flex w-full items-center justify-center">
+          컬럼의 모든 카드가 삭제됩니다.
+        </div>
       </Modal>
     </>
   );
