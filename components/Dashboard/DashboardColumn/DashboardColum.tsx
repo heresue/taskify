@@ -14,7 +14,7 @@ import {
   useSensors,
 } from '@dnd-kit/core';
 import { SortableContext, arrayMove, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { CardType } from '../DashboardCard/DashboardCard';
 import SortableCard from '../DashboardCard/SortableCard';
 import { cardOrdersTable } from './db';
@@ -23,11 +23,11 @@ export default function DashboardColumn({ columnId, columnTitle }: ColumnType) {
   const [cards, setCards] = useState<CardType[]>([]);
   const [totalCounts, setTotalCounts] = useState(0);
 
-  useEffect(() => {
-    const getCards = async () => {
+  const getCards = useCallback(
+    async (id?: number) => {
       try {
-        const data = await getDashboardCard(columnId);
-        const dbOrder = await cardOrdersTable.get(columnId);
+        const data = await getDashboardCard(id ?? columnId);
+        const dbOrder = await cardOrdersTable.get(id ?? columnId);
 
         setCards(() => {
           const orderedCards = dbOrder
@@ -47,10 +47,13 @@ export default function DashboardColumn({ columnId, columnTitle }: ColumnType) {
       } catch (err) {
         console.error(err);
       }
-    };
+    },
+    [columnId]
+  );
 
+  useEffect(() => {
     getCards();
-  }, [columnId]);
+  }, [getCards]);
 
   const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
@@ -97,9 +100,14 @@ export default function DashboardColumn({ columnId, columnTitle }: ColumnType) {
         <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} sensors={sensors}>
           <SortableContext items={cards} strategy={verticalListSortingStrategy}>
             <div className="flex w-full flex-col gap-2 md:gap-4">
-              <AddCardBtn columnId={columnId} />
+              <AddCardBtn columnId={columnId} getCards={getCards} />
               {cards.map((card) => (
-                <SortableCard key={card.id} card={card} columnTitle={columnTitle} />
+                <SortableCard
+                  key={card.id}
+                  card={card}
+                  columnTitle={columnTitle}
+                  getCards={getCards}
+                />
               ))}
             </div>
           </SortableContext>

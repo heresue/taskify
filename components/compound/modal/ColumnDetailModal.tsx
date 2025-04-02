@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Modal from '@/components/common/Modal';
 import CloseIcon from '@/assets/icons/CloseIcon';
@@ -26,6 +28,7 @@ interface ColumnDetailModalProps {
   cardData: CardType;
   defaultImage: boolean;
   columnTitle: string;
+  getCards: (id?: number) => void;
   onFetchNextComments?: () => Promise<void>;
   hasNextPage?: boolean;
   isLoadingComments?: boolean;
@@ -38,6 +41,7 @@ const ColumnDetailModal = ({
   cardData,
   defaultImage = false,
   columnTitle,
+  getCards,
   onFetchNextComments,
   hasNextPage = false,
   // isLoadingComments = false,
@@ -104,6 +108,7 @@ const ColumnDetailModal = ({
   const handleCardDelete = async () => {
     try {
       await api.delete(`${EXTERNAL_API.CARDS.ROOT}/${cardData.id}`);
+      getCards();
     } catch (err) {
       console.error(err);
     }
@@ -136,7 +141,6 @@ const ColumnDetailModal = ({
                 open();
               } else if (option.id === 2) {
                 handleCardDelete();
-                window.location.reload();
               }
             }}
           />
@@ -239,6 +243,7 @@ const ColumnDetailModal = ({
         onClose={close}
         columnId={cardData.columnId}
         card={cardData}
+        getCards={getCards}
       />
       <Modal isOpen={isOpen} onClose={onClose} padding="32/24" borderRadius="8" ref={modalRef}>
         <div className="flex w-full flex-col gap-2 md:gap-6">
