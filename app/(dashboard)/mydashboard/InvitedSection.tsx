@@ -6,21 +6,24 @@ import Image from 'next/image';
 import Input from '@/components/common/Input';
 import InvitedDashboardList from './InvitedDashboardList';
 import { Invitation } from './invitations';
-import { acceptInvitation, rejectInvitation } from './data';
+import { acceptInvitation, getInvitations, rejectInvitation } from './data';
 
-interface Props {
-  invitations: Invitation[];
-}
-
-export default function InvitedSection({ invitations: initialInvitations }: Props) {
-  const [isLoading, setIsLoading] = useState(false);
+export default function InvitedSection() {
   const [invitations, setInvitations] = useState<Invitation[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [keyword, setKeyword] = useState('');
   const router = useRouter();
 
+  // useEffect(() => {
+  //   setInvitations(initialInvitations);
+  // }, [initialInvitations]);
+
   useEffect(() => {
-    setInvitations(initialInvitations);
-  }, [initialInvitations]);
+    (async () => {
+      const data = await getInvitations();
+      setInvitations(data.invitations);
+    })();
+  }, []);
 
   const filtered = invitations.filter((inv) =>
     inv.dashboard.title.toLowerCase().includes(keyword.toLowerCase())
