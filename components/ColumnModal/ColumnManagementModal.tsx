@@ -36,10 +36,11 @@ export default function ColumnManagementModal({
   const createOrUpdate = columnId ? '변경' : '생성';
 
   useEffect(() => {
-    (async () => {
+    const getColumn = async () => {
       const data = await getDashboardColumn(dashboardId);
       if (data) setDashboardColumns(data);
-    })();
+    };
+    getColumn();
   }, [dashboardId]);
 
   const handleColumnSubmit = async () => {
@@ -59,8 +60,8 @@ export default function ColumnManagementModal({
           ...(!columnId && { dashboardId }),
         }
       );
-
       onClose();
+      window.location.reload();
     } catch (err) {
       console.error(err);
       setColumnErrorMessage('다시 시도해 주세요');

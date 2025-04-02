@@ -6,6 +6,7 @@ const ROUTES = {
   MYPAGE: '/mypage',
 
   DASHBOARD: {
+    BASE: '/dashboard',
     root: (dashboardId: number) => `/dashboard/${dashboardId}`,
     edit: (dashboardId: number) => `/dashboard/${dashboardId}/edit`,
   },
