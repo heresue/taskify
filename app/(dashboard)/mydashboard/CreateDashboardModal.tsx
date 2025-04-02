@@ -2,6 +2,7 @@ import Modal from '@/components/common/Modal';
 import FormField from '@/components/compound/form/FormField';
 import ColorPalette from '@/components/Dashboard/ColorPalette';
 import EXTERNAL_API from '@/constants/api/external';
+import ROUTES from '@/constants/routes';
 import { api } from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -52,7 +53,8 @@ export default function CreateDashboardModal({ isOpen, onClose }: Props) {
       resetForm();
 
       const dashboardId = response.id;
-      router.push(EXTERNAL_API.DASHBOARDS.getDetail(dashboardId));
+      router.push(ROUTES.DASHBOARD.root(dashboardId));
+      onClose();
     } catch (error) {
       console.error('대시보드 생성 실패:', error);
     }
@@ -74,7 +76,7 @@ export default function CreateDashboardModal({ isOpen, onClose }: Props) {
       disabled={!canSubmit}
     >
       <div className="w-full">
-        <h3 className="text-bold24 mb-6">새로운 대시보드</h3>
+        <h3 className="text-bold20 md:text-bold24 mb-6">새로운 대시보드</h3>
         <FormField
           fieldType="input"
           label="대시보드 이름"

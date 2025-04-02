@@ -1,33 +1,36 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import DashboardColorIcon, { ColorKey } from '@/components/DashboardColorIcon/DashboardColorIcon';
+import DashboardColorIcon from '@/components/DashboardColorIcon/DashboardColorIcon';
 import clsx from 'clsx';
+import { Dashboard } from './types';
 
-interface DashboardListItemProps {
+interface DashboardListItemProps extends Dashboard {
   dashboardId: number;
-  title: string;
-  colorKey: ColorKey;
-  createdAt?: string;
-  updatedAt?: string;
-  createdByMe: boolean;
-  userId?: number;
   isSelected?: boolean;
+  shouldHideOnSm?: boolean;
 }
 
 export default function MyDashboardListItem({
   dashboardId,
   title,
-  colorKey,
+  color,
   createdByMe,
+  shouldHideOnSm = false,
 }: DashboardListItemProps) {
   return (
     <Link
       href={`/dashboard/${dashboardId}`}
-      className="border-gray300 h-[58px] rounded-lg border bg-white md:h-[68px] md:w-[247px] lg:h-[70px] lg:w-[332px]"
+      className="border-gray300 h-[58px] w-full rounded-lg border bg-white md:h-[68px] lg:h-[70px]"
     >
-      <div className="flex items-center gap-4 p-5">
-        <DashboardColorIcon colorKey={colorKey} />
-        <div className="flex hidden min-w-0 flex-1 items-center gap-[6px] md:flex">
+      <div className="flex items-center gap-4 px-5 py-[17px] md:py-5 lg:py-[22px]">
+        <DashboardColorIcon color={color} />
+
+        <div
+          className={clsx(
+            'flex min-w-0 flex-1 items-center gap-[6px]',
+            shouldHideOnSm ? 'hidden md:flex' : 'flex'
+          )}
+        >
           <span
             className={clsx(
               'text-black200 text-semi14 md:text-semi16 truncate',
