@@ -172,7 +172,7 @@ const ColumnDetailModal = ({
 
   const renderCardImage = () =>
     !defaultImage && (
-      <div className="relative h-[168px] w-full overflow-hidden rounded-md bg-gray-200 md:h-[246px]">
+      <div className="relative h-[168px] w-full overflow-hidden rounded-md bg-gray-200 md:h-[260px] md:w-[445px]">
         <Image src={cardData.imageUrl} alt="content" quality={80} fill />
       </div>
     );
@@ -245,7 +245,7 @@ const ColumnDetailModal = ({
       <Modal isOpen={isOpen} onClose={onClose} padding="32/24" borderRadius="8" ref={modalRef}>
         <div className="flex w-full flex-col gap-2 md:gap-6">
           {renderHeader()}
-          <main>
+          <main className="md:w-[674px]">
             {renderCardDetails()}
             {renderCardImage()}
             <div className="flex flex-col gap-6">
