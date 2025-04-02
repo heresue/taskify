@@ -50,7 +50,6 @@ export default function ProfileEditForm() {
     setIsNicknameValid(validateLimitLengthNickname(e.target.value));
   };
 
-  // content-type 헤더가 multipart/form-data라, fetch 함수를 사용했습니다. TODO: 리팩토링 필요
   const uploadProfileImage = async (imageFile: File) => {
     const token = getItem('accessToken');
     const formData = new FormData();
@@ -102,7 +101,7 @@ export default function ProfileEditForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 md:p-6">
+    <form onSubmit={handleSubmit} className="rounded-2xl bg-white p-4 md:p-6">
       <h2 className="text-bold20 text-black200 md:text-bold24">프로필</h2>
       <div className="my-6 flex flex-col md:flex-row">
         <div className="mb-10 size-25 md:mr-10 md:mb-0 md:size-[180px] md:basis-[180px]">

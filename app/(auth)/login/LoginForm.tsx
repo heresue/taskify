@@ -15,16 +15,15 @@ export default function LoginForm() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isEmailValid, setIsEmailValid] = useState(true);
-  const [isPasswordValid, setIsPasswordValid] = useState(true);
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const hasEmailClickedRef = useRef<boolean>(false);
   const hasPasswordClickedRef = useRef<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
 
-  const canSubmit =
-    hasEmailClickedRef.current && hasPasswordClickedRef.current && isEmailValid && isPasswordValid;
+  const canSubmit = isEmailValid && isPasswordValid;
 
   const handleEmailBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     hasEmailClickedRef.current = true;
@@ -73,7 +72,7 @@ export default function LoginForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             onBlur={handleEmailBlur}
-            isValid={isEmailValid}
+            isValid={!hasEmailClickedRef.current || isEmailValid}
           />
           <FormField
             id="password"
@@ -85,7 +84,7 @@ export default function LoginForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onBlur={handlePasswordBlur}
-            isValid={isPasswordValid}
+            isValid={!hasPasswordClickedRef.current || isPasswordValid}
             rightIcon={
               <PasswordToggle
                 isEyeOpen={!isPasswordVisible}
