@@ -1,23 +1,10 @@
 'use server';
 
 import { api } from '@/lib/api';
-
-interface CardsType {
-  id: number;
-  title: string;
-  description: string;
-  tags: string[];
-  dueDate: string;
-  assignee: {
-    id: number;
-    nickname: string;
-    profileImageUrl: string | null;
-  };
-  imageUrl: string;
-}
+import { CardType } from './DashboardCard';
 
 interface CardsPromise {
-  cards: CardsType[];
+  cards: CardType[];
   totalCount: number;
 }
 

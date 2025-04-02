@@ -1,16 +1,18 @@
 export interface CommentsType {
-  cursorId: number;
-  comments: {
+  id: number;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  author: {
+    profileImageUrl: string;
+    nickname: string;
     id: number;
-    content: string;
-    createdAt: string;
-    updatedAt: string;
-    author: {
-      profileImageUrl: string;
-      nickname: string;
-      id: number;
-    };
-  }[];
+  };
+}
+
+export interface CommentPromise {
+  cursorId: number;
+  comments: CommentsType[];
 }
 
 export interface CardData {
@@ -25,8 +27,5 @@ export interface CardData {
     id: number;
   };
   imageUrl: string;
-  teamId: string;
   columnId: number;
-  createdAt: string;
-  updatedAt: string;
 }
