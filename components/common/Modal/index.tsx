@@ -14,6 +14,7 @@ interface ModalProps {
   padding: PaddingSize;
   borderRadius: RadiusSize;
   disabled?: boolean;
+  ref?: React.RefObject<HTMLDivElement | null>;
 }
 
 export default function Modal({
@@ -26,6 +27,7 @@ export default function Modal({
   padding,
   borderRadius,
   disabled,
+  ref,
 }: ModalProps) {
   useBlockScroll(isOpen);
   if (!isOpen) return null;
@@ -42,11 +44,13 @@ export default function Modal({
       <div className="fixed top-0 left-0 z-[999] h-full w-full bg-black opacity-70" />
       <div
         className={clsx(
-          'fixed top-1/2 left-1/2 z-[999] flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center bg-white',
+          'fixed top-1/2 left-1/2 z-[999] -translate-x-1/2 -translate-y-1/2 flex-col bg-white',
           cancelMessage || submitMessage ? 'gap-5' : 'gap-0',
           paddingCSS[padding],
+          'max-h-[90vh] overflow-y-auto',
           borderRadiusCSS[borderRadius]
         )}
+        ref={ref}
       >
         {children}
         <div
