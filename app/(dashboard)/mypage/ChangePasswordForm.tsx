@@ -132,7 +132,9 @@ export default function ChangePasswordForm() {
         submitMessage="확인"
         onClose={closeModal}
       >
-        {modalMessage}
+        <div className="text-medium20 text-black200 flex w-full items-center justify-center">
+          {modalMessage}
+        </div>
       </Modal>
     </>
   );
