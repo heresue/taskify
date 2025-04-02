@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { PaginationItemsProps } from './type';
 
 export default function PaginationItems<T>({
-  data,
+  data = [],
   itemsPerPage,
   renderFixedItem,
   renderItems,

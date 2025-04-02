@@ -1,23 +1,18 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import DashboardColorIcon, { ColorKey } from '../../DashboardColorIcon/DashboardColorIcon';
+import DashboardColorIcon from '../../DashboardColorIcon/DashboardColorIcon';
 import clsx from 'clsx';
+import { Dashboard } from '@/app/(dashboard)/mydashboard/types';
 
-interface DashboardListItemProps {
+interface DashboardListItemProps extends Dashboard {
   dashboardId: number;
-  title: string;
-  colorKey: ColorKey;
-  createdAt?: string;
-  updatedAt?: string;
-  createdByMe: boolean;
-  userId?: number;
   isSelected?: boolean;
 }
 
 export default function DashboardListItem({
   dashboardId,
   title,
-  colorKey,
+  color,
   createdByMe,
   isSelected,
 }: DashboardListItemProps) {
@@ -27,7 +22,7 @@ export default function DashboardListItem({
         href={`/dashboard/${dashboardId}`}
         className="flex h-[50px] items-center gap-4 px-3 py-2"
       >
-        <DashboardColorIcon colorKey={colorKey} />
+        <DashboardColorIcon color={color} />
         <div className="flex hidden min-w-0 items-center gap-[6px] md:flex">
           <span
             className={clsx(
