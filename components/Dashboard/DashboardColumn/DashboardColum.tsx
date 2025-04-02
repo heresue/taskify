@@ -26,7 +26,7 @@ export default async function DashboardColumn({ columnTitle, columnId }: ColumnT
         </div>
         <div className="flex w-full flex-col gap-2 md:gap-4">
           <AddCardBtn columnId={columnId} />
-          {cards?.map((card) => <Card key={card.id} card={card} columnId={columnId} />)}
+          {cards?.map((card) => <Card key={card.id} card={card} columnTitle={columnTitle} />)}
         </div>
       </div>
     </div>
