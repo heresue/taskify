@@ -1,6 +1,6 @@
 'use client';
 
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import CheckBox from './CheckBox';
 import FormField from '../compound/form/FormField';
 import Button from '../common/Button';
@@ -8,8 +8,11 @@ import Modal from '../common/Modal';
 import useSignupForm from './useSignupForm';
 import Open from '@/public/icons/openEye.svg';
 import Close from '@/public/icons/closeEye.svg';
+import { setItem } from '@/utils/localstorage';
+import login from '@/components/SignupForm/login';
 
 export default function SignupForm() {
+  const router = useRouter();
   const {
     formData,
     handleFormChange,
@@ -56,6 +59,16 @@ export default function SignupForm() {
     },
   ];
 
+  const handleCloseModal = async () => {
+    const credentials = state?.credentials;
+    if (!credentials) return;
+    const res = await login(credentials);
+    if (!res.success) return;
+    router.push('/mydashboard');
+    setItem('userInfo', res.data.user);
+    setItem('accessToken', res.data.accessToken);
+  };
+
   return (
     <form onSubmit={handleFormSubmit} className="flex w-full flex-col gap-6">
       <Modal
@@ -63,7 +76,7 @@ export default function SignupForm() {
         padding="64/40"
         borderRadius="16"
         submitMessage="확인"
-        onClose={() => redirect('/login')}
+        onClose={handleCloseModal}
       >
         가입이 완료되었습니다!
       </Modal>
