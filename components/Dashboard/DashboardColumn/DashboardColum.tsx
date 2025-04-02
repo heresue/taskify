@@ -96,7 +96,7 @@ export default function DashboardColumn({ columnId, columnTitle }: ColumnType) {
             <div className="flex w-full flex-col gap-2 md:gap-4">
               <AddCardBtn columnId={columnId} />
               {cards.map((card) => (
-                <SortableCard key={card.id} card={card} columnId={columnId} />
+                <SortableCard key={card.id} card={card} columnTitle={columnTitle} />
               ))}
             </div>
           </SortableContext>

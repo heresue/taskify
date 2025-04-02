@@ -10,6 +10,7 @@ interface DeleteColumnProps extends ModalProps {
 export default function DeleteColumnModal({ isOpen, onClose, columnId }: DeleteColumnProps) {
   const handelColumnDelete = async () => {
     await api.delete(`${EXTERNAL_API.COLUMNS.ROOT}/${columnId}`).then(() => onClose());
+    window.location.reload();
   };
 
   return (

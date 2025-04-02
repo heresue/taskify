@@ -6,8 +6,9 @@ import { MenuOption } from '@/components/common/Dropdown/Item';
 import { DropdownItem } from '@/components/common/Dropdown/types';
 import DeleteColumnModal from '@/components/DeleteColumnModal/DeleteColumnModal';
 import { useModal } from '@/hooks/useModal';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { ColumnType } from '../type';
+import { useClickOutside } from '@/hooks/useClickOutside';
 
 const COLUMN_DROPDOWN_LIST = [
   { id: 'edit', value: '수정하기' },
@@ -19,8 +20,16 @@ export default function ColumnSettingList({ columnId, columnTitle }: ColumnType)
   const [openColumnId, setOpenColumnId] = useState<number | null>(null);
   const { isOpen, open, close } = useModal();
 
+  const dropdownRef = useRef(null);
+  const closeDropdown = () => {
+    setOpenColumnId(null);
+  };
+
+  useClickOutside(dropdownRef, closeDropdown);
+
   const handleSelectOpenModal = (option: DropdownItem) => {
     setModalId(String(option.id));
+    setOpenColumnId(null);
     open();
   };
 
@@ -29,7 +38,7 @@ export default function ColumnSettingList({ columnId, columnTitle }: ColumnType)
   };
 
   return (
-    <div className="relative">
+    <div className="relative" ref={dropdownRef}>
       <DeleteColumnModal
         isOpen={modalId === 'delete' && isOpen}
         onClose={close}
