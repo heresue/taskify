@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Modal from '@/components/common/Modal';
 import CloseIcon from '@/assets/icons/CloseIcon';
 import Image from 'next/image';
@@ -7,35 +7,47 @@ import Textarea from '@/components/common/Textarea';
 import Button from '@/components/common/Button';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { useBlockScroll } from '@/hooks/useBlockScroll';
-import { CardData, CommentsType } from './types';
+import { CommentPromise, CommentsType } from './types';
 import { MenuDropdown } from '@/components/common/Dropdown';
+import { CardType } from '@/components/Dashboard/DashboardCard/DashboardCard';
+import UserBadge from '@/components/UserBadge/UserBadge';
+import ColumnName from '@/components/ColumnName/ColumnName';
+import { separateTagColor } from '@/utils/separateTagColor';
+import { useModal } from '@/hooks/useModal';
+import ToDoFormModal from '@/components/ToDoFormModal/ToDoFormModal';
+import { api } from '@/lib/api';
+import EXTERNAL_API from '@/constants/api/external';
 
 interface ColumnDetailModalProps {
   isOpen: boolean;
   onClose: () => void;
-  cardData: CardData;
-  comments: CommentsType[];
-  onCommentSubmit?: (content: string) => Promise<void>;
+  cardData: CardType;
+  defaultImage: boolean;
+  columnTitle: string;
   onFetchNextComments?: () => Promise<void>;
   hasNextPage?: boolean;
   isLoadingComments?: boolean;
-  threshold: number;
+  threshold?: number;
 }
 
 const ColumnDetailModal = ({
   isOpen,
   onClose,
   cardData,
-  comments,
-  onCommentSubmit,
+  defaultImage = false,
+  columnTitle,
   onFetchNextComments,
   hasNextPage = false,
-  isLoadingComments = false,
+  // isLoadingComments = false,
   threshold = 100,
 }: ColumnDetailModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const [commentText, setCommentText] = useState('');
+  const [comments, setComments] = useState<CommentsType[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { isOpen: isToDoUpdateModalOpen, open, close } = useModal();
+
+  const tags = separateTagColor(cardData.tags);
 
   useBlockScroll(isOpen);
 
@@ -48,17 +60,44 @@ const ColumnDetailModal = ({
     threshold,
   });
 
+  useEffect(() => {
+    const getComment = async () => {
+      const response = await api.get<CommentPromise>(
+        `${EXTERNAL_API.COMMENTS.ROOT}?cardId=${cardData.id}`
+      );
+      setComments(response.comments);
+    };
+    getComment();
+  }, [cardData.id]);
+
+  const onCommentSubmit = async () => {
+    await api.post(`${EXTERNAL_API.COMMENTS.ROOT}`, {
+      content: commentText,
+      columnId: cardData.columnId,
+      cardId: cardData.id,
+      dashboardId: cardData.dashboardId,
+    });
+  };
+
   const handleCommentSubmit = async () => {
     if (!commentText.trim() || isSubmitting) return;
 
     setIsSubmitting(true);
     try {
-      await onCommentSubmit?.(commentText);
+      await onCommentSubmit();
       setCommentText('');
     } catch (error) {
       console.error('Failed to submit comment:', error);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleCardDelete = async () => {
+    try {
+      await api.delete(`${EXTERNAL_API.CARDS.ROOT}/${cardData.id}`);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -68,7 +107,7 @@ const ColumnDetailModal = ({
         <Image src={imageUrl} alt="profile" fill />
       </div>
     ) : (
-      <div className="h-[26px] w-[26px] rounded-full bg-gray-200 md:h-[34px] md:w-[34px]"></div>
+      <UserBadge size={34} profile={cardData.assignee.profileImageUrl} />
     );
 
   const renderHeader = () => (
@@ -85,11 +124,11 @@ const ColumnDetailModal = ({
             ]}
             onSelect={(option) => {
               if (option.id === 1) {
-                //수정 모달로 이동
-                console.log('수정');
+                onClose();
+                open();
               } else if (option.id === 2) {
-                //삭제 모달로 이동
-                console.log('삭제');
+                handleCardDelete();
+                window.location.reload();
               }
             }}
           />
@@ -107,7 +146,7 @@ const ColumnDetailModal = ({
         <div className="flex flex-col md:gap-[6px]">
           <h2 className="text-semi12">담당자</h2>
           <div className="flex items-center gap-2">
-            {renderProfileImage(cardData.assignee.profileImageUrl)}
+            {renderProfileImage(cardData.assignee.profileImageUrl ?? '')}
             <p className="text-regular12 text-black200">{cardData.assignee.nickname}</p>
           </div>
         </div>
@@ -120,10 +159,10 @@ const ColumnDetailModal = ({
       </div>
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-1">
-          <Tag tag="To Do" color="7ac555" />
+          <ColumnName columnName={columnTitle} />
           <div className="h-4 w-[1px] bg-gray-200" />
-          {cardData.tags.map((tag) => (
-            <Tag key={tag} tag={tag} color={tag} />
+          {tags.map((tag) => (
+            <Tag key={tag.text} tag={tag.text} color={tag.color} readonly />
           ))}
         </div>
         <div className="text-regular14 text-black md:min-w-[395px]">{cardData.description}</div>
@@ -132,7 +171,7 @@ const ColumnDetailModal = ({
   );
 
   const renderCardImage = () =>
-    cardData.imageUrl && (
+    !defaultImage && (
       <div className="relative h-[168px] w-full overflow-hidden rounded-md bg-gray-200 md:h-[246px]">
         <Image src={cardData.imageUrl} alt="content" quality={80} fill />
       </div>
@@ -146,6 +185,7 @@ const ColumnDetailModal = ({
         </label>
         <Textarea
           id="comment"
+          placeholder="댓글 작성하기"
           value={commentText}
           onChange={(e) => setCommentText(e.target.value)}
         />
@@ -164,50 +204,58 @@ const ColumnDetailModal = ({
 
   const renderComments = () => (
     <>
-      {comments.map((comment) => (
-        <div key={comment.cursorId} className="flex gap-4">
+      {comments?.map((comment) => (
+        <div key={comment.id} className="flex gap-4">
           <div className="flex gap-3">
-            {renderProfileImage(comment.comments[0].author.profileImageUrl)}
+            {renderProfileImage(comment.author.profileImageUrl)}
             <div>
-              <p>{comment.comments[0].author.nickname}</p>
-              <p>{comment.comments[0].content}</p>
+              <p>{comment.author.nickname}</p>
+              <p>{comment.content}</p>
             </div>
           </div>
         </div>
       ))}
-      {renderCommentsPagination()}
+      {/* {renderCommentsPagination()} */}
     </>
   );
 
-  const renderCommentsPagination = () =>
-    hasNextPage ? (
-      <div className="space-y-4">
-        {isLoadingComments && (
-          <div className="flex flex-col items-center gap-2 p-4 text-gray-500">
-            <span>댓글을 더 불러오는 중...</span>
-          </div>
-        )}
-      </div>
-    ) : (
-      <p className="text-regular14 text-black200 flex items-center justify-center">
-        마지막 댓글입니다.
-      </p>
-    );
+  // const renderCommentsPagination = () =>
+  //   hasNextPage ? (
+  //     <div className="space-y-4">
+  //       {isLoadingComments && (
+  //         <div className="flex flex-col items-center gap-2 p-4 text-gray-500">
+  //           <span>댓글을 더 불러오는 중...</span>
+  //         </div>
+  //       )}
+  //     </div>
+  //   ) : (
+  //     <p className="text-regular14 text-black200 flex items-center justify-center">
+  //       마지막 댓글입니다.
+  //     </p>
+  //   );
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} padding="32/24" borderRadius="8" ref={modalRef}>
-      <div className="flex w-full flex-col gap-2 md:gap-6">
-        {renderHeader()}
-        <main>
-          {renderCardDetails()}
-          {renderCardImage()}
-          <div className="flex flex-col gap-6">
-            {renderCommentInput()}
-            {renderComments()}
-          </div>
-        </main>
-      </div>
-    </Modal>
+    <>
+      <ToDoFormModal
+        isOpen={isToDoUpdateModalOpen}
+        onClose={close}
+        columnId={cardData.columnId}
+        card={cardData}
+      />
+      <Modal isOpen={isOpen} onClose={onClose} padding="32/24" borderRadius="8" ref={modalRef}>
+        <div className="flex w-full flex-col gap-2 md:gap-6">
+          {renderHeader()}
+          <main>
+            {renderCardDetails()}
+            {renderCardImage()}
+            <div className="flex flex-col gap-6">
+              {renderCommentInput()}
+              {renderComments()}
+            </div>
+          </main>
+        </div>
+      </Modal>
+    </>
   );
 };
 

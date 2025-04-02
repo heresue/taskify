@@ -12,7 +12,7 @@ import { deleteDashboard } from './data';
 
 export default function DashboardIdEdit() {
   const { dashboardId } = useDashboardParamsId();
-  const router = useRouter()
+  const router = useRouter();
 
   const handleDelete = async () => {
     // 임시
@@ -31,7 +31,8 @@ export default function DashboardIdEdit() {
     <div id="wrapper" className="m-5 mb-[57px] flex flex-col gap-[34px]">
       <BackLink dashboardId={dashboardId} />
 
-      <div className="flex w-[620px] flex-col gap-4">
+      {/* <div className="flex w-full max-w-[620px] flex-col gap-4"> */}
+      <div className="mx-auto flex w-full lg:max-w-[620px] flex-col gap-4 px-4 lg:mx-0">
         <DashboardTitleSection dashboardId={dashboardId} />
         <MemberListSection dashboardId={dashboardId} />
         <InvitationListSection dashboardId={dashboardId} />

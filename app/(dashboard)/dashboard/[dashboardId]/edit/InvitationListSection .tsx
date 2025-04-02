@@ -39,8 +39,8 @@ export default function InvitationListSection({ dashboardId }: { dashboardId: nu
 
   return (
     <div id="section" className="rounded-2xl bg-white py-[32px]">
-      <div className="mb-[27px] flex items-center justify-between px-[28px]">
-        <h3 className="text-bold24">초대 내역</h3>
+      <div className="mb-[14px] md:mb-[32px] flex items-center justify-between px-[28px]">
+        <h3 className="text-bold20 md:text-bold24">초대 내역</h3>
         <div className="flex items-center gap-4">
           <PaginationControls
             currentPage={currentPage}
@@ -50,13 +50,13 @@ export default function InvitationListSection({ dashboardId }: { dashboardId: nu
           />
           <Button size="w-[109px] h-[32px] rounded-sm" className="flex gap-[10px]" onClick={open}>
             <AddBoxIcon width="14" height="14" color="white" />
-            <span className="text-medium14">초대하기</span>
+            <span className="text-medium12 md:text-medium14">초대하기</span>
           </Button>
         </div>
       </div>
 
       <div className="w-full rounded-lg">
-        <h4 className="text-gray400 text-regular16 px-[28px]">이메일</h4>
+        <h4 className="text-gray400 text-regular14 md:text-regular16 px-[28px]">이메일</h4>
 
         <PaginationItems
           data={invitations}

@@ -76,7 +76,7 @@ export default function CreateDashboardModal({ isOpen, onClose }: Props) {
       disabled={!canSubmit}
     >
       <div className="w-full">
-        <h3 className="text-bold24 mb-6">새로운 대시보드</h3>
+        <h3 className="text-bold20 md:text-bold24 mb-6">새로운 대시보드</h3>
         <FormField
           fieldType="input"
           label="대시보드 이름"
