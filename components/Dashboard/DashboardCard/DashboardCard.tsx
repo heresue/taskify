@@ -22,7 +22,7 @@ export interface CardType {
   dashboardId: number;
 }
 
-interface CardProps {
+export interface CardProps {
   card: CardType;
   columnTitle: string;
 }

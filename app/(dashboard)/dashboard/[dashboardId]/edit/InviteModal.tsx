@@ -66,7 +66,7 @@ export default function InviteModal({ isOpen, onClose, onInvite, onSuccess }: Pr
     >
       <div className="w-full">
         <div className="flex items-center justify-between">
-          <h3 className="text-bold24">초대하기</h3>
+          <h3 className="text-bold20 md:text-bold24">초대하기</h3>
           <button onClick={onClose}>
             <CloseIcon width="36" height="36" />
           </button>
