@@ -54,7 +54,7 @@ export default function Modal({
       >
         {children}
         <div
-          className={`flex gap-[7px] ${
+          className={`mt-8 flex gap-[7px] ${
             twoButton
               ? 'w-[80vw] max-w-[520px] min-w-[295px] md:w-[520px]'
               : 'w-[38vw] max-w-[240px] min-w-[192px] md:w-[240px]'
