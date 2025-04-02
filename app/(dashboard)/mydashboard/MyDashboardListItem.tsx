@@ -1,23 +1,18 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import DashboardColorIcon, { ColorKey } from '@/components/DashboardColorIcon/DashboardColorIcon';
+import DashboardColorIcon from '@/components/DashboardColorIcon/DashboardColorIcon';
 import clsx from 'clsx';
+import { Dashboard } from './types';
 
-interface DashboardListItemProps {
+interface DashboardListItemProps extends Dashboard {
   dashboardId: number;
-  title: string;
-  colorKey: ColorKey;
-  createdAt?: string;
-  updatedAt?: string;
-  createdByMe: boolean;
-  userId?: number;
   isSelected?: boolean;
 }
 
 export default function MyDashboardListItem({
   dashboardId,
   title,
-  colorKey,
+  color,
   createdByMe,
 }: DashboardListItemProps) {
   return (
@@ -26,7 +21,8 @@ export default function MyDashboardListItem({
       className="border-gray300 h-[58px] rounded-lg border bg-white md:h-[68px] md:w-[247px] lg:h-[70px] lg:w-[332px]"
     >
       <div className="flex items-center gap-4 p-5">
-        <DashboardColorIcon colorKey={colorKey} />
+        <DashboardColorIcon color={color} />
+
         <div className="flex hidden min-w-0 flex-1 items-center gap-[6px] md:flex">
           <span
             className={clsx(

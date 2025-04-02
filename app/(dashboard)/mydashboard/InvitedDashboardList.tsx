@@ -6,9 +6,10 @@ interface Props {
   invitations: Invitation[];
   onAccept: (id: number) => void;
   onReject: (id: number) => void;
+  isLoading: boolean;
 }
 
-const InvitedDashboardList = ({ invitations, onAccept, onReject }: Props) => {
+const InvitedDashboardList = ({ invitations, onAccept, onReject, isLoading }: Props) => {
   return (
     <div className="w-full overflow-hidden rounded-lg">
       {/* Header */}
@@ -26,8 +27,14 @@ const InvitedDashboardList = ({ invitations, onAccept, onReject }: Props) => {
               <span>{invitation.dashboard.title}</span>
               <span>{invitation.inviter.nickname}</span>
               <span className="flex justify-center gap-2">
-                <Button onClick={() => onAccept(invitation.id)}>수락</Button>
-                <Button variant="outline" onClick={() => onReject(invitation.id)}>
+                <Button onClick={() => onAccept(invitation.id)} disabled={isLoading}>
+                  수락
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => onReject(invitation.id)}
+                  disabled={isLoading}
+                >
                   거절
                 </Button>
               </span>
