@@ -80,7 +80,7 @@ export default function DashboardColumn({ columnId, columnTitle }: ColumnType) {
   );
 
   return (
-    <div className="border-gray200 w-full shrink-0 border-b border-solid px-5 py-[18px] lg:w-[354px] lg:border-r lg:border-b-0">
+    <div className="border-gray200 w-full shrink-0 border-b border-solid px-5 py-[18px] lg:h-full lg:w-[354px] lg:border-r lg:border-b-0">
       <div>
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center justify-center gap-2">
