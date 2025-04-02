@@ -36,13 +36,19 @@ export default function UserBadge({
           height={size}
           alt="user"
           style={{ width: size, height: size }}
-          className="rounded-full border border-white object-cover"
+          className="rounded-full border border-white bg-white object-cover"
         />
       ) : (
         <UserIcon width={size} height={size} />
       )}
       {userName && (
-        <span className={clsx(fontSize && fontSizeCSS[fontSize], responsive && 'max-sm:hidden')}>
+        <span
+          className={clsx(
+            fontSize && fontSizeCSS[fontSize],
+            responsive && 'max-sm:hidden',
+            'bg-white'
+          )}
+        >
           {userName}
         </span>
       )}
