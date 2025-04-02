@@ -20,7 +20,7 @@ export default function Tag({ tag, color, onDoubleClick, readonly }: TagProps) {
     <div
       onDoubleClick={readonly ? undefined : onDoubleClick}
       className={clsx(
-        'rounded-sm px-1.5 whitespace-nowrap',
+        'rounded-sm px-1.5 py-0.5 whitespace-nowrap',
         readonly ? 'cursor-default' : 'cursor-pointer',
         tagColor[color]
       )}

@@ -8,7 +8,7 @@ import { separateTagColor } from '@/utils/separateTagColor';
 import { formatDate } from '@/utils/formatDateTime';
 import DEFAULT_CARD_IMAGE from '@/constants/image/defaultCardImage';
 import { useModal } from '@/hooks/useModal';
-import ToDoFormModal from '@/components/ToDoFormModal/ToDoFormModal';
+import ColumnDetailModal from '@/components/compound/modal/ColumnDetailModal';
 
 export interface CardType {
   id: number;
@@ -18,14 +18,16 @@ export interface CardType {
   tags: string[];
   dueDate: string;
   assignee: { profileImageUrl: string | null; id?: number; nickname?: string };
+  columnId: number;
+  dashboardId: number;
 }
 
 export interface CardProps {
   card: CardType;
-  columnId: number;
+  columnTitle: string;
 }
 
-export default function Card({ card, columnId }: CardProps) {
+export default function Card({ card, columnTitle }: CardProps) {
   const { imageUrl, title, tags, dueDate, assignee } = card;
   const { isOpen, open, close } = useModal();
   const tag = separateTagColor(tags);
@@ -34,7 +36,13 @@ export default function Card({ card, columnId }: CardProps) {
 
   return (
     <>
-      <ToDoFormModal isOpen={isOpen} onClose={close} columnId={columnId} card={card} />
+      <ColumnDetailModal
+        defaultImage={defaultImage}
+        isOpen={isOpen}
+        onClose={close}
+        cardData={card}
+        columnTitle={columnTitle}
+      />
       <div
         className="border-gray300 flex w-full cursor-pointer items-center justify-center rounded-md border border-solid bg-white p-3 sm:p-3 md:p-4 md:px-5 md:py-[18px]"
         onClick={open}
