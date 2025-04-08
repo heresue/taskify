@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useState } from 'react';
 import Button from '@/components/common/Button';
 import UserIcon from '@/assets/icons/UserIcon';
