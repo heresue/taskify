@@ -95,6 +95,7 @@ export default function InvitationListSection({ dashboardId }: { dashboardId: nu
       <InviteModal
         isOpen={isOpen}
         onClose={close}
+        key={isOpen ? 'opened' : 'closed'}
         onInvite={async (email) => {
           await inviteMember(dashboardId, email);
         }}

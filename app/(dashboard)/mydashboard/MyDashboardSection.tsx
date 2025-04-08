@@ -84,7 +84,7 @@ export default function MyDashboardSection() {
         goToNext={goToNext}
       />
 
-      <CreateDashboardModal isOpen={isOpen} onClose={close} />
+      <CreateDashboardModal isOpen={isOpen} onClose={close} key={isOpen ? 'opened' : 'closed'} />
     </div>
   );
 }
