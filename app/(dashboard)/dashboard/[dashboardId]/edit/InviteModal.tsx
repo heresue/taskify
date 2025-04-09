@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import CloseIcon from '@/assets/icons/CloseIcon';
 import Modal from '@/components/common/Modal';

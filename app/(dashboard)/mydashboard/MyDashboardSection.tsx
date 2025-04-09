@@ -1,8 +1,8 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import { useModal } from '@/hooks/useModal';
 import { usePagination } from '@/components/Pagination/usePagination';
 import Button from '@/components/common/Button';

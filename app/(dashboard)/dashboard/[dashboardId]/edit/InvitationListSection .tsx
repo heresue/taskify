@@ -1,5 +1,7 @@
-import Image from 'next/image';
+'use client';
+
 import { useCallback, useEffect, useState } from 'react';
+import Image from 'next/image';
 import { useModal } from '@/hooks/useModal';
 import AddBoxIcon from '@/assets/icons/AddBoxIcon';
 import Button from '@/components/common/Button';

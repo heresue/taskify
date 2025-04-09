@@ -1,6 +1,8 @@
+'use client';
+
+import { useModal } from '@/hooks/useModal';
 import CreateDashboardModal from '@/app/(dashboard)/mydashboard/CreateDashboardModal';
 import AddBoxIcon from '@/assets/icons/AddBoxIcon';
-import { useModal } from '@/hooks/useModal';
 
 export default function AddDashboardButton() {
   const { isOpen, open, close } = useModal();

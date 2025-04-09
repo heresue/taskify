@@ -1,11 +1,11 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import SideNavItems from './sideNavItems';
 import ROUTES from '@/constants/routes';
+import SideNavItems from './sideNavItems';
 
 export default function SideNav() {
   const pathname = usePathname();
