@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import { useModal } from '@/hooks/useModal';
@@ -13,7 +12,7 @@ import CreateDashboardModal from './CreateDashboardModal';
 import { Dashboard } from './types';
 
 export default function MyDashboardSection({ initialData }: { initialData: Dashboard[] }) {
-  const [myDashboards, setMyDashboards] = useState(initialData);
+  const myDashboards = initialData;
   const pathname = usePathname();
   const { isOpen, open, close } = useModal();
   const selectedId = pathname?.split('/dashboard/')[1]?.split('/')[0];
@@ -29,6 +28,7 @@ export default function MyDashboardSection({ initialData }: { initialData: Dashb
   return (
     <div className="mb-[40px] flex flex-col gap-3">
       <PaginationItems
+        key={`${myDashboards.length}-${currentPage}`}
         data={myDashboards}
         itemsPerPage={itemsPerPage}
         currentPage={currentPage}

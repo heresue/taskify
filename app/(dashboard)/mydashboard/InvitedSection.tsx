@@ -4,12 +4,12 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import InvitedDashboardList from './InvitedDashboardList';
 import InvitedDashboardEmpty from './InvitedDashboardEmpty';
-import { acceptInvitation, rejectInvitation } from './data';
 import { Invitation } from './types';
+import { acceptInvitationAction, rejectInvitationAction } from './actions';
 
 export default function InvitedSection({ initialData }: { initialData: Invitation[] }) {
-  const [invitations, setInvitations] = useState(initialData);
   const [isLoading, setIsLoading] = useState(false);
+  const invitations = initialData;
   const router = useRouter();
 
   const handleAccept = async (id: number) => {
@@ -17,8 +17,7 @@ export default function InvitedSection({ initialData }: { initialData: Invitatio
     setIsLoading(true);
 
     try {
-      await acceptInvitation(id);
-      setInvitations((prev) => prev.filter((inv) => inv.id !== id));
+      await acceptInvitationAction(id);
       router.refresh();
     } catch (err) {
       console.error('초대 수락 에러:', err);
@@ -32,9 +31,8 @@ export default function InvitedSection({ initialData }: { initialData: Invitatio
     setIsLoading(true);
 
     try {
-      await rejectInvitation(id);
+      await rejectInvitationAction(id);
       router.refresh();
-      setInvitations((prev) => prev.filter((inv) => inv.id !== id));
     } catch (err) {
       console.error('초대 거절 에러:', err);
     } finally {
