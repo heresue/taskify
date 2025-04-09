@@ -10,7 +10,7 @@ export default function AddDashboardButton() {
         <AddBoxIcon width="14" height="14" />
       </button>
 
-      <CreateDashboardModal isOpen={isOpen} onClose={close} />
+      <CreateDashboardModal isOpen={isOpen} onClose={close} key={isOpen ? 'opened' : 'closed'} />
     </>
   );
 }
