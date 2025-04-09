@@ -23,7 +23,7 @@ export default function DashboardIdEdit() {
 
   return (
     <div id="wrapper" className="m-5 mb-[57px] flex flex-col gap-[34px]">
-      <BackLink fallbackHref={`/dashboard/${dashboardId}`} />
+      <BackLink backUrl={`/dashboard/${dashboardId}`} />
       <div className="mx-auto flex w-full flex-col gap-4 px-4 lg:mx-0 lg:max-w-[620px]">
         <DashboardTitleSection dashboardId={dashboardId} />
         <MemberListSection dashboardId={dashboardId} />
