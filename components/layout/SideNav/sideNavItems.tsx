@@ -1,9 +1,11 @@
+"use client"
+
 import { usePagination } from '@/components/Pagination/usePagination';
 import PaginationControls from '@/components/Pagination/PaginationControls';
 import PaginationItems from '@/components/Pagination/PaginationItems';
-import AddDashboardButton from './AddDashboardButton';
 import { useSideNavDashboards } from './useSideNavDashboards';
 import DashboardListItem from './DashboardListItem';
+import AddDashboardButton from './AddDashboardButton';
 
 interface SideNavItemsProps {
   selectedId: number | undefined;

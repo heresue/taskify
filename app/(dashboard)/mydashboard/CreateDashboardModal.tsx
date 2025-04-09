@@ -1,11 +1,13 @@
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Modal from '@/components/common/Modal';
 import FormField from '@/components/compound/form/FormField';
 import ColorPalette from '@/components/Dashboard/ColorPalette';
 import EXTERNAL_API from '@/constants/api/external';
 import ROUTES from '@/constants/routes';
 import { api } from '@/lib/api';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
 interface Props {
   isOpen: boolean;
@@ -31,17 +33,6 @@ export default function CreateDashboardModal({ isOpen, onClose }: Props) {
 
   const canSubmit = Boolean(title.trim() && isColorSelected);
 
-  const resetForm = () => {
-    setTitle('');
-    setIsColorSelected(null);
-  };
-
-  useEffect(() => {
-    if (!isOpen) {
-      resetForm();
-    }
-  }, [isOpen]);
-
   const handleSubmitTitle = async () => {
     if (!canSubmit) return;
 
@@ -50,7 +41,6 @@ export default function CreateDashboardModal({ isOpen, onClose }: Props) {
         title,
         color: isColorSelected,
       });
-      resetForm();
 
       const dashboardId = response.id;
       router.push(ROUTES.DASHBOARD.root(dashboardId));

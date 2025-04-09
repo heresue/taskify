@@ -1,8 +1,10 @@
+'use client';
+
+import { useState } from 'react';
 import CloseIcon from '@/assets/icons/CloseIcon';
 import Modal from '@/components/common/Modal';
 import FormField from '@/components/compound/form/FormField';
 import { validateEmail } from '@/utils/authValidate';
-import { useEffect, useState } from 'react';
 
 interface Props {
   isOpen: boolean;
@@ -19,19 +21,6 @@ export default function InviteModal({ isOpen, onClose, onInvite, onSuccess }: Pr
 
   const canSubmit = hasEmailBlurred && isEmailValid && !isLoading;
 
-  const resetForm = () => {
-    setEmail('');
-    setIsEmailValid(true);
-    setHasEmailBlurred(false);
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    if (!isOpen) {
-      resetForm();
-    }
-  }, [isOpen]);
-
   const handleEmailBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     setHasEmailBlurred(true);
     setIsEmailValid(validateEmail(e.target.value));
@@ -44,7 +33,6 @@ export default function InviteModal({ isOpen, onClose, onInvite, onSuccess }: Pr
       setIsLoading(true);
       await onInvite(email);
       onSuccess?.();
-      resetForm();
       onClose();
     } catch (error) {
       console.error('초대 실패:', error);

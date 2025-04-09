@@ -1,5 +1,6 @@
+"use client"
+
 import Button from '@/components/common/Button';
-import React from 'react';
 import { Invitation } from './invitations';
 
 interface Props {

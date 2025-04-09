@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import DashboardColorIcon from '../../DashboardColorIcon/DashboardColorIcon';
 import clsx from 'clsx';
+import DashboardColorIcon from '@/components/DashboardColorIcon/DashboardColorIcon';
 import { Dashboard } from '@/app/(dashboard)/mydashboard/types';
 
 interface DashboardListItemProps extends Dashboard {

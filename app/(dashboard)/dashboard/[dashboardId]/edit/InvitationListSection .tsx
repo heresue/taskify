@@ -1,7 +1,7 @@
 'use client';
 
-import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
+import Image from 'next/image';
 import { useModal } from '@/hooks/useModal';
 import AddBoxIcon from '@/assets/icons/AddBoxIcon';
 import Button from '@/components/common/Button';
@@ -97,6 +97,7 @@ export default function InvitationListSection({ dashboardId }: { dashboardId: nu
       <InviteModal
         isOpen={isOpen}
         onClose={close}
+        key={isOpen ? 'opened' : 'closed'}
         onInvite={async (email) => {
           await inviteMember(dashboardId, email);
         }}
