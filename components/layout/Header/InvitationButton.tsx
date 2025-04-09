@@ -19,6 +19,7 @@ export default function InvitationButton({ dashboardId }: { dashboardId: number 
       <InviteModal
         isOpen={isOpen}
         onClose={close}
+        key={isOpen ? 'opened' : 'closed'}
         onInvite={async (email) => {
           await inviteMember(dashboardId, email);
         }}

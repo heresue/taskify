@@ -1,3 +1,5 @@
+"use client"
+
 import { PaginationControlsProps } from './type';
 import ArrowIcon from '@/assets/icons/ArrowIcon';
 

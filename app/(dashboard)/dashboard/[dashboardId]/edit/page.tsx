@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import useDashboardParamsId from '@/components/Dashboard/useDashboardParamsId';
 import Button from '@/components/common/Button';
-import BackLink from './BackLink';
+import BackLink from '@/components/BackLink/BackLink';
 import DashboardTitleSection from './DashboardTitleSection ';
 import MemberListSection from './MemberListSection ';
 import InvitationListSection from './InvitationListSection ';
@@ -23,8 +23,7 @@ export default function DashboardIdEdit() {
 
   return (
     <div id="wrapper" className="m-5 mb-[57px] flex flex-col gap-[34px]">
-      <BackLink dashboardId={dashboardId} />
-
+      <BackLink backUrl={`/dashboard/${dashboardId}`} />
       <div className="mx-auto flex w-full flex-col gap-4 px-4 lg:mx-0 lg:max-w-[620px]">
         <DashboardTitleSection dashboardId={dashboardId} />
         <MemberListSection dashboardId={dashboardId} />
