@@ -1,3 +1,4 @@
+/* My Dashboard */
 export type Dashboard = {
   id: number;
   title: string;
@@ -13,6 +14,13 @@ export type DashboardListResponse = {
   totalCount: number;
 };
 
+export interface DashboardListItem extends Dashboard {
+  dashboardId: number;
+  isSelected?: boolean;
+  shouldHideOnSm?: boolean;
+}
+
+/* Invited Dashboard */
 export type Invitation = {
   id: number;
   inviter: {

@@ -1,56 +1,55 @@
-import Button from '@/components/common/Button';
-import React from 'react';
-import { Invitation } from './invitations';
+import { useState } from 'react';
+import Image from 'next/image';
+import Input from '@/components/common/Input';
+import InvitedDashboardListTable from './InvitedDashboardListTable';
+import { Invitation } from './types';
 
-interface Props {
+export default function InvitedDashboardList({
+  invitations = [],
+  isLoading,
+  handleAccept,
+  handleReject,
+}: {
   invitations: Invitation[];
-  onAccept: (id: number) => void;
-  onReject: (id: number) => void;
   isLoading: boolean;
-}
+  handleAccept: (id: number) => void;
+  handleReject: (id: number) => void;
+}) {
+  const [keyword, setKeyword] = useState('');
 
-const InvitedDashboardList = ({ invitations, onAccept, onReject, isLoading }: Props) => {
-  return (
-    <div className="w-full overflow-hidden rounded-lg">
-      {/* Header */}
-      <div className="text-gray400 text-regular14 md:text-regular16 grid grid-cols-3 px-[76px]">
-        <span>이름</span>
-        <span>초대자</span>
-        <span className="text-center">수락 여부</span>
-      </div>
-
-      {/* Body - 무한스크롤 영역 */}
-      <div className="divide-y">
-        <div className="border-gray200 border-b">
-          {invitations.map((invitation) => (
-            <div
-              key={invitation.id}
-              className="md:text-regular16 grid grid-cols-3 items-center px-[76px] py-[23px]"
-            >
-              <span className="text-regular14 md:text-regular16 pr-5">
-                {invitation.dashboard.title}
-              </span>
-              <span className="text-regular14 md:text-regular16">
-                {invitation.inviter.nickname}
-              </span>
-              <span className="text-regular14 md:text-regular16 flex justify-center gap-2">
-                <Button onClick={() => onAccept(invitation.id)} disabled={isLoading}>
-                  수락
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => onReject(invitation.id)}
-                  disabled={isLoading}
-                >
-                  거절
-                </Button>
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
+  const filtered = invitations.filter((inv) =>
+    inv.dashboard.title.toLowerCase().includes(keyword.toLowerCase())
   );
-};
 
-export default InvitedDashboardList;
+  return (
+    <>
+      <div>
+        <Input
+          placeholder="검색"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+          size={16}
+          customInputClass="h-6"
+          customBorderClass="py-[7px]"
+          leftIcon={
+            <Image
+              src="/icons/search.svg"
+              alt="검색 아이콘"
+              width={17}
+              height={17}
+              className="ml-1"
+            />
+          }
+        />
+      </div>
+      <div>
+        <InvitedDashboardListTable
+          invitations={filtered}
+          isLoading={isLoading}
+          onAccept={handleAccept}
+          onReject={handleReject}
+        />
+      </div>
+    </>
+  );
+}

@@ -1,14 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import DashboardColorIcon from '@/components/DashboardColorIcon/DashboardColorIcon';
 import clsx from 'clsx';
-import { Dashboard } from './types';
-
-interface DashboardListItemProps extends Dashboard {
-  dashboardId: number;
-  isSelected?: boolean;
-  shouldHideOnSm?: boolean;
-}
+import DashboardColorIcon from '@/components/DashboardColorIcon/DashboardColorIcon';
+import { DashboardListItem } from './types';
 
 export default function MyDashboardListItem({
   dashboardId,
@@ -16,7 +10,7 @@ export default function MyDashboardListItem({
   color,
   createdByMe,
   shouldHideOnSm = false,
-}: DashboardListItemProps) {
+}: DashboardListItem) {
   return (
     <Link
       href={`/dashboard/${dashboardId}`}

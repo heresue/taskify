@@ -1,8 +1,8 @@
 'use client';
 
-import Image from 'next/image';
+import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { useModal } from '@/hooks/useModal';
 import { usePagination } from '@/components/Pagination/usePagination';
 import Button from '@/components/common/Button';
@@ -10,21 +10,13 @@ import PaginationItems from '@/components/Pagination/PaginationItems';
 import PaginationControls from '@/components/Pagination/PaginationControls';
 import MyDashboardListItem from './MyDashboardListItem';
 import CreateDashboardModal from './CreateDashboardModal';
-import { getMyDashboards } from './data';
 import { Dashboard } from './types';
 
-export default function MyDashboardSection() {
-  const [myDashboards, setMyDashboards] = useState<Dashboard[]>([]);
+export default function MyDashboardSection({ initialData }: { initialData: Dashboard[] }) {
+  const [myDashboards, setMyDashboards] = useState(initialData);
   const pathname = usePathname();
   const { isOpen, open, close } = useModal();
   const selectedId = pathname?.split('/dashboard/')[1]?.split('/')[0];
-
-  useEffect(() => {
-    (async () => {
-      const data = await getMyDashboards();
-      setMyDashboards(data.dashboards);
-    })();
-  }, []);
 
   const itemsPerPage = 6;
 
