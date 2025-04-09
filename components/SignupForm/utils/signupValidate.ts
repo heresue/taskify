@@ -1,5 +1,5 @@
+import { AUTH_MESSAGE } from '@/constants/message/authMessage';
 import { ResponseState, SignupType } from './useSignupForm';
-import { AUTH_MESSAGE } from '../../constants/message/authMessage';
 import {
   validateEmail,
   validateLimitLengthNickname,
